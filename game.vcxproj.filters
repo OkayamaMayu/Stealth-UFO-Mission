@@ -1,0 +1,427 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\BackGround">
+      <UniqueIdentifier>{b744ad65-7101-45df-a082-fca99aa6475c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\0_MyLib">
+      <UniqueIdentifier>{a9bbfc02-7edd-4505-9bc7-e53ebd3741f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Camera">
+      <UniqueIdentifier>{f099eee1-cc3e-4a24-9759-dc52860d6d36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Model">
+      <UniqueIdentifier>{d73dc0c9-4cee-4c36-b61a-e53e5b1d6099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Player">
+      <UniqueIdentifier>{5feeaab5-5e86-4265-9fa4-9b63e1093266}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{c0663130-4968-4c6a-9d04-ef6645a4d084}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\enemy">
+      <UniqueIdentifier>{ea4d6aed-077a-42fe-929f-5b267caee556}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item">
+      <UniqueIdentifier>{8ad875e4-f887-4652-bf8e-5e2e3aae8d6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Pause">
+      <UniqueIdentifier>{ce55c5c1-f143-4532-90f9-d0a624f9b8c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Goal">
+      <UniqueIdentifier>{cb1068ee-94c3-4bb5-acfe-1c93fc735445}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TitleModel">
+      <UniqueIdentifier>{4aaf4052-8f41-4105-9ec3-6da1102f311e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Laser">
+      <UniqueIdentifier>{01b82731-a11e-445f-8f07-a7ed7d7f3dab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Block">
+      <UniqueIdentifier>{639d235b-11c7-4e03-a6e2-413a7970288d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mouse">
+      <UniqueIdentifier>{d8e65f79-a6e4-4ea1-bfaa-1f01f6cea2d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Select">
+      <UniqueIdentifier>{46664a97-5c86-4ab4-9796-a58d9d90a7e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{4132b051-795e-4fea-9aee-7fd1999a52e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\CheckPoint">
+      <UniqueIdentifier>{ebe1260e-62a3-4f46-8638-5f9d30c95db4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\TitleScene">
+      <UniqueIdentifier>{ea1b91d3-943e-4a53-9b9c-cd83d8755cb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\SelectScene">
+      <UniqueIdentifier>{797f5eb3-b0fd-4a67-9f2e-ce48047559c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\LoadStageData">
+      <UniqueIdentifier>{4ec4254a-54dd-4aa2-b58d-c8a5dfa1fdf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\EndScene">
+      <UniqueIdentifier>{828977e3-a176-4fc4-aa3c-b0b725058908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\GameoverScene">
+      <UniqueIdentifier>{355e27b0-4e5e-4656-b776-417388730014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\PlayScene">
+      <UniqueIdentifier>{3887f5c6-1ad0-4d40-a13c-7260d7ddd7a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\ResultScene">
+      <UniqueIdentifier>{33a29d3f-6fb4-4b6a-89a1-408074e0d901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\0_MyLib\MyLib">
+      <UniqueIdentifier>{91ca58ac-b644-4f07-840e-54550834ca29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\0_MyLib\MyLib\Input">
+      <UniqueIdentifier>{2d5c988d-a133-4ce0-ace7-b68e2ab81b8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib">
+      <UniqueIdentifier>{3e37aa8a-97fa-4c3c-9e04-54eea9d0462b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Effekseer">
+      <UniqueIdentifier>{a03f1678-02d6-4526-93e0-cc5a49cf5485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\0_MyLib\MyLib\Collision">
+      <UniqueIdentifier>{8140e85c-f984-4cba-8658-b708a7d52cd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SafetyArea">
+      <UniqueIdentifier>{4c7f757e-2e9b-464b-8dd9-976b2bcf57ef}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MyLib\MyLib.cpp">
+      <Filter>ソース ファイル\0_MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BackGround\BackGround.cpp">
+      <Filter>ソース ファイル\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BackGround\sky.cpp">
+      <Filter>ソース ファイル\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera\CameraManager.cpp">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera\DebugCamera.cpp">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera\PlayCamera.cpp">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Model\Model.cpp">
+      <Filter>ソース ファイル\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player\Player.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\SceneManager.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy\Enemy.cpp">
+      <Filter>ソース ファイル\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy\EnemyManager.cpp">
+      <Filter>ソース ファイル\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Item\Item.cpp">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Item\ItemManager.cpp">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pause\Pause.cpp">
+      <Filter>ソース ファイル\Pause</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Goal\Goal.cpp">
+      <Filter>ソース ファイル\Goal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy\UFO.cpp">
+      <Filter>ソース ファイル\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TitleModel\TitleModel.cpp">
+      <Filter>ソース ファイル\TitleModel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Laser\Laser.cpp">
+      <Filter>ソース ファイル\Laser</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Laser\LaserManager.cpp">
+      <Filter>ソース ファイル\Laser</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Block\Block.cpp">
+      <Filter>ソース ファイル\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Block\BlockManager.cpp">
+      <Filter>ソース ファイル\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mouse\Mouse.cpp">
+      <Filter>ソース ファイル\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Select\Select.cpp">
+      <Filter>ソース ファイル\Select</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\UIManager.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CheckPoint\CheckPoint.cpp">
+      <Filter>ソース ファイル\CheckPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CheckPoint\CheckPointManager.cpp">
+      <Filter>ソース ファイル\CheckPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\TitleScene.cpp">
+      <Filter>ソース ファイル\Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\SelectScene.cpp">
+      <Filter>ソース ファイル\Scene\SelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MyLib\MyLib\Input.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InputManager\InputManager.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy\EnemyBase.cpp">
+      <Filter>ソース ファイル\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player\PlayerRing.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LoadStageData\LoadStageData.cpp">
+      <Filter>ソース ファイル\LoadStageData</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\EndScene.cpp">
+      <Filter>ソース ファイル\Scene\EndScene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\GameOverScene.cpp">
+      <Filter>ソース ファイル\Scene\GameoverScene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\PlayScene.cpp">
+      <Filter>ソース ファイル\Scene\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\ResultScene.cpp">
+      <Filter>ソース ファイル\Scene\ResultScene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MyLib\MyLib\DebugString.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MyLib\MyLib\Draw.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MyLib\MyLib\Fade.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MyLib\MyLib\FrameRate.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MyLib\MyLib\MyMath.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MyLib\MyLib\SaveLoad.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MyLib\MyLib\Sound.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Lib\Effekseer\Effekseer.cpp">
+      <Filter>ソース ファイル\Lib\Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MyLib\MyLib\Vector.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MyLib\MyLib\Collision.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Colli\CollisionManager.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SafetyArea\SafetyArea.cpp">
+      <Filter>ソース ファイル\SafetyArea</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SafetyArea\SafetyAreaManager.cpp">
+      <Filter>ソース ファイル\SafetyArea</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\MyLib\MyLib.h">
+      <Filter>ソース ファイル\0_MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BackGround\BackGround.h">
+      <Filter>ソース ファイル\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BackGround\sky.h">
+      <Filter>ソース ファイル\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Camera\CameraManager.h">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Camera\DebugCamera.h">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Camera\PlayCamera.h">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model\Model.h">
+      <Filter>ソース ファイル\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player\Player.h">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\SceneManager.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy\Enemy.h">
+      <Filter>ソース ファイル\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy\EnemyManager.h">
+      <Filter>ソース ファイル\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Item\Item.h">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Item\ItemManager.h">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pause\Pause.h">
+      <Filter>ソース ファイル\Pause</Filter>
+    </ClInclude>
+    <ClInclude Include="src\goal\Goal.h">
+      <Filter>ソース ファイル\Goal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy\UFO.h">
+      <Filter>ソース ファイル\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TitleModel\TitleModel.h">
+      <Filter>ソース ファイル\TitleModel</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Laser\Laser.h">
+      <Filter>ソース ファイル\Laser</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Laser\LaserManager.h">
+      <Filter>ソース ファイル\Laser</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Block\Block.h">
+      <Filter>ソース ファイル\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Block\BlockManager.h">
+      <Filter>ソース ファイル\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mouse\Mouse.h">
+      <Filter>ソース ファイル\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Select\Select.h">
+      <Filter>ソース ファイル\Select</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\UIManager.h">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CheckPoint\CheckPoint.h">
+      <Filter>ソース ファイル\CheckPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CheckPoint\CheckPointManager.h">
+      <Filter>ソース ファイル\CheckPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\TitleScene.h">
+      <Filter>ソース ファイル\Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\SelectScene.h">
+      <Filter>ソース ファイル\Scene\SelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MyLib\MyLib\Input.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InputManager\InputManager.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy\EnemyBase.h">
+      <Filter>ソース ファイル\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player\PlayerRing.h">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LoadStageData\LoadStageData.h">
+      <Filter>ソース ファイル\LoadStageData</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\EndScene.h">
+      <Filter>ソース ファイル\Scene\EndScene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\GameOverScene.h">
+      <Filter>ソース ファイル\Scene\GameoverScene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\PlayScene.h">
+      <Filter>ソース ファイル\Scene\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\ResultScene.h">
+      <Filter>ソース ファイル\Scene\ResultScene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MyLib\MyLib\DebugString.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MyLib\MyLib\Draw.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MyLib\MyLib\Fade.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MyLib\MyLib\FrameRate.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MyLib\MyLib\MyMath.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MyLib\MyLib\SaveLoad.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MyLib\MyLib\Sound.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Lib\Effekseer\Effekseer.h">
+      <Filter>ソース ファイル\Lib\Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MyLib\MyLib\Vector.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MyLib\MyLib\Collision.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Colli\CollisionManager.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SafetyArea\SafetyArea.h">
+      <Filter>ソース ファイル\SafetyArea</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SafetyArea\SafetyAreaManager.h">
+      <Filter>ソース ファイル\SafetyArea</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\system\icon.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
