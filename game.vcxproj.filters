@@ -261,6 +261,9 @@
     <ClCompile Include="src\Colli\CollisionBase.cpp">
       <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="src\Colli\CollisionAABB.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MyLib\MyLib.h">
@@ -417,6 +420,9 @@
       <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
     </ClInclude>
     <ClInclude Include="src\Colli\CollisionBase.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Colli\CollisionAABB.h">
       <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
     </ClInclude>
   </ItemGroup>

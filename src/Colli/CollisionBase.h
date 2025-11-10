@@ -22,14 +22,14 @@ enum COLLISION_KIND {
 
 class CollisionBase {
 protected:
-	COLLISION_TYPE	m_CollisionType;				//当たり判定のタイプ
+	COLLISION_TYPE	m_CollisionType;				//コリジョンタイプ
 	CModel*			m_Owner;						//オーナーのアドレス
 	bool			m_IsCollision;					//コリジョン有効フラグ
 	int				m_iKind;						//kindメンバー
 	function<void(CollisionBase)> m_OnHitCollback;	//ヒット時のコールバック関数
 
 public:
-	COLLISION_TYPE	GetCollisionType() { return m_CollisionType; }						//当たり判定のタイプを取得
+	COLLISION_TYPE	GetCollisionType() { return m_CollisionType; }						//コリジョンタイプを取得
 	CModel*			GetOwner() { return m_Owner; }										//オーナーのアドレスを取得
 	bool			IsCollision() { return m_IsCollision; }								//コリジョン有効フラグを取得
 	int				GetKind() { return m_iKind; }										//kindメンバーを取得

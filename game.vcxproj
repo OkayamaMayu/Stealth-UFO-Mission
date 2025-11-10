@@ -28,6 +28,7 @@
     <ClCompile Include="src\Camera\PlayCamera.cpp" />
     <ClCompile Include="src\CheckPoint\CheckPoint.cpp" />
     <ClCompile Include="src\CheckPoint\CheckPointManager.cpp" />
+    <ClCompile Include="src\Colli\CollisionAABB.cpp" />
     <ClCompile Include="src\Colli\CollisionBase.cpp" />
     <ClCompile Include="src\Colli\CollisionManager.cpp" />
     <ClCompile Include="src\enemy\Enemy.cpp" />
@@ -83,6 +84,7 @@
     <ClInclude Include="src\Camera\PlayCamera.h" />
     <ClInclude Include="src\CheckPoint\CheckPoint.h" />
     <ClInclude Include="src\CheckPoint\CheckPointManager.h" />
+    <ClInclude Include="src\Colli\CollisionAABB.h" />
     <ClInclude Include="src\Colli\CollisionBase.h" />
     <ClInclude Include="src\Colli\CollisionManager.h" />
     <ClInclude Include="src\enemy\Enemy.h" />
