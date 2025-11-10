@@ -1,5 +1,7 @@
 #include"Collision.h"
 #include"MyMath.h"
+#include <algorithm>
+using namespace std;
 
 //IsHitRectの定義（四角）
 bool Collision::Rect(int aX, int aY, int aW, int aH, int bX, int bY, int bW, int bH)
@@ -95,19 +97,78 @@ bool Collision::Circlr3D(VECTOR aPos, float aR, VECTOR bPos, float bR)
 	return false;
 }
 
-//線と矩形の当たり判定：線の開始座標,線の向き, 矩形の座標, 矩形のサイズ
-bool LineToRect(VECTOR linePos, VECTOR lineRot, VECTOR RectPos, VECTOR RectSize)
-{
-	//線のベクトル
-	//向いている方向に伸ばす
-	VECTOR lineVec = Math::GetMoveVec(lineRot.y, 1.0f);
+//----------------------------
 
-	//外積の計算
+//箱と箱の当たり判定
+bool Collision::IsCollidingAABBToAABB(AABB boxA, AABB boxB) {
+	//モデルの中心座標
+	VECTOR boxACenterPos = boxA.centerPos;
+	VECTOR boxBCenterPos = boxB.centerPos;
+	
+	//判定サイズを半分にする
+	VECTOR boxAHalfSize = VScale(boxA.size, 0.5f);
+	VECTOR boxBHalfSize = VScale(boxA.size, 0.5f);
 
+	if (boxBCenterPos.x - boxBHalfSize.x < boxACenterPos.x + boxAHalfSize.x &&
+		boxBCenterPos.x + boxBHalfSize.x > boxACenterPos.x - boxAHalfSize.x &&
+		boxBCenterPos.y - boxBHalfSize.y < boxACenterPos.y + boxAHalfSize.y &&
+		boxBCenterPos.y + boxBHalfSize.y > boxACenterPos.y - boxAHalfSize.y &&
+		boxBCenterPos.z - boxBHalfSize.z < boxACenterPos.z + boxAHalfSize.z &&
+		boxBCenterPos.z + boxBHalfSize.z > boxACenterPos.z - boxAHalfSize.z
+		)
+		return true;
+	
+	return false;
+}
 
-	//すべて正の数もしくはすべて負の数なら当たっていない
-	//0がある場合は線と重なっている
+//箱と球の当たり判定
+bool Collision::IsCollidingAABBToSphere(AABB box, Sphere sphere) {
+	//モデルの中心座標
+	VECTOR boxCenterPos = box.centerPos;
+	VECTOR sphereCenterPos = sphere.centerPos;
 
+	//箱の判定サイズを半分にする
+	VECTOR boxHalfSize = VScale(box.size, 0.5f);
+	//判定の半径
+	float sphereRadius = sphere.radius;
+
+	//箱の最小点
+	VECTOR boxMinPos = {
+		boxCenterPos.x - boxHalfSize.x,
+		boxCenterPos.y - boxHalfSize.y,
+		boxCenterPos.z - boxHalfSize.z };
+	//箱の最大点
+	VECTOR boxMaxPos = {
+		boxCenterPos.x + boxHalfSize.x,
+		boxCenterPos.y + boxHalfSize.y,
+		boxCenterPos.z + boxHalfSize.z };
+
+	//箱の一番近い点を求める
+	VECTOR nearestPos = Math::Clamp(sphereCenterPos, boxMinPos, boxMaxPos);
+
+	//近い点と球で判定
+	if (Math::GetDistance(nearestPos, sphereCenterPos) < sphereRadius)
+		return true;
+
+	return false;
+}
+
+//球と球の当たり判定
+bool Collision::IsCollidingSphereToSphere(Sphere sphereA, Sphere sphereB){
+	//モデルの中心座標
+	VECTOR sphereACenterPos = sphereA.centerPos;
+	VECTOR sphereBCenterPos = sphereB.centerPos;
+
+	//判定の半径
+	float sphereARadius = sphereA.radius;
+	float sphereBRadius = sphereB.radius;
+
+	if ((sphereARadius + sphereBRadius) * (sphereARadius + sphereBRadius) >
+		(sphereACenterPos.x - sphereBCenterPos.x) * (sphereACenterPos.x - sphereBCenterPos.x) +
+		(sphereACenterPos.y - sphereBCenterPos.y) * (sphereACenterPos.y - sphereBCenterPos.y) +
+		(sphereACenterPos.z - sphereBCenterPos.z) * (sphereACenterPos.z - sphereBCenterPos.z))
+		return true;
+	
 	return false;
 }
 
@@ -259,3 +320,4 @@ bool Collision::DiamondToRect(
 		}
 	}
 }
+

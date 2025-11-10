@@ -246,9 +246,6 @@
     <ClCompile Include="src\MyLib\MyLib\Vector.cpp">
       <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="src\MyLib\MyLib\Collision.cpp">
-      <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="src\Colli\CollisionManager.cpp">
       <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
     </ClCompile>
@@ -257,6 +254,9 @@
     </ClCompile>
     <ClCompile Include="src\SafetyArea\SafetyAreaManager.cpp">
       <Filter>ソース ファイル\SafetyArea</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MyLib\MyLib\Collision.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -401,9 +401,6 @@
     <ClInclude Include="src\MyLib\MyLib\Vector.h">
       <Filter>ソース ファイル\0_MyLib\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="src\MyLib\MyLib\Collision.h">
-      <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="src\Colli\CollisionManager.h">
       <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
     </ClInclude>
@@ -412,6 +409,9 @@
     </ClInclude>
     <ClInclude Include="src\SafetyArea\SafetyAreaManager.h">
       <Filter>ソース ファイル\SafetyArea</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MyLib\MyLib\Collision.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -332,3 +332,26 @@ VECTOR Math::BaseRotationPosition(VECTOR basePos, VECTOR rotPos, float rot)
 
 	return ret;
 }
+
+//範囲内にする
+//引数：調べる値, 最小値, 最大値
+float Math::Clamp(float value, float min, float max) {
+	if (value < min)
+		return min;
+	else if (value > max)
+		return max;
+	else
+		return value;
+}
+
+//範囲内にする
+//引数：調べる値, 最小値, 最大値
+VECTOR Math::Clamp(VECTOR value, VECTOR min, VECTOR max) {
+	VECTOR ret = {};
+
+	ret.x = Clamp(value.x, min.x, max.x);
+	ret.y = Clamp(value.y, min.y, max.y);
+	ret.z = Clamp(value.z, min.z, max.z);
+
+	return ret;
+}

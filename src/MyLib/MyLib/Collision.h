@@ -3,19 +3,19 @@
 #include <math.h>
 
 //箱情報
-struct AABB {
+struct AABB{
 	VECTOR	centerPos;	//中心座標
 	VECTOR	size;		//大きさ
 };
 
 //球座標
-struct Sphere {
+struct Sphere{
 	VECTOR	centerPos;	//中心座標
 	float	radius;		//半径
 };
 
 //線分
-struct LineSegment {
+struct LineSegment{
 	VECTOR	startPos;	//開始点座標
 	VECTOR	endPos;		//終了点座標
 };
@@ -46,8 +46,16 @@ public:
 	//円形(3D)：それぞれの座標と半径
 	static bool Circlr3D(VECTOR aPos, float aR, VECTOR bPos, float bR);
 
-	//線と矩形の当たり判定：線の開始座標,線の向き, 線の長さ, 矩形の座標, 矩形のサイズ
-	static bool LineToRect(VECTOR linePos, VECTOR lineRot, float length, VECTOR RectPos, VECTOR RectSize);
+	//----------------------------
+
+	//箱と箱の当たり判定
+	static bool IsCollidingAABBToAABB(AABB boxA, AABB boxB);
+
+	//箱と球の当たり判定
+	static bool IsCollidingAABBToSphere(AABB box, Sphere sphere);
+
+	//球と球の当たり判定
+	static bool IsCollidingSphereToSphere(Sphere sphereA, Sphere sphereB);
 
 	//==========================================
 

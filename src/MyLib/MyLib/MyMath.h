@@ -67,4 +67,12 @@ public:
 	//起点から回転
 	//引数：起点となる座標, 回転する物の座標, 回転速度
 	static VECTOR	BaseRotationPosition(VECTOR basePos, VECTOR rotPos, float rot);
+
+	//範囲内にする
+	//引数：調べる値, 最小値, 最大値
+	static float	Clamp(float value, float min, float max);
+
+	//範囲内にする
+	//引数：調べる値, 最小値, 最大値
+	static VECTOR	Clamp(VECTOR value, VECTOR min, VECTOR max);
 };
