@@ -2,6 +2,24 @@
 #include"DxLib.h"
 #include <math.h>
 
+//箱情報
+struct AABB {
+	VECTOR	centerPos;	//中心座標
+	VECTOR	size;		//大きさ
+};
+
+//球座標
+struct Sphere {
+	VECTOR	centerPos;	//中心座標
+	float	radius;		//半径
+};
+
+//線分
+struct LineSegment {
+	VECTOR	startPos;	//開始点座標
+	VECTOR	endPos;		//終了点座標
+};
+
 //当たり判定
 class Collision
 {
