@@ -107,3 +107,25 @@ bool CheckPointManager::IsHit(int ID, VECTOR setReSpawnPos, float setReSpawnRot)
 
 	return false;
 }
+
+//チェックポイントを距離で透かす
+void CheckPointManager::CheckCheckPointToCamera(VECTOR playerPos, VECTOR cameraPos, float cameraLemgth){
+	for (int i = 0; i < m_iCheckPointNum; i++){
+		//チェックポイントの座標
+		VECTOR checkPointPos = m_CheckPoint[i].GetPos();
+		//半透明フラグをきる
+		m_CheckPoint[i].SetSemitransparentFlag(false);
+
+		//カメラとチェックポイントの距離
+		float checkPointToCameraDistance = Math::GetDistance(checkPointPos, cameraPos);
+
+		//カメラと一定以上離れていたら終了
+		if (checkPointToCameraDistance > cameraLemgth) continue;
+		//チェックポイントとプレイヤーのカメラまでの距離を見て
+		//チェックポイント方が遠い場合は終了
+		if (checkPointToCameraDistance > Math::GetDistance(playerPos, cameraPos)) continue;
+			
+		//半透明にする
+		m_CheckPoint[i].SetSemitransparentFlag(true);
+	}
+}

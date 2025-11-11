@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"../LoadStageData/LoadStageData.h"
 #include"../MyLib/MyLib.h"
+#include"../Camera/CameraManager.h"
 
 const float BLOCK_SIZE = 5.0f;	//ブロックのサイズ
 
@@ -40,9 +41,9 @@ private:
 	const float		SEMITRANSPARENT_ALPHA_SPEED = 0.05f;	//透明度の増加量
 
 private:
-	Block*		block;										//ブロック情報
-	int			m_iBlockNum;								//ブロックの数
-	int			m_iHandleOrigin[BLOCK_TYPE_NUM];			//オリジナルハンドル
+	Block*			block;									//ブロック情報
+	int				m_iBlockNum;							//ブロックの数
+	int				m_iHandleOrigin[BLOCK_TYPE_NUM];		//オリジナルハンドル
 
 public:
 	BackGround();
@@ -59,7 +60,9 @@ public:
 	int			GetBlockNum() { return m_iBlockNum; }
 	//ブロックのタイプを取得
 	SET_BLOCK	GetBlockType(int ID) { return block[ID].m_iType; }
-
 	//ブロックを透かすかの設定
 	void		SetIsDraw(int ID, bool set) { block[ID].m_IsDraw = set; }
+
+	//ブロックを距離で透かす
+	void CheckStageBlockToCamera(CameraManager& cameraManager);
 };

@@ -633,3 +633,25 @@ void UIManager::CheckInputBlockMode()
 		m_PushFlag[SYSTEM_CONTROLLER_BLOCK_PUT] = true;
 }
 
+//チューリアルを距離で透かす
+void UIManager::CheckTutorialToPlayer(VECTOR playerPos, VECTOR playCameraPos){
+	for (int i = 0; i < TUTORIAL_IMAGE_NUM; i++){
+		//通常の表示にする
+		m_TutorialFadeFlag[i] = true;
+
+		//チュートリアルの座標を取得
+		VECTOR tutorialPos = TUTORIAL_POS[i];
+
+		//チュートリアル/プレイヤー座標とカメラの座標の距離をそれぞれ計算する
+		float distanceTutoPos = Math::GetDistance(tutorialPos, playCameraPos);
+		float distancePlayerPos = Math::GetDistance(playerPos, playCameraPos);
+
+		//プレイヤーと一定以上離れていたら終了
+		if (Math::GetDistance(tutorialPos, playerPos) > TUTORIAL_FADE_DISTANCE) continue;
+		//チュートリアルがプレイヤーの奥にあった場合は透かせない
+		if (distanceTutoPos >= distancePlayerPos) continue;
+
+		//チュートリアルをすかす
+		m_TutorialFadeFlag[i] = false;
+	}
+}

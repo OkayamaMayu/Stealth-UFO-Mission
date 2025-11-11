@@ -3,7 +3,6 @@
 #include"../Model/Model.h"
 #include"../Player/Player.h"
 
-
 class UFO:public CModel
 {
 public:
@@ -101,6 +100,9 @@ public:
 	bool GetPLFound() {	return m_PLFound; }
 	//プレイヤーを捕獲したフラグ
 	bool GetCatchPlayer() { return m_CatchPlayer; }
+
+	//UFOを距離で透かす
+	void CheckUfoToCamera(VECTOR cameraPos, bool plVisionFlag, float discoveryRange);
 
 private:
 	void Updata();

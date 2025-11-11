@@ -3,7 +3,6 @@
 #include"../Model/Model.h"
 #include"../MyLib/MyLib.h"
 
-
 class Laser :public CModel
 {
 public:

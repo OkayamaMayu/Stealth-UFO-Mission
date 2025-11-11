@@ -327,4 +327,6 @@ public:
 	VECTOR	GetTutorialPos(int ID) { return TUTORIAL_POS[ID]; }
 	//チュートリアルの透けるフラグを設定
 	void	SetTutorialFadeFlag(int ID, bool set) { m_TutorialFadeFlag[ID] = set; }
+	//チューリアルを距離で透かす
+	void	CheckTutorialToPlayer(VECTOR playerPos, VECTOR playCameraPos);
 };

@@ -36,4 +36,8 @@ public:
 	float		GetReSpawnRot() { return m_fReSpawnRot; }
 	//モデルのサイズ取得
 	float		GetModelSize() { return MODEL_SIZE; }
+
+	//チェックポイントを距離で透かす
+	void CheckCheckPointToCamera(VECTOR playerPos, VECTOR cameraPos, float cameraLemgth);
+
 };

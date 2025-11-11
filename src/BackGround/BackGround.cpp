@@ -144,3 +144,53 @@ void BackGround::Fin()
 		block = nullptr;
 	}
 }
+
+//ブロックを距離で透かす
+void BackGround::CheckStageBlockToCamera(CameraManager& cameraManager) {
+	//プレイカメラを取得
+	PlayCamera& camera = cameraManager.GetPlayCamera();
+
+	//カメラ情報
+	VECTOR cameraPos = camera.GetPos();
+	VECTOR cameraSize = { 1.0f,1.0f,1.0f };
+	
+	//フォーカス（プレイヤーの位置）
+	VECTOR cameraFocusPos = camera.GetForcus();
+	cameraFocusPos.y += -FORCUS_OFFSET_Y - camera.GetForcusF();
+	
+	//直径にする
+	VECTOR checkCameraSize = VScale(cameraSize, 2.0f);
+	
+	//ブロックのサイズ
+	VECTOR blockSize = VGet(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+	//直径にする
+	VECTOR checkblockSize = VScale(blockSize, 2.0f);
+	
+	for (int i = 0; i < m_iBlockNum; i++){
+		VECTOR blockPos = block[i].m_vPos;
+		block[i].m_IsDraw = true;
+	
+		//ブロック/プレイヤー座標とカメラの座標の距離をそれぞれ計算する
+		float distanceBlock = Math::GetDistance(blockPos, cameraPos);
+		float distancePlayerPos = Math::GetDistance(cameraFocusPos, cameraPos);
+	
+		//ブロックがプレイヤーの下(地面)にあるか、ブロックがプレイヤーの奥にあった場合は透かせない
+		if (cameraFocusPos.y >= blockPos.y || distanceBlock >= distancePlayerPos) continue;
+	
+		if(!camera.GetUfoFlag()){
+			//一定より遠くだと実行しない
+			if (camera.GetPlVisionFlag()) continue;
+			if (Math::GetDistance(blockPos, cameraPos) > CAMERA_LEMGTH) continue;
+			
+			block[i].m_IsDraw = false;
+			
+		}
+		else{
+			//一定より遠くだと実行しない
+			if (camera.GetPlVisionFlag()) continue;
+			if (Math::GetDistance(blockPos, cameraPos) > CAMERA_LEMGTH + CAMERA_LEMGTH_UFO) continue;
+			
+			block[i].m_IsDraw = false;
+		}
+	}
+}

@@ -2,17 +2,17 @@
 #include<vector>
 using namespace std;
 
-#include"../Player/Player.h"
-#include"../enemy/EnemyManager.h"
-#include"../BackGround/BackGround.h"
-#include"../Item/ItemManager.h"
-#include"../Goal/Goal.h"
-#include"../Camera/CameraManager.h"
-#include"../enemy/UFO.h"
-#include"../Laser/LaserManager.h"
-#include"../Block/BlockManager.h"
-#include"../CheckPoint/CheckPointManager.h"
-#include"../UI/UIManager.h"
+//#include"../Player/Player.h"
+//#include"../enemy/EnemyManager.h"
+//#include"../BackGround/BackGround.h"
+//#include"../Item/ItemManager.h"
+//#include"../Goal/Goal.h"
+//#include"../Camera/CameraManager.h"
+//#include"../enemy/UFO.h"
+//#include"../Laser/LaserManager.h"
+//#include"../Block/BlockManager.h"
+//#include"../CheckPoint/CheckPointManager.h"
+//#include"../UI/UIManager.h"
 #include"CollisionBase.h"
 #include"CollisionAABB.h"
 #include"CollisionSphere.h"
@@ -46,50 +46,37 @@ public:
 	//--------------------------------
 
 	//ブロックとプレイヤー
-	void CheckStageBlockToPlayer(Player& player, BackGround& block);
-	//ブロックとエネミー1
-	void CheckStageBlockToEnemyType1(EnemyManager& enemyManager, BackGround& block);
-	//ブロックとアイテム
-	bool CheckStageBlockToItem(ItemManager& itemManager, BackGround& block);
+	//void CheckStageBlockToPlayer(Player& player, BackGround& block);
+	////ブロックとエネミー1
+	//void CheckStageBlockToEnemyType1(EnemyManager& enemyManager, BackGround& block);
+	////ブロックとアイテム
+	//bool CheckStageBlockToItem(ItemManager& itemManager, BackGround& block);
 
-	//ブロックとカメラ
-	void CheckStageBlockToCamera(CameraManager& cameraManager, BackGround& block);
-	//ブロックとリング
-	void CheckStageBlockToPlRing(Player& player, BackGround& block, BlockManager& createBlock);
-	//ブロックとレーザー
-	void CheckStageBlockToLaser(LaserManager& laserManager, BackGround& block);
+	////ブロックとリング
+	//void CheckStageBlockToPlRing(Player& player, BackGround& block, BlockManager& createBlock);
+	////ブロックとレーザー
+	//void CheckStageBlockToLaser(LaserManager& laserManager, BackGround& block);
 
-	//ゴールとプレイヤー
-	void CheckGoalToPayer(Player& player, Goal& goal);
-	//チェックポイントとプレイヤー
-	void CheckCheckPointToPayer(CheckPointManager& checkPointManager, Player& player);
+	////ゴールとプレイヤー
+	//void CheckGoalToPayer(Player& player, Goal& goal);
+	////チェックポイントとプレイヤー
+	//void CheckCheckPointToPayer(CheckPointManager& checkPointManager, Player& player);
 
-	//エネミーとプレイヤー
-	void CheckEnemyToPlayer(Player& player, EnemyManager& enemyManager);
-	//エネミーとエネミー
-	void CheckEnemyToEnemy(EnemyManager& enemyManager);
-	//エネミー1とアイテム
-	bool CheckEnemyType1ToItem(EnemyManager& enemyManager, ItemManager& itemManager);
+	////エネミーとプレイヤー
+	//void CheckEnemyToPlayer(Player& player, EnemyManager& enemyManager);
+	////エネミーとエネミー
+	//void CheckEnemyToEnemy(EnemyManager& enemyManager);
+	////エネミー1とアイテム
+	//bool CheckEnemyType1ToItem(EnemyManager& enemyManager, ItemManager& itemManager);
 
-	//レーザーとプレイヤー
-	void CheckLaserToPlayer(Player& player, LaserManager& laserManager, EnemyManager& enemyManager);
-
-	//カメラとUFO
-	void CheckUfoToCamera(UFO& cUfo, CameraManager& cameraMan);
-	//カメラとチェックポイント
-	void CheckCheckPointToCamera(CheckPointManager& checkPointManager, CameraManager& camera, Player& player);
-
-	//ブロック配置可能位置
-	void CheckSetBlockPos(CameraManager& cameraManager, BlockManager& createBlock, BackGround& block, bool setMode);
-	//配置ブロックとレーザー
-	void CheckSetBlockToLaser(LaserManager& laserManager, BlockManager& createBlock);
-	//配置ブロックとプレイヤー
-	void CheckSetBlockToPlayer(Player& player, BlockManager& createBlock);
-	//配置ブロックとエネミー1
-	void CheckSetBlockToEnemyType1(EnemyManager& enemyManager, BlockManager& createBlock);
-	//配置ブロックとアイテム
-	void CheckSetBlockToItem(ItemManager& itemManager, BlockManager& createBlock);
-
-	//チュートリアルとプレイヤー
-	void CheckTutorialToPlayer(UIManager& Ui,Player& player, CameraManager& cameraManager);
+	////ブロック配置可能位置
+	//void CheckSetBlockPos(CameraManager& cameraManager, BlockManager& createBlock, BackGround& block, bool setMode);
+	////配置ブロックとレーザー
+	//void CheckSetBlockToLaser(LaserManager& laserManager, BlockManager& createBlock);
+	////配置ブロックとプレイヤー
+	//void CheckSetBlockToPlayer(Player& player, BlockManager& createBlock);
+	////配置ブロックとエネミー1
+	//void CheckSetBlockToEnemyType1(EnemyManager& enemyManager, BlockManager& createBlock);
+	////配置ブロックとアイテム
+	//void CheckSetBlockToItem(ItemManager& itemManager, BlockManager& createBlock);
 };

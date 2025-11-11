@@ -1,6 +1,7 @@
 #pragma once
 #include"Laser.h"
 #include"../LoadStageData/LoadStageData.h"
+#include"../enemy/EnemyManager.h"
 
 class LaserManager
 {
@@ -25,4 +26,7 @@ public:
 	Laser&			GetLaser(int ID) { return laser[ID]; }
 	//レーザーの数を取得
 	int				GetLaserNum() { return m_iLaserNum; }
+
+	//レーザーとプレイヤー
+	void CheckLaserToPlayer(VECTOR playerPos,  EnemyManager& enemyManager);
 };

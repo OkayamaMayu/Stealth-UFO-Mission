@@ -483,3 +483,12 @@ void UFO::QuickTimerEvent(Player& pl)
 		m_fSpeedAdd		= 0.0f;
 	}
 }
+
+//UFO‚ð‹——£‚Å“§‚©‚·
+void UFO::CheckUfoToCamera(VECTOR cameraPos,bool plVisionFlag, float discoveryRange) {
+	m_HitCameraFlag = false;
+	//ˆê’è‚Ì‹——£“à‚É‘¶Ý‚µ‚Ä‚¢‚½‚ç”­Œ©ó‘Ô‚É
+	if (plVisionFlag || Math::GetDistance(m_vPos, cameraPos) > discoveryRange) return;
+
+	m_HitCameraFlag = true;
+}
