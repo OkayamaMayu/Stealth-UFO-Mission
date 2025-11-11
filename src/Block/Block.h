@@ -7,8 +7,9 @@ const float BLOCK_SURVIVAL_TIME = 10.0f;	//ブロックの生存時間
 class Block :public CModel
 {
 private:
-	float	m_fBlockCount;	//消えるまでのカウント
-	bool	m_IsUse;		//設置フラグ
+	CollisionAABB	m_Collision;	//コリジョン情報
+	float			m_fBlockCount;	//消えるまでのカウント
+	bool			m_IsUse;		//設置フラグ
 
 public:
 	void Init();

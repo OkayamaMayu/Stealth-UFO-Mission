@@ -2,8 +2,6 @@
 #include"../MyLib/MyLib.h"
 #include"../Model/Model.h"
 
-
-
 class Goal:public CModel
 {
 public:
@@ -39,14 +37,15 @@ public:
 	const int		SCENE_CHANGE_FADEOUT_SPEED	= 5;			//シーン変更時のフェードアウト速度
 
 private:
-	VECTOR	m_vStartPos;		//初期位置
-	float	m_fFloating;		//浮遊
-	float	m_fUpSpeed;			//上昇速度
-	float	m_fUpCount;			//上昇までの時間
-	bool	m_IsGoalFlag;		//ゴールしたか
-	bool	m_NextSceneTrg;		//シーンがすすむフラグ
-	bool	m_FloatingFlag;		//trueだと浮く
-	int		m_iEffectHandle;	//常時設定用エフェクトハンドル
+	CollisionAABB	m_Collision;		//コリジョン情報
+	VECTOR			m_vStartPos;		//初期位置
+	float			m_fFloating;		//浮遊
+	float			m_fUpSpeed;			//上昇速度
+	float			m_fUpCount;			//上昇までの時間
+	bool			m_IsGoalFlag;		//ゴールしたか
+	bool			m_NextSceneTrg;		//シーンがすすむフラグ
+	bool			m_FloatingFlag;		//trueだと浮く
+	int				m_iEffectHandle;	//常時設定用エフェクトハンドル
 
 public:
 	void Init(VECTOR vPos);

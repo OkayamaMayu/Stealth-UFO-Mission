@@ -41,6 +41,7 @@ private:
 	const float		SEMITRANSPARENT_ALPHA_SPEED = 0.05f;	//透明度の増加量
 
 private:
+	CollisionAABB	m_Collision;							//コリジョン情報
 	Block*			block;									//ブロック情報
 	int				m_iBlockNum;							//ブロックの数
 	int				m_iHandleOrigin[BLOCK_TYPE_NUM];		//オリジナルハンドル

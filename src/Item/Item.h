@@ -2,7 +2,6 @@
 #include"../Model/Model.h"
 #include"../MyLib/MyLib.h"
 
-
 class Item:public CModel
 {
 public:
@@ -44,29 +43,30 @@ public:
 	const int		THROW_SPEED_SCALE			= 5;		//投げた時の速度の倍率
 
 private:
-	VECTOR m_vSpawnPos;					//出現位置
-	VECTOR m_vTargetPos;				//投げた先のターゲット
-	VECTOR m_vPlPos;					//プレイヤーの座標を保存する
-	float m_fBoundValue;				//バウンド用
-	float m_fBoundMax;					//バウンド最大値
-	float m_fGravityAdd;				//加算する重力
-	float m_fFryPos;					//つかみ時の浮遊
-	float m_fSpeed;						//移動量総合値
-	float m_fThrowRot;					//投げられた向き
-	float m_fFoundCount;				//発見される可能性のある時間
-	float m_fAlpha;						//モデルの透明度
-	float m_fRespawnTimeCount;			//リスポーンまでの時間
-	bool m_FoundFlagPl;					//掴むことのできるフラグ
-	bool m_IsUse;						//使用フラグ
-	bool m_Fall;						//落ちフラグ
-	bool m_Throw;						//投げられフラグ
-	bool m_CatchFlag;					//持ってるフラグ
-	bool m_FryUp;						//持ってる時の動きフラグ
-	bool m_FoundFlag;					//発見される可能性のあるフラグ
-	bool m_EnemyHitFlag;				//エネミーに当たるフラグ
-	bool m_EnemyTargetFlag;				//投げた時にエネミーをターゲットにする
-	bool m_DrawFlag;					//描画フラグ
-	int m_iDrawHandle[2];				//保存しておくハンドル
+	CollisionSphere	m_Collision;				//コリジョン情報
+	VECTOR			m_vSpawnPos;				//出現位置
+	VECTOR			m_vTargetPos;				//投げた先のターゲット
+	VECTOR			m_vPlPos;					//プレイヤーの座標を保存する
+	float			m_fBoundValue;				//バウンド用
+	float			m_fBoundMax;				//バウンド最大値
+	float			m_fGravityAdd;				//加算する重力
+	float			m_fFryPos;					//つかみ時の浮遊
+	float			m_fSpeed;					//移動量総合値
+	float			m_fThrowRot;				//投げられた向き
+	float			m_fFoundCount;				//発見される可能性のある時間
+	float			m_fAlpha;					//モデルの透明度
+	float			m_fRespawnTimeCount;		//リスポーンまでの時間
+	bool			m_FoundFlagPl;				//掴むことのできるフラグ
+	bool			m_IsUse;					//使用フラグ
+	bool			m_Fall;						//落ちフラグ
+	bool			m_Throw;					//投げられフラグ
+	bool			m_CatchFlag;				//持ってるフラグ
+	bool			m_FryUp;					//持ってる時の動きフラグ
+	bool			m_FoundFlag;				//発見される可能性のあるフラグ
+	bool			m_EnemyHitFlag;				//エネミーに当たるフラグ
+	bool			m_EnemyTargetFlag;			//投げた時にエネミーをターゲットにする
+	bool			m_DrawFlag;					//描画フラグ
+	int				m_iDrawHandle[2];			//保存しておくハンドル
 
 public:
 

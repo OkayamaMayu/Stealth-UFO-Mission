@@ -1,5 +1,4 @@
 #pragma once
-
 #include"../Model/Model.h"
 #include"../Item/ItemManager.h"
 #include"PlayerRing.h"
@@ -55,7 +54,7 @@ private:
 	const int		DEATH_HEIGHT_SCALE					= 5;							//落下時の高さの倍率
 
 private:
-	
+	CollisionAABB	m_Collision;			//コリジョン情報
 	PLAYR_STATE		m_State;				//プレイヤーの状態
 	PlayerRing		PlayerRing;				//足元リング
 	VECTOR			m_vNextRot;				//プレイヤーの回転先

@@ -26,11 +26,11 @@ private:
 	const float MODEL_FADE_SPEED		= 0.05f;	//透明度の変化速度
 
 private:
-
-	float		m_fModelFade;						//透明度
-	bool		m_IsActive;							//使用中か
-	bool		m_SemitransparentFlag;				//半透明にするフラグ
-	int			m_iEffectHandle;					//エフェクトハンドル
+	CollisionAABB	m_Collision;					//コリジョン情報
+	float			m_fModelFade;					//透明度
+	bool			m_IsActive;						//使用中か
+	bool			m_SemitransparentFlag;			//半透明にするフラグ
+	int				m_iEffectHandle;				//エフェクトハンドル
 	
 public:
 	//初期化

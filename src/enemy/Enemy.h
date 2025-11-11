@@ -25,6 +25,7 @@ private:
 	const int		MOVE_MAX_SPEED					= 3;				//ランダムに速さを出す場合の最大値
 
 private:
+	CollisionAABB	m_Collision;										//コリジョン情報
 	VECTOR			m_vMoveFinPos;										//移動先
 	VECTOR			m_vNextMovePos;										//次に向かうところ
 	float			m_fStayRot[MOVE_POINT_NUM];							//移動先の向き
