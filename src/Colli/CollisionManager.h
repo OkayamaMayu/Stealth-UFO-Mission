@@ -1,4 +1,7 @@
 #pragma once
+#include<vector>
+using namespace std;
+
 #include"../Player/Player.h"
 #include"../enemy/EnemyManager.h"
 #include"../BackGround/BackGround.h"
@@ -22,52 +25,61 @@ const float CREATE_BLOCK_STAGE_HIT_SCALE	= 5.0f;		//生成ブロックとステージブロッ
 
 class CollisionManager
 {
+private:
+	static CollisionManager* m_Instance;		//インスタンス
+
 public:
+	static void					Create();		//インスタンスの生成
+	static void					Destroy();		//インスタンスの削除
+	static CollisionManager*	GetInstance();	//インスタンスの取得
+
+	//--------------------------------
+
 	//ブロックとプレイヤー
-	static void CheckStageBlockToPlayer(Player& player, BackGround& block);
+	void CheckStageBlockToPlayer(Player& player, BackGround& block);
 	//ブロックとエネミー1
-	static void CheckStageBlockToEnemyType1(EnemyManager& enemyManager, BackGround& block);
+	void CheckStageBlockToEnemyType1(EnemyManager& enemyManager, BackGround& block);
 	//ブロックとアイテム
-	static bool CheckStageBlockToItem(ItemManager& itemManager, BackGround& block);
+	bool CheckStageBlockToItem(ItemManager& itemManager, BackGround& block);
 
 	//ブロックとカメラ
-	static void CheckStageBlockToCamera(CameraManager& cameraManager, BackGround& block);
+	void CheckStageBlockToCamera(CameraManager& cameraManager, BackGround& block);
 	//ブロックとリング
-	static void CheckStageBlockToPlRing(Player& player, BackGround& block, BlockManager& createBlock);
+	void CheckStageBlockToPlRing(Player& player, BackGround& block, BlockManager& createBlock);
 	//ブロックとレーザー
-	static void CheckStageBlockToLaser(LaserManager& laserManager, BackGround& block);
+	void CheckStageBlockToLaser(LaserManager& laserManager, BackGround& block);
 
 	//ゴールとプレイヤー
-	static void CheckGoalToPayer(Player& player, Goal& goal);
+	void CheckGoalToPayer(Player& player, Goal& goal);
 	//チェックポイントとプレイヤー
-	static void CheckCheckPointToPayer(CheckPointManager& checkPointManager, Player& player);
+	void CheckCheckPointToPayer(CheckPointManager& checkPointManager, Player& player);
 
 	//エネミーとプレイヤー
-	static void CheckEnemyToPlayer(Player& player, EnemyManager& enemyManager);
+	void CheckEnemyToPlayer(Player& player, EnemyManager& enemyManager);
 	//エネミーとエネミー
-	static void CheckEnemyToEnemy(EnemyManager& enemyManager);
+	void CheckEnemyToEnemy(EnemyManager& enemyManager);
 	//エネミー1とアイテム
-	static bool CheckEnemyType1ToItem(EnemyManager& enemyManager, ItemManager& itemManager);
+	bool CheckEnemyType1ToItem(EnemyManager& enemyManager, ItemManager& itemManager);
 
 	//レーザーとプレイヤー
-	static void CheckLaserToPlayer(Player& player, LaserManager& laserManager, EnemyManager& enemyManager);
+	void CheckLaserToPlayer(Player& player, LaserManager& laserManager, EnemyManager& enemyManager);
 
 	//カメラとUFO
-	static void CheckUfoToCamera(UFO& cUfo, CameraManager& cameraMan);
+	void CheckUfoToCamera(UFO& cUfo, CameraManager& cameraMan);
 	//カメラとチェックポイント
-	static void CheckCheckPointToCamera(CheckPointManager& checkPointManager, CameraManager& camera, Player& player);
+	void CheckCheckPointToCamera(CheckPointManager& checkPointManager, CameraManager& camera, Player& player);
 
 	//ブロック配置可能位置
-	static void CheckSetBlockPos(CameraManager& cameraManager, BlockManager& createBlock, BackGround& block, bool setMode);
+	void CheckSetBlockPos(CameraManager& cameraManager, BlockManager& createBlock, BackGround& block, bool setMode);
 	//配置ブロックとレーザー
-	static void CheckSetBlockToLaser(LaserManager& laserManager, BlockManager& createBlock);
+	void CheckSetBlockToLaser(LaserManager& laserManager, BlockManager& createBlock);
 	//配置ブロックとプレイヤー
-	static void CheckSetBlockToPlayer(Player& player, BlockManager& createBlock);
+	void CheckSetBlockToPlayer(Player& player, BlockManager& createBlock);
 	//配置ブロックとエネミー1
-	static void CheckSetBlockToEnemyType1(EnemyManager& enemyManager, BlockManager& createBlock);
+	void CheckSetBlockToEnemyType1(EnemyManager& enemyManager, BlockManager& createBlock);
 	//配置ブロックとアイテム
-	static void CheckSetBlockToItem(ItemManager& itemManager, BlockManager& createBlock);
+	void CheckSetBlockToItem(ItemManager& itemManager, BlockManager& createBlock);
 
 	//チュートリアルとプレイヤー
-	static void CheckTutorialToPlayer(UIManager& Ui,Player& player, CameraManager& cameraManager);
+	void CheckTutorialToPlayer(UIManager& Ui,Player& player, CameraManager& cameraManager);
 };

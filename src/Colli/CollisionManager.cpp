@@ -2,6 +2,35 @@
 #include"CollisionManager.h"
 #include"../MyLib/MyLib.h"
 
+CollisionManager* CollisionManager::m_Instance = nullptr;
+
+//インスタンスの生成
+void CollisionManager::Create(){
+	if (m_Instance == nullptr){
+		m_Instance = new CollisionManager();
+	}
+}
+
+//インスタンスの削除
+void CollisionManager::Destroy(){
+	if (m_Instance != nullptr){
+		delete m_Instance;
+		m_Instance = nullptr;
+	}
+}
+
+//インスタンスの所得
+CollisionManager* CollisionManager::GetInstance(){
+	if (m_Instance == nullptr){
+		//インスタンスがない場合は生成
+		Create();
+	}
+
+	return m_Instance;
+}
+
+//========================================
+
 //ブロックとプレイヤー
 void CollisionManager::CheckStageBlockToPlayer
 (Player& player, BackGround& block)
