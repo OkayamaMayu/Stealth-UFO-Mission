@@ -1,6 +1,7 @@
 #include"DxLib.h"
 #include"CollisionManager.h"
 #include"../MyLib/MyLib.h"
+#include <algorithm>
 
 CollisionManager* CollisionManager::m_Instance = nullptr;
 
@@ -27,6 +28,32 @@ CollisionManager* CollisionManager::GetInstance(){
 	}
 
 	return m_Instance;
+}
+
+//========================================
+
+//ƒRƒŠƒWƒ‡ƒ“‚ğ“o˜^
+void CollisionManager::RegisterCollision(CollisionBase* base) {
+	//—v‘f‚ğ’T‚·
+	auto it = find(m_Collsion.begin(), m_Collsion.end(), base);
+
+	//—v‘f‚ªŒ©‚Â‚©‚Á‚Ä‚¢‚½‚çI—¹
+	if (it != m_Collsion.end()) return;
+
+	//—v‘f‚ğ“o˜^
+	m_Collsion.push_back(base);
+}
+
+//ƒRƒŠƒWƒ‡ƒ“‚ğ‰ğœ
+void CollisionManager::UnRegisterCollision(CollisionBase* base) {
+	//—v‘f‚ğ’T‚·
+	auto it = find(m_Collsion.begin(), m_Collsion.end(), base);
+
+	//—v‘f‚ªŒ©‚Â‚©‚Á‚Ä‚¢‚È‚©‚Á‚½‚çI—¹
+	if (it == m_Collsion.end()) return;
+
+	//—v‘f‚ğ‰ğœ
+	m_Collsion.erase(it);
 }
 
 //========================================

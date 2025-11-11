@@ -13,6 +13,10 @@ using namespace std;
 #include"../Block/BlockManager.h"
 #include"../CheckPoint/CheckPointManager.h"
 #include"../UI/UIManager.h"
+#include"CollisionBase.h"
+#include"CollisionAABB.h"
+#include"CollisionSphere.h"
+#include"CollisionLineSegment.h"
 
 //エネミーにアイテムが当たった時の処理
 //true：反射	false：消す
@@ -26,12 +30,18 @@ const float CREATE_BLOCK_STAGE_HIT_SCALE	= 5.0f;		//生成ブロックとステージブロッ
 class CollisionManager
 {
 private:
-	static CollisionManager* m_Instance;		//インスタンス
+	static CollisionManager* m_Instance;			//インスタンス
+	vector<CollisionBase*> m_Collsion;				//コリジョン情報
 
 public:
-	static void					Create();		//インスタンスの生成
-	static void					Destroy();		//インスタンスの削除
-	static CollisionManager*	GetInstance();	//インスタンスの取得
+	static void					Create();			//インスタンスの生成
+	static void					Destroy();			//インスタンスの削除
+	static CollisionManager*	GetInstance();		//インスタンスの取得
+
+	//--------------------------------
+
+	void RegisterCollision(CollisionBase* base);	//コリジョンを登録
+	void UnRegisterCollision(CollisionBase* base);	//コリジョンを解除
 
 	//--------------------------------
 
