@@ -33,7 +33,7 @@ private:
 
 public:
 	void			Init(VECTOR vStartPos, VECTOR vGoalPos, float vStartRot, float vGoalRot);
-	void			Step(Player& pl,ItemManager& itemMana, BackGround& block, bool gameOverFlag, bool clearFlag);
+	void			Step(Player& pl,ItemManager& itemMana, StageBlockManager& block, bool gameOverFlag, bool clearFlag);
 	
 	//ƒTƒCƒY‚ðŽæ“¾
 	VECTOR			GetSize() { return ENEMY_TYPE1_SIZE; }

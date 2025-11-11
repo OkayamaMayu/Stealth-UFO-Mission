@@ -19,8 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\BackGround\BackGround.cpp" />
+    <ClCompile Include="src\BackGround\StageBlockManager.cpp" />
     <ClCompile Include="src\BackGround\sky.cpp" />
+    <ClCompile Include="src\BackGround\StageBlock.cpp" />
     <ClCompile Include="src\Block\Block.cpp" />
     <ClCompile Include="src\Block\BlockManager.cpp" />
     <ClCompile Include="src\Camera\CameraManager.cpp" />
@@ -77,8 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="src\BackGround\BackGround.h" />
+    <ClInclude Include="src\BackGround\StageBlockManager.h" />
     <ClInclude Include="src\BackGround\sky.h" />
+    <ClInclude Include="src\BackGround\StageBlock.h" />
     <ClInclude Include="src\Block\Block.h" />
     <ClInclude Include="src\Block\BlockManager.h" />
     <ClInclude Include="src\Camera\CameraManager.h" />

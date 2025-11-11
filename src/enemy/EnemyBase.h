@@ -2,7 +2,7 @@
 #include"../Model/Model.h"
 #include"../MyLib/MyLib.h"
 #include"../Item/ItemManager.h"
-#include"../BackGround/BackGround.h"
+#include"../BackGround/StageBlockManager.h"
 #include"../Player/Player.h"
 
 const float ENEMY_FOUNDSIZE		= 80.0f;					//éãäEÇÃëÂÇ´Ç≥
@@ -90,7 +90,7 @@ public:
 	virtual	void	Init(VECTOR vPos, VECTOR vRot);
 	void			Load(int originHandle);
 	void			Start();
-	virtual void	Step(Player& player, ItemManager& itemMana, BackGround& block) {};
+	virtual void	Step(Player& player, ItemManager& itemMana, StageBlockManager& block) {};
 	void			Draw();
 	void			Fin();
 
@@ -105,7 +105,7 @@ protected:
 	//í«ê’
 	void			TrackingMove(Player& player, VECTOR itemPos, float speed);
 	//î≠å©
-	void			Discovery(Player& player, ItemManager& itemMana, BackGround& block);
+	void			Discovery(Player& player, ItemManager& itemMana, StageBlockManager& block);
 	//ÉäÉXÉ|Å[Éì
 	void			Respawn();
 

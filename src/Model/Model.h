@@ -26,17 +26,17 @@ protected:
 		ANIMSTATE m_iState;		//アニメの状態
 	};
 
-	ANIM_DATA m_AnimData;		//アニメ再生関連データ
-	ANIM_DATA m_OldAnimData;	//ブレンド用
-	VECTOR m_vPos;				//座標
-	VECTOR m_vNextPos;			//次の座標
-	VECTOR m_vRot;				//回転角度
-	VECTOR m_vScale;			//拡大縮小率
-	VECTOR m_vSpeed;			//移動増加量
-	float m_fBlend;				//アニメーションのブレンド率
-	float m_fBlendSpd;			//ブレンドの速度
-	bool m_AnimeChangeFlag;		//アニメーション変更中のフラグ
-	int m_iHandle;				//モデルハンドル
+	ANIM_DATA	m_AnimData;			//アニメ再生関連データ
+	ANIM_DATA	m_OldAnimData;		//ブレンド用
+	VECTOR		m_vPos;				//座標
+	VECTOR		m_vNextPos;			//次の座標
+	VECTOR		m_vRot;				//回転角度
+	VECTOR		m_vScale;			//拡大縮小率
+	VECTOR		m_vSpeed;			//移動増加量
+	float		m_fBlend;			//アニメーションのブレンド率
+	float		m_fBlendSpd;		//ブレンドの速度
+	bool		m_AnimeChangeFlag;	//アニメーション変更中のフラグ
+	int			m_iHandle;			//モデルハンドル
 
 public:
 	//初期化

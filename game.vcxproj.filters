@@ -111,7 +111,7 @@
     <ClCompile Include="src\MyLib\MyLib.cpp">
       <Filter>ソース ファイル\0_MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="src\BackGround\BackGround.cpp">
+    <ClCompile Include="src\BackGround\StageBlockManager.cpp">
       <Filter>ソース ファイル\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="src\BackGround\sky.cpp">
@@ -270,12 +270,15 @@
     <ClCompile Include="src\Colli\CollisionLineSegment.cpp">
       <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="src\BackGround\StageBlock.cpp">
+      <Filter>ソース ファイル\BackGround</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MyLib\MyLib.h">
       <Filter>ソース ファイル\0_MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="src\BackGround\BackGround.h">
+    <ClInclude Include="src\BackGround\StageBlockManager.h">
       <Filter>ソース ファイル\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="src\BackGround\sky.h">
@@ -436,6 +439,9 @@
     </ClInclude>
     <ClInclude Include="src\Colli\CollisionLineSegment.h">
       <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BackGround\StageBlock.h">
+      <Filter>ソース ファイル\BackGround</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

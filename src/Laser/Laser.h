@@ -1,5 +1,5 @@
 #pragma once
-#include"../BackGround/BackGround.h"
+#include"../BackGround/StageBlockManager.h"
 #include"../Model/Model.h"
 #include"../MyLib/MyLib.h"
 

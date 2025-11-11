@@ -35,7 +35,7 @@ void EnemyType1::Init(VECTOR vStartPos, VECTOR vGoalPos, float vStartRot, float 
 	m_State				= ENEMY_STATE_MOVE;
 }
 
-void EnemyType1::Step(Player& pl, ItemManager& itemMana, BackGround& block, bool gameOverFlag, bool clearFlag)
+void EnemyType1::Step(Player& pl, ItemManager& itemMana, StageBlockManager& block, bool gameOverFlag, bool clearFlag)
 {
 	//ブロックに連続でぶつかった時間を計算
 	if (m_HitBlockFlag)

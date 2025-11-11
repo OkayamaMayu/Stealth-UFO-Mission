@@ -204,7 +204,7 @@ void EnemyBase::TrackingMove(Player& player, VECTOR itemPos, float speed)
 }
 
 //発見
-void EnemyBase::Discovery(Player& player, ItemManager& itemMana, BackGround& block)
+void EnemyBase::Discovery(Player& player, ItemManager& itemMana, StageBlockManager& block)
 {
 	//気絶状態なら未発見状態にして終了
 	if (m_State == ENEMY_STATE_STUN)
@@ -217,11 +217,12 @@ void EnemyBase::Discovery(Player& player, ItemManager& itemMana, BackGround& blo
 	float distance = 0.0f;
 	for (int i = 0; i < block.GetBlockNum(); i++)
 	{
+		StageBlock& stageBlock = block.GetBlock(i);
 		//空気ブロックなら間に入っていても気にしない
-		if (block.GetBlockType(i) == block.BLOCK_AIR)
+		if (stageBlock.GetBlockType() == stageBlock.BLOCK_AIR)
 			continue;
 
-		VECTOR blockPos = block.GetPos(i);
+		VECTOR blockPos = stageBlock.GetPos();
 
 		//ブロックが視界内にあるか判定
 		if (!Math::CheckVision(blockPos, m_vRot.y, m_vPos, ENEMY_FOUNDSIZE))

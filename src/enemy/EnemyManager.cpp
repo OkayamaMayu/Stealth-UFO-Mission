@@ -71,7 +71,7 @@ void EnemyManager::Start()
 	}
 }
 
-void EnemyManager::Step(Player& pl, ItemManager& itemMana, BackGround& block, bool gameOverFlag, bool clearFlag)
+void EnemyManager::Step(Player& pl, ItemManager& itemMana, StageBlockManager& block, bool gameOverFlag, bool clearFlag)
 {
 	bool soundFlag = false;
 	for (int i = 0; i < m_iEnemyType1Num; i++)

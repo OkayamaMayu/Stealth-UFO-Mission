@@ -49,7 +49,7 @@ public:
 	void		Init(LoadStageData &data);
 	void		Load();
 	void		Start();
-	void		Step(Player& pl,ItemManager& itemMana, BackGround& block, bool gameOverFlag, bool clearFlag);
+	void		Step(Player& pl,ItemManager& itemMana, StageBlockManager& block, bool gameOverFlag, bool clearFlag);
 	void		Updata();
 	void		Draw();
 	void		Fin();

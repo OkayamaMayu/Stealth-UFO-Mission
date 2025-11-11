@@ -3,7 +3,7 @@
 
 #include"../Camera/CameraManager.h"
 #include"../Player/Player.h"
-#include"../BackGround/BackGround.h"
+#include"../BackGround/StageBlockManager.h"
 #include"../BackGround/sky.h"
 #include"../enemy/EnemyManager.h"
 #include"../Item/ItemManager.h"
@@ -78,7 +78,7 @@ private:
 	const int			SOUND_PAUSE_VOLUME = 70;	//ポーズ画面時の音量
 	
 private:
-	BackGround			backGraund;				//背景
+	StageBlockManager	backGraund;				//背景
 	Sky					sky;					//天球
 	BlockManager		block;					//配置ブロック
 	CameraManager		cameraMan;				//カメラマネージャー
