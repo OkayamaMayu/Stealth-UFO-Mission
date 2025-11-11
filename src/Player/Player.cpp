@@ -115,6 +115,21 @@ void Player::Start()
 
 	//リングの準備処理
 	PlayerRing.Start();
+
+	//コリジョン情報の設定
+	m_Collision.SetOwner(this);
+	m_Collision.SetKind(KIND_PLAYER);
+	//構造体の設定
+	AABB setCollision = {};
+	//サイズを設定
+	setCollision.size = VScale(PLAYER_SIZE, 2.0f);
+	setCollision.size.y /= 2.0f;
+	//中心座標を設定
+	setCollision.centerPos = m_vNextPos;
+	setCollision.centerPos.y += setCollision.size.y / 2.0f;
+	//情報を登録
+	m_Collision.SetCollision(setCollision);
+	CollisionManager::GetInstance()->RegisterCollision(&m_Collision);
 }
 
 void Player::Step(VECTOR ufoPos,VECTOR vCameraRot,float fRot, bool cameraFlag, bool gameoverFlag)

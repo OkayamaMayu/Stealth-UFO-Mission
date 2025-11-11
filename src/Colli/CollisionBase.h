@@ -5,6 +5,8 @@ using namespace std;
 
 //当たり判定のタイプ
 enum COLLISION_TYPE {
+	TYPE_NEUTRAL = -1,
+
 	TYPE_AABB,		//箱
 	TYPE_SPHERE,	//球
 	TYPE_LINE		//線分
@@ -29,6 +31,7 @@ protected:
 	function<void(CollisionBase)> m_OnHitCollback;	//ヒット時のコールバック関数
 
 public:
+	CollisionBase();																	//コンストラクタ
 	COLLISION_TYPE	GetCollisionType() { return m_CollisionType; }						//コリジョンタイプを取得
 	CModel*			GetOwner() { return m_Owner; }										//オーナーのアドレスを取得
 	bool			IsCollision() { return m_IsCollision; }								//コリジョン有効フラグを取得
