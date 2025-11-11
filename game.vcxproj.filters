@@ -267,6 +267,9 @@
     <ClCompile Include="src\Colli\CollisionSphere.cpp">
       <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="src\Colli\CollisionLineSegment.cpp">
+      <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MyLib\MyLib.h">
@@ -429,6 +432,9 @@
       <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
     </ClInclude>
     <ClInclude Include="src\Colli\CollisionSphere.h">
+      <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Colli\CollisionLineSegment.h">
       <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
     </ClInclude>
   </ItemGroup>

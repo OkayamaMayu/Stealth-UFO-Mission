@@ -30,6 +30,7 @@
     <ClCompile Include="src\CheckPoint\CheckPointManager.cpp" />
     <ClCompile Include="src\Colli\CollisionAABB.cpp" />
     <ClCompile Include="src\Colli\CollisionBase.cpp" />
+    <ClCompile Include="src\Colli\CollisionLineSegment.cpp" />
     <ClCompile Include="src\Colli\CollisionManager.cpp" />
     <ClCompile Include="src\Colli\CollisionSphere.cpp" />
     <ClCompile Include="src\enemy\Enemy.cpp" />
@@ -87,6 +88,7 @@
     <ClInclude Include="src\CheckPoint\CheckPointManager.h" />
     <ClInclude Include="src\Colli\CollisionAABB.h" />
     <ClInclude Include="src\Colli\CollisionBase.h" />
+    <ClInclude Include="src\Colli\CollisionLineSegment.h" />
     <ClInclude Include="src\Colli\CollisionManager.h" />
     <ClInclude Include="src\Colli\CollisionSphere.h" />
     <ClInclude Include="src\enemy\Enemy.h" />
