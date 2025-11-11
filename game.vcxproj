@@ -31,6 +31,7 @@
     <ClCompile Include="src\Colli\CollisionAABB.cpp" />
     <ClCompile Include="src\Colli\CollisionBase.cpp" />
     <ClCompile Include="src\Colli\CollisionManager.cpp" />
+    <ClCompile Include="src\Colli\CollisionSphere.cpp" />
     <ClCompile Include="src\enemy\Enemy.cpp" />
     <ClCompile Include="src\enemy\EnemyBase.cpp" />
     <ClCompile Include="src\enemy\EnemyManager.cpp" />
@@ -87,6 +88,7 @@
     <ClInclude Include="src\Colli\CollisionAABB.h" />
     <ClInclude Include="src\Colli\CollisionBase.h" />
     <ClInclude Include="src\Colli\CollisionManager.h" />
+    <ClInclude Include="src\Colli\CollisionSphere.h" />
     <ClInclude Include="src\enemy\Enemy.h" />
     <ClInclude Include="src\enemy\EnemyBase.h" />
     <ClInclude Include="src\enemy\EnemyManager.h" />
