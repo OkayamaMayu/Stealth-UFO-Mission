@@ -17,6 +17,8 @@ void StageBlock::Init(SET_BLOCK blockType, VECTOR setPos) {
 	m_IsDraw = true;
 	//透明度を初期化
 	m_fAlpha = 1.0f;
+	//サイズを設定
+	m_vSize = VGet(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 
 	//コリジョン情報の設定
 	m_Collision.SetOwner(this);
@@ -24,7 +26,7 @@ void StageBlock::Init(SET_BLOCK blockType, VECTOR setPos) {
 	//構造体の設定
 	AABB setCollision = {};
 	//サイズを設定
-	setCollision.size = VScale(VGet(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 2.0f);
+	setCollision.size = m_vSize;
 	//中心座標を設定
 	setCollision.centerPos = m_vPos;
 	//情報を登録

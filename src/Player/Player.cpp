@@ -88,6 +88,9 @@ void Player::Init(VECTOR setPos, VECTOR setRot)
 
 	//リングの初期化
 	PlayerRing.Init(m_vPos, m_vRot);
+
+	m_vSize = PLAYER_SIZE;
+	m_vSize.y /= 2.0f;
 }
 
 void Player::Load()
@@ -122,11 +125,12 @@ void Player::Start()
 	//構造体の設定
 	AABB setCollision = {};
 	//サイズを設定
-	setCollision.size = VScale(PLAYER_SIZE, 2.0f);
-	setCollision.size.y /= 2.0f;
+	setCollision.size = m_vSize;
 	//中心座標を設定
 	setCollision.centerPos = m_vNextPos;
-	setCollision.centerPos.y += setCollision.size.y / 2.0f;
+	setCollision.centerPos.y += setCollision.size.y;
+	//当たった時の処理
+	m_Collision.SetOnHitCollback([this](CollisionBase *hitCollision) {Hit(hitCollision);});
 	//情報を登録
 	m_Collision.SetCollision(setCollision);
 	CollisionManager::GetInstance()->RegisterCollision(&m_Collision);
@@ -612,6 +616,89 @@ bool Player::ThrowItem(ItemManager& itemMana, float camaraRot,float focusRot)
 	}
 
 	return false;
+}
+
+//当たった処理
+void Player::Hit(CollisionBase* hitCollision) {
+	//アイテムだと実行しない
+	if (hitCollision->GetCollisionType() >= KIND_ITEM && hitCollision->GetCollisionType() > KIND_BLOCK)
+		return;
+
+	//情報を取得
+	AABB MyCollision = m_Collision.GetCollision();
+	VECTOR hitPos = hitCollision->GetOwner()->GetPos();
+	VECTOR hitSize = hitCollision->GetOwner()->GetSize();
+
+	VECTOR playerPos = MyCollision.centerPos;
+	VECTOR playerSize = MyCollision.size;
+
+	if (playerPos.y - playerSize.y < hitPos.y + hitSize.y || playerPos.y + playerSize.y > hitPos.y - hitSize.y)HitY(*hitCollision);
+	if (playerPos.x - playerSize.x < hitPos.x + hitSize.x || playerPos.x + playerSize.x > hitPos.x - hitSize.x)HitX(*hitCollision);
+	if (playerPos.z - playerSize.z < hitPos.z + hitSize.z || playerPos.z + playerSize.z > hitPos.z - hitSize.z)HitZ(*hitCollision);
+}
+
+//X軸の当たった処理
+void Player::HitX(CollisionBase hitCollision){
+	//情報を取得
+	AABB MyCollision = m_Collision.GetCollision();
+	VECTOR hitPos = hitCollision.GetOwner()->GetPos();
+	VECTOR hitSize = hitCollision.GetOwner()->GetSize();
+
+	VECTOR playerPos = MyCollision.centerPos;
+	VECTOR playerSize = MyCollision.size;
+
+	if (playerPos.x - playerSize.x < hitPos.x + hitSize.x){
+		//→側に当たった
+		playerPos.x += (hitPos.x + hitSize.x) - (playerPos.x - playerSize.x);
+	}
+	else if (playerPos.x + playerSize.x > hitPos.x - hitSize.x){
+		//←側にあった
+		playerPos.x -= (playerPos.x + playerSize.x) - (hitPos.x - hitSize.x);
+	}
+}
+//Y軸の当たった処理
+void Player::HitY(CollisionBase hitCollision) {
+	if (m_vPos.y == m_vNextPos.y)return;
+
+	//情報を取得
+	AABB MyCollision = m_Collision.GetCollision();
+	VECTOR hitPos = hitCollision.GetOwner()->GetPos();
+	VECTOR hitSize = hitCollision.GetOwner()->GetSize();
+
+	VECTOR playerPos = MyCollision.centerPos;
+	VECTOR playerSize = MyCollision.size;
+	if (playerPos.y - playerSize.y < hitPos.y + hitSize.y) {
+		//天井に当たった
+		playerPos.y += (hitPos.y + hitSize.y) - (playerPos.y - playerSize.y);
+		HitCeiling();
+	}
+	else if (playerPos.y + playerSize.y > hitPos.y - hitSize.y) {
+		//床に当たった
+		playerPos.y -= (playerPos.y + playerSize.y) - (hitPos.y - hitSize.y);
+		HitGround();
+	}
+
+	//座標を足元に移動
+	playerPos.y += playerSize.y;
+
+	//適応
+	m_vNextPos.y = playerPos.y;
+}
+//Z軸の当たった処理
+void Player::HitZ(CollisionBase hitCollision) {
+	//情報を取得
+	AABB MyCollision = m_Collision.GetCollision();
+	VECTOR hitPos = hitCollision.GetOwner()->GetPos();
+	VECTOR hitSize = hitCollision.GetOwner()->GetSize();
+
+	VECTOR playerPos = MyCollision.centerPos;
+	VECTOR playerSize = MyCollision.size;
+	if (playerPos.z - playerSize.z < hitPos.z + hitSize.z) {
+		playerPos.z += (hitPos.z + hitSize.z) - (playerPos.z - playerSize.z);
+	}
+	else if (playerPos.z + playerSize.z > hitPos.z - hitSize.z) {
+		playerPos.z -= (playerPos.z + playerSize.z) - (hitPos.z - hitSize.z);
+	}
 }
 
 /*==============================

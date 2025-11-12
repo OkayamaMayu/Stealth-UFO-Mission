@@ -135,6 +135,16 @@ private:
 	//–³“GŠÔ
 	void		FaverTime();
 
+	//“–‚½‚Á‚½ˆ—
+	void		Hit(CollisionBase* hitCollision);
+
+	//X²‚Ì“–‚½‚Á‚½ˆ—
+	void		HitX(CollisionBase hitCollision);
+	//Y²‚Ì“–‚½‚Á‚½ˆ—
+	void		HitY(CollisionBase hitCollision);
+	//Z²‚Ì“–‚½‚Á‚½ˆ—
+	void		HitZ(CollisionBase hitCollision);
+
 //ƒAƒjƒ=====================================================
 public:
 	enum tagAnim

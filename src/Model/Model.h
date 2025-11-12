@@ -31,6 +31,7 @@ protected:
 	VECTOR		m_vPos;				//座標
 	VECTOR		m_vNextPos;			//次の座標
 	VECTOR		m_vRot;				//回転角度
+	VECTOR		m_vSize;			//モデルサイズ
 	VECTOR		m_vScale;			//拡大縮小率
 	VECTOR		m_vSpeed;			//移動増加量
 	float		m_fBlend;			//アニメーションのブレンド率
@@ -62,6 +63,10 @@ public:
 	void			SetRot(VECTOR set) { m_vRot = set; }
 	//移動量を設定
 	void			SetSpeed(VECTOR set) { m_vSpeed = set; }
+	//モデルサイズを取得
+	VECTOR			GetSize() { return m_vSize; }
+	//モデルサイズを設定
+	void			SetSize(VECTOR set) { m_vSize = set; }
 
 	//-----------------------------------------
 	//			　画像読み込み関数

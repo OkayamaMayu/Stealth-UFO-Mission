@@ -12,6 +12,7 @@ void CModel::Init()
 	memset(&m_vPos, 0, sizeof(VECTOR));
 	memset(&m_vNextPos, 0, sizeof(VECTOR));
 	memset(&m_vRot, 0, sizeof(VECTOR));
+	memset(&m_vSize, 0, sizeof(VECTOR));
 	ZeroMemory(&m_AnimData, sizeof(m_AnimData));
 	ZeroMemory(&m_OldAnimData, sizeof(m_OldAnimData));
 	m_vScale				= MODEL_SCALE_V;
