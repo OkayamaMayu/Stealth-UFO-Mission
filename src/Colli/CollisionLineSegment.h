@@ -8,4 +8,5 @@ private:
 public:
 	CollisionLineSegment();										//コンストラクタ
 	void SetCollision(LineSegment set) { m_LineSegment = set; }	//コリジョン情報を設定
+	LineSegment GetCollision() { return m_LineSegment; }		//コリジョン情報を取得
 };
