@@ -729,6 +729,9 @@ void PlayScene::Collision()
 	////レーザー関連
 	//CollisionManager::GetInstance()->CheckSetBlockToLaser		(laser, block);				//配置ブロックとレーザー
 
+	//当たり判定
+	CollisionManager::GetInstance()->Update();
+
 	//レーザーとプレイヤー
 	laser.CheckLaserToPlayer(player.GetPos(), enemy);
 

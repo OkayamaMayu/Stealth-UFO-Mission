@@ -56,6 +56,135 @@ void CollisionManager::UnRegisterCollision(CollisionBase* base) {
 	m_Collsion.erase(it);
 }
 
+//接触処理
+void CollisionManager::Update() {
+	for (int hitMain = 0;hitMain < m_Collsion.size(); hitMain++) {
+		//当たり判定を実行しない
+		if (!m_Collsion[hitMain]->IsCollision())continue;
+
+		for (int hitSub = hitMain + 1;hitSub < m_Collsion.size(); hitSub++) {
+			//当たり本体とkindが同じなら実行しない
+			if (m_Collsion[hitMain]->GetKind() == m_Collsion[hitSub]->GetKind())continue;
+			//当たり判定を実行しない
+			if (!m_Collsion[hitSub]->IsCollision())continue;
+			//一定距離の外側は以下計算させない
+			if (Math::GetDistance(m_Collsion[hitMain]->GetOwner()->GetPos(), m_Collsion[hitSub]->GetOwner()->GetPos()) >= COLLISION_DISANCE)continue;
+			
+			//当たっていなかったら終了
+			if (!Collision(m_Collsion[hitMain], m_Collsion[hitSub]))continue;
+
+			//当たっていたら
+			m_Collsion[hitMain]->HitCollision(m_Collsion[hitSub]);
+		}
+	}
+}
+
+//========================================
+//baseAのコリジョンタイプを識別
+bool CollisionManager::Collision(CollisionBase* baseA, CollisionBase* baseB) {
+	switch (baseA->GetCollisionType())
+	{
+	case TYPE_AABB: {
+		CollisionAABB* main = static_cast<CollisionAABB*>(baseA);
+		AABB collision = main->GetCollision();
+		return Collision(collision, baseB);
+		break;
+	}
+	case TYPE_SPHERE: {
+		CollisionSphere* main = static_cast<CollisionSphere*>(baseA);
+		Sphere collision = main->GetCollision();
+		return Collision(collision, baseB);
+		break;
+	}
+	case TYPE_LINE: {
+		CollisionLineSegment* main = static_cast<CollisionLineSegment*>(baseA);
+		LineSegment collision = main->GetCollision();
+		return Collision(collision, baseB);
+		break;
+	}
+	default:
+		break;
+	}
+
+	return false;
+}
+//baseBのコリジョンタイプを識別
+bool CollisionManager::Collision(AABB collisionA, CollisionBase* baseB) {
+	switch (baseB->GetCollisionType())
+	{
+	case TYPE_AABB: {
+		CollisionAABB* sub = static_cast<CollisionAABB*>(baseB);
+		AABB collisionB = sub->GetCollision();
+		return CheckHit(collisionA, collisionB);
+		break;
+	}
+	case TYPE_SPHERE: {
+		CollisionSphere* sub = static_cast<CollisionSphere*>(baseB);
+		Sphere collisionB = sub->GetCollision();
+		return CheckHit(collisionA, collisionB);
+		break;
+	}
+	case TYPE_LINE: {
+		CollisionLineSegment* sub = static_cast<CollisionLineSegment*>(baseB);
+		LineSegment collisionB = sub->GetCollision();
+		return CheckHit(collisionA, collisionB);
+		break;
+	}
+	default:
+		break;
+	}
+
+	return false;
+}
+bool CollisionManager::Collision(Sphere collisionA, CollisionBase* baseB) {
+	switch (baseB->GetCollisionType())
+	{
+	case TYPE_AABB: {
+		CollisionAABB* sub = static_cast<CollisionAABB*>(baseB);
+		AABB collisionB = sub->GetCollision();
+		return CheckHit(collisionA, collisionB);
+		break;
+	}
+	case TYPE_SPHERE: {
+		CollisionSphere* sub = static_cast<CollisionSphere*>(baseB);
+		Sphere collisionB = sub->GetCollision();
+		return CheckHit(collisionA, collisionB);
+		break;
+	}
+	/*case TYPE_LINE: {
+		CollisionLineSegment* sub = static_cast<CollisionLineSegment*>(baseB);
+		LineSegment collisionB = sub->GetCollision();
+		return CheckHit(collisionA, collisionB);
+		break;
+	}*/
+	default:
+		break;
+	}
+
+	return false;
+}
+bool CollisionManager::Collision(LineSegment collisionA, CollisionBase* baseB) {
+	switch (baseB->GetCollisionType())
+	{
+	case TYPE_AABB: {
+		CollisionAABB* sub = static_cast<CollisionAABB*>(baseB);
+		AABB collisionB = sub->GetCollision();
+		return CheckHit(collisionA, collisionB);
+		break;
+	}
+	/*case TYPE_SPHERE: {
+		CollisionSphere* sub = static_cast<CollisionSphere*>(baseB);
+		Sphere collisionB = sub->GetCollision();
+		return CheckHit(collisionA, collisionB);
+		break;
+	}*/
+	default:
+		break;
+	}
+
+	return false;
+}
+
 //========================================
 
 //ブロックとプレイヤー
@@ -180,6 +309,7 @@ void CollisionManager::UnRegisterCollision(CollisionBase* base) {
 //	player.SetPos(checkPlayerPos);
 //	player.Updata();
 //}
+
 ////エネミー1とブロック
 //void CollisionManager::CheckStageBlockToEnemyType1
 //(EnemyManager& enemyManager, BackGround& block)

@@ -30,8 +30,8 @@ const float CREATE_BLOCK_STAGE_HIT_SCALE	= 5.0f;		//生成ブロックとステージブロッ
 class CollisionManager
 {
 private:
-	static CollisionManager* m_Instance;			//インスタンス
-	vector<CollisionBase*> m_Collsion;				//コリジョン情報
+	static CollisionManager*	m_Instance;			//インスタンス
+	vector<CollisionBase*>		m_Collsion;			//コリジョン情報
 
 public:
 	static void					Create();			//インスタンスの生成
@@ -42,6 +42,26 @@ public:
 
 	void RegisterCollision(CollisionBase* base);	//コリジョンを登録
 	void UnRegisterCollision(CollisionBase* base);	//コリジョンを解除
+
+	void Update();									//接触処理
+
+	//当たり判定の識別
+	//baseAのコリジョンタイプを識別
+	bool Collision(CollisionBase* baseA, CollisionBase* baseB);
+	//baseBのコリジョンタイプを識別
+	bool Collision(AABB collisionA, CollisionBase* baseB);
+	bool Collision(Sphere collisionA, CollisionBase* baseB);
+	bool Collision(LineSegment collisionA, CollisionBase* baseB);
+
+	//当たり判定
+	bool CheckHit(AABB collisionA, AABB collisionB) { return Collision::IsCollidingAABBToAABB(collisionA, collisionB) ; }
+	bool CheckHit(AABB collisionA, Sphere collisionB) { return Collision::IsCollidingAABBToSphere(collisionA, collisionB); }
+	bool CheckHit(Sphere collisionA, AABB collisionB) { return Collision::IsCollidingAABBToSphere(collisionB, collisionA); }
+	bool CheckHit(AABB collisionA, LineSegment collisionB) { return Collision::IsCollidingAABBToLineSegment(collisionA, collisionB); }
+	bool CheckHit(LineSegment collisionA, AABB collisionB) { return Collision::IsCollidingAABBToLineSegment(collisionB, collisionA); }
+	bool CheckHit(Sphere collisionA, Sphere collisionB) { return Collision::IsCollidingSphereToSphere(collisionA, collisionB); }
+	//bool CheckHit(Sphere collisionA, LineSegment collisionB) { return Collision::IsCollidingAABBToAABB(collisionA, collisionB); }
+	//bool CheckHit(LineSegment collisionA, Sphere collisionB) { return Collision::IsCollidingAABBToAABB(collisionA, collisionB); }
 
 	//--------------------------------
 
