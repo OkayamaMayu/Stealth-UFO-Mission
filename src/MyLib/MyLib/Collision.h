@@ -54,6 +54,9 @@ public:
 	//” ‚Æ‹…‚Ì“–‚½‚è”»’è
 	static bool IsCollidingAABBToSphere(AABB box, Sphere sphere);
 
+	//” ‚Æü•ª‚Ì“–‚½‚è”»’è
+	static bool IsCollidingAABBToLineSegment(AABB aabb, LineSegment lineSegment);
+
 	//‹…‚Æ‹…‚Ì“–‚½‚è”»’è
 	static bool IsCollidingSphereToSphere(Sphere sphereA, Sphere sphereB);
 
