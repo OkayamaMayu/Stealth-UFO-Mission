@@ -49,10 +49,10 @@ public:
 	//----------------------------
 
 	//” ‚Æ” ‚Ì“–‚½‚è”»’è
-	static bool IsCollidingAABBToAABB(AABB boxA, AABB boxB);
+	static bool IsCollidingAABBToAABB(AABB aabbA, AABB aabbB);
 
 	//” ‚Æ‹…‚Ì“–‚½‚è”»’è
-	static bool IsCollidingAABBToSphere(AABB box, Sphere sphere);
+	static bool IsCollidingAABBToSphere(AABB aabb, Sphere sphere);
 
 	//” ‚Æü•ª‚Ì“–‚½‚è”»’è
 	static bool IsCollidingAABBToLineSegment(AABB aabb, LineSegment lineSegment);

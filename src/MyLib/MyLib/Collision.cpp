@@ -100,21 +100,17 @@ bool Collision::Circlr3D(VECTOR aPos, float aR, VECTOR bPos, float bR)
 //----------------------------
 
 //箱と箱の当たり判定
-bool Collision::IsCollidingAABBToAABB(AABB boxA, AABB boxB) {
+bool Collision::IsCollidingAABBToAABB(AABB aabbA, AABB aabbB) {
 	//モデルの中心座標
-	VECTOR boxACenterPos = boxA.centerPos;
-	VECTOR boxBCenterPos = boxB.centerPos;
-	
-	//判定サイズを半分にする
-	VECTOR boxAHalfSize = VScale(boxA.size, 0.5f);
-	VECTOR boxBHalfSize = VScale(boxA.size, 0.5f);
+	VECTOR aabbACenterPos = aabbA.centerPos;
+	VECTOR aabbBCenterPos = aabbB.centerPos;
 
-	if (boxBCenterPos.x - boxBHalfSize.x < boxACenterPos.x + boxAHalfSize.x &&
-		boxBCenterPos.x + boxBHalfSize.x > boxACenterPos.x - boxAHalfSize.x &&
-		boxBCenterPos.y - boxBHalfSize.y < boxACenterPos.y + boxAHalfSize.y &&
-		boxBCenterPos.y + boxBHalfSize.y > boxACenterPos.y - boxAHalfSize.y &&
-		boxBCenterPos.z - boxBHalfSize.z < boxACenterPos.z + boxAHalfSize.z &&
-		boxBCenterPos.z + boxBHalfSize.z > boxACenterPos.z - boxAHalfSize.z
+	if (aabbBCenterPos.x - aabbB.size.x < aabbACenterPos.x + aabbA.size.x &&
+		aabbBCenterPos.x + aabbB.size.x > aabbACenterPos.x - aabbA.size.x &&
+		aabbBCenterPos.y - aabbB.size.y < aabbACenterPos.y + aabbA.size.y &&
+		aabbBCenterPos.y + aabbB.size.y > aabbACenterPos.y - aabbA.size.y &&
+		aabbBCenterPos.z - aabbB.size.z < aabbACenterPos.z + aabbA.size.z &&
+		aabbBCenterPos.z + aabbB.size.z > aabbACenterPos.z - aabbA.size.z
 		)
 		return true;
 	
@@ -122,29 +118,21 @@ bool Collision::IsCollidingAABBToAABB(AABB boxA, AABB boxB) {
 }
 
 //箱と球の当たり判定
-bool Collision::IsCollidingAABBToSphere(AABB box, Sphere sphere) {
+bool Collision::IsCollidingAABBToSphere(AABB aabb, Sphere sphere) {
 	//モデルの中心座標
-	VECTOR boxCenterPos = box.centerPos;
+	VECTOR aabbCenterPos = aabb.centerPos;
 	VECTOR sphereCenterPos = sphere.centerPos;
 
-	//箱の判定サイズを半分にする
-	VECTOR boxHalfSize = VScale(box.size, 0.5f);
 	//判定の半径
 	float sphereRadius = sphere.radius;
 
 	//箱の最小点
-	VECTOR boxMinPos = {
-		boxCenterPos.x - boxHalfSize.x,
-		boxCenterPos.y - boxHalfSize.y,
-		boxCenterPos.z - boxHalfSize.z };
+	VECTOR aabbMinPos = VSub(aabb.centerPos, aabb.size);
 	//箱の最大点
-	VECTOR boxMaxPos = {
-		boxCenterPos.x + boxHalfSize.x,
-		boxCenterPos.y + boxHalfSize.y,
-		boxCenterPos.z + boxHalfSize.z };
+	VECTOR aabbMaxPos = VAdd(aabb.centerPos, aabb.size);
 
 	//箱の一番近い点を求める
-	VECTOR nearestPos = Math::Clamp(sphereCenterPos, boxMinPos, boxMaxPos);
+	VECTOR nearestPos = Math::Clamp(sphereCenterPos, aabbMinPos, aabbMaxPos);
 
 	//近い点と球で判定
 	if (Math::GetDistance(nearestPos, sphereCenterPos) < sphereRadius)
@@ -155,12 +143,10 @@ bool Collision::IsCollidingAABBToSphere(AABB box, Sphere sphere) {
 
 //箱と線分の当たり判定
 bool Collision::IsCollidingAABBToLineSegment(AABB aabb, LineSegment lineSegment) {
-	//AABBのサイズを半分にする
-	VECTOR aabbSize = VScale(aabb.size, 0.5f);
 	//AABBの最小値
-	VECTOR MinAABB = VSub(aabb.centerPos, aabbSize);
+	VECTOR MinAABB = VSub(aabb.centerPos, aabb.size);
 	//AABBの最大値
-	VECTOR MaxAABB = VAdd(aabb.centerPos, aabbSize);
+	VECTOR MaxAABB = VAdd(aabb.centerPos, aabb.size);
 
 	//線分のベクトル
 	VECTOR lineVec = VSub(lineSegment.endPos, lineSegment.startPos);
