@@ -22,13 +22,20 @@ enum COLLISION_KIND {
 	KIND_BLOCK	= 300,	//配置ブロック
 };
 
+//当たり判定の軸
+enum COLLISION_AXIS {
+	AXIS_X,
+	AXIS_Y,
+	AXIS_Z,
+};
+
 class CollisionBase {
 protected:
 	COLLISION_TYPE	m_CollisionType;				//コリジョンタイプ
-	CModel* m_Owner;						//オーナーのアドレス
+	CModel*			m_Owner;						//オーナーのアドレス
 	bool			m_IsCollision;					//コリジョン有効フラグ
 	int				m_iKind;						//kindメンバー
-	function<void(CollisionBase*)> m_OnHitCollback;	//ヒット時のコールバック関数
+	function<void(CollisionBase*, COLLISION_AXIS)> m_OnHitCollback;	//ヒット時のコールバック関数
 
 public:
 	CollisionBase();																	//コンストラクタ
@@ -36,10 +43,10 @@ public:
 	CModel*			GetOwner() { return m_Owner; }										//オーナーのアドレスを取得
 	bool			IsCollision() { return m_IsCollision; }								//コリジョン有効フラグを取得
 	int				GetKind() { return m_iKind; }										//kindメンバーを取得
-	void			HitCollision(CollisionBase* base) { m_OnHitCollback(base); }		
+	void			HitCollision(CollisionBase* base, COLLISION_AXIS axis) {	if(m_OnHitCollback) m_OnHitCollback(base,axis); }
 
 	void SetOwner(CModel* set) { m_Owner = set; }										//オーナーのアドレスを設定
 	void SetIsCollision(bool set) { m_IsCollision = set; }								//コリジョン有効フラグを設定
 	void SetKind(int set) { m_iKind = set; }											//kindメンバーを設定
-	void SetOnHitCollback(function<void(CollisionBase*)> set) { m_OnHitCollback = set; }//ヒット時のコールバック関数を設定
+	void SetOnHitCollback(function<void(CollisionBase*, COLLISION_AXIS)> set) { m_OnHitCollback = set; }//ヒット時のコールバック関数を設定
 };

@@ -61,8 +61,10 @@ void CollisionManager::Update() {
 	for (int hitMain = 0;hitMain < m_Collsion.size(); hitMain++) {
 		//当たり判定を実行しない
 		if (!m_Collsion[hitMain]->IsCollision())continue;
+		if (m_Collsion[hitMain]->GetOwner() == nullptr)continue;
 
 		for (int hitSub = hitMain + 1;hitSub < m_Collsion.size(); hitSub++) {
+			if (m_Collsion[hitSub]->GetOwner() == nullptr)continue;
 			//当たり本体とkindが同じなら実行しない
 			if (m_Collsion[hitMain]->GetKind() == m_Collsion[hitSub]->GetKind())continue;
 			//当たり判定を実行しない
@@ -70,11 +72,25 @@ void CollisionManager::Update() {
 			//一定距離の外側は以下計算させない
 			if (Math::GetDistance(m_Collsion[hitMain]->GetOwner()->GetPos(), m_Collsion[hitSub]->GetOwner()->GetPos()) >= COLLISION_DISANCE)continue;
 			
-			//当たっていなかったら終了
-			if (!Collision(m_Collsion[hitMain], m_Collsion[hitSub]))continue;
-
-			//当たっていたら
-			m_Collsion[hitMain]->HitCollision(m_Collsion[hitSub]);
+			//軸ごとに当たっているか調べる
+			//Y軸の当たり判定
+			if (Collision(m_Collsion[hitMain], m_Collsion[hitSub])){
+				//当たっていたら
+				m_Collsion[hitMain]->HitCollision(m_Collsion[hitSub], AXIS_Y);
+				m_Collsion[hitSub]->HitCollision(m_Collsion[hitMain], AXIS_Y);
+			}
+			//X軸の当たり判定
+			if (Collision(m_Collsion[hitMain], m_Collsion[hitSub])) {
+				//当たっていたら
+				m_Collsion[hitMain]->HitCollision(m_Collsion[hitSub], AXIS_X);
+				m_Collsion[hitSub]->HitCollision(m_Collsion[hitMain], AXIS_X);
+			}
+			//Z軸の当たり判定
+			else if (Collision(m_Collsion[hitMain], m_Collsion[hitSub])) {
+				//当たっていたら
+				m_Collsion[hitMain]->HitCollision(m_Collsion[hitSub], AXIS_Z);
+				m_Collsion[hitSub]->HitCollision(m_Collsion[hitMain], AXIS_Z);
+			}
 		}
 	}
 }
@@ -185,130 +201,74 @@ bool CollisionManager::Collision(LineSegment collisionA, CollisionBase* baseB) {
 	return false;
 }
 
-//========================================
+//修正軸を選ぶ
+COLLISION_AXIS CollisionManager::SelectModifyingAxis(CollisionBase* baseA, CollisionBase* baseB) {
+	//情報を取得
+	VECTOR baseAPos = {};
+	VECTOR baseASize = {};
+	switch (baseA->GetCollisionType())
+	{
+	case TYPE_AABB: {
+		CollisionAABB* hitAABB = static_cast<CollisionAABB*>(baseA);
+		baseAPos = hitAABB->GetCollision().centerPos;
+		baseASize = hitAABB->GetCollision().size;
+		break;
+	}
+	case TYPE_SPHERE: {
+		CollisionSphere* hitSphere = static_cast<CollisionSphere*>(baseA);
+		baseAPos = hitSphere->GetCollision().centerPos;
+		baseASize.y = hitSphere->GetCollision().radius;
+		break;
+	}
+	default:
+		break;
+	}
 
-//ブロックとプレイヤー
-//void CollisionManager::CheckStageBlockToPlayer
-//(Player& player, BackGround& block)
-//{
-//	//UFOに捕まっている状態なら当たり判定をとらない
-//	if (player.GetState() == PLAYER_STATE_QTE)
-//	{
-//		player.SetPos(player.GetNextPos());
-//		player.Updata();
-//		return;
-//	}
-//
-//	//プレイヤーの座標
-//	VECTOR playerPos = player.GetPos();
-//	VECTOR playerSize = PLAYER_SIZE;
-//
-//	//点をモデルの中央に移動する
-//	VECTOR checkPlayerPos = playerPos;
-//	//直径にする
-//	VECTOR checkPlayerSize = VScale(playerSize, 2.0f);
-//	//縦高さが大きくなり過ぎたので戻す
-//	checkPlayerSize.y /= 2.0f;
-//	//次の座標
-//	VECTOR playerNextPos = player.GetNextPos();
-//
-//	//ブロックのサイズ
-//	VECTOR blockSize = VGet(5.0f, 5.0f, 5.0f);
-//	//直径にする
-//	VECTOR checkBlockSize = VScale(blockSize, 2.0f);
-//
-//	//床/天井
-//	checkPlayerPos.y = playerNextPos.y;
-//	for (int i = 0; i < block.GetBlockNum(); i++)
-//	{
-//		VECTOR blockPos = block.GetPos(i);
-//
-//		//一定距離の外側は以下計算させない
-//		if (Math::GetDistance(blockPos, playerNextPos) >= COLLISION_DISANCE)
-//			continue;
-//
-//		//当たっているかチェック
-//		if (Collision::Rect3D(
-//			VGet(checkPlayerPos.x, checkPlayerPos.y + playerSize.y / 2.0f, checkPlayerPos.z),
-//			checkPlayerSize, blockPos, checkBlockSize))
-//		{
-//			if (checkPlayerPos.y < blockPos.y){
-//				//天井
-//				checkPlayerPos.y += (blockPos.y - blockSize.y) - (checkPlayerPos.y + playerSize.y);
-//				player.HitCeiling();
-//			}else if (checkPlayerPos.y > blockPos.y){
-//				//床
-//				checkPlayerPos.y += (blockPos.y + blockSize.y) - checkPlayerPos.y;
-//				player.HitGround();
-//			}
-//
-//			break;
-//		}
-//	}
-//
-//	//壁X
-//	checkPlayerPos.x = playerNextPos.x;
-//	for (int i = 0; i < block.GetBlockNum(); i++)
-//	{
-//		VECTOR blockPos = block.GetPos(i);
-//
-//		//一定距離の外側は以下計算させない
-//		if (Math::GetDistance(blockPos, playerNextPos) >= COLLISION_DISANCE)
-//			continue;
-//		
-//		//当たったら
-//		if (Collision::Rect3D(
-//			VGet(checkPlayerPos.x, checkPlayerPos.y + playerSize.y / 2.0f, checkPlayerPos.z),
-//			checkPlayerSize, blockPos, checkBlockSize))
-//		{
-//			//横の壁
-//			if (checkPlayerPos.x < blockPos.x)
-//			{
-//				checkPlayerPos.x += (blockPos.x - blockSize.x) - (checkPlayerPos.x + playerSize.x);
-//			}
-//			else if (checkPlayerPos.x > blockPos.x)
-//			{
-//				checkPlayerPos.x += (blockPos.x + blockSize.x) - (checkPlayerPos.x - playerSize.x);
-//			}
-//
-//			break;
-//		}
-//	}
-//
-//	//壁Z
-//	checkPlayerPos.z = playerNextPos.z;
-//	for (int i = 0; i < block.GetBlockNum(); i++)
-//	{
-//		VECTOR blockPos = block.GetPos(i);
-//
-//		//一定距離の外側は以下計算させない
-//		if (Math::GetDistance(blockPos, playerNextPos) >= COLLISION_DISANCE)
-//			continue;
-//
-//		//当たったら
-//		if (Collision::Rect3D(
-//			VGet(checkPlayerPos.x, checkPlayerPos.y + playerSize.y / 2.0f, checkPlayerPos.z),
-//			checkPlayerSize, blockPos, checkBlockSize))
-//		{
-//			//手前と奥の壁
-//			if (checkPlayerPos.z < blockPos.z)
-//			{
-//				checkPlayerPos.z += (blockPos.z - blockSize.z) - (checkPlayerPos.z + playerSize.z);
-//			}
-//			else if (checkPlayerPos.z > blockPos.z)
-//			{
-//				checkPlayerPos.z += (blockPos.z + blockSize.z) - (checkPlayerPos.z - playerSize.z);
-//
-//			}
-//
-//			break;
-//		}
-//	}
-//
-//	//座標を適応
-//	player.SetPos(checkPlayerPos);
-//	player.Updata();
-//}
+	//当たった先の情報
+	VECTOR baseBPos = {};
+	VECTOR baseBSize = {};
+	switch (baseA->GetCollisionType())
+	{
+	case TYPE_AABB: {
+		CollisionAABB* hitAABB = static_cast<CollisionAABB*>(baseB);
+		baseBPos = hitAABB->GetCollision().centerPos;
+		baseBSize = hitAABB->GetCollision().size;
+		break;
+	}
+	case TYPE_SPHERE: {
+		CollisionSphere* hitSphere = static_cast<CollisionSphere*>(baseB);
+		baseBPos = hitSphere->GetCollision().centerPos;
+		baseBSize.y = hitSphere->GetCollision().radius;
+		break;
+	}
+	default:
+		break;
+	}
+
+	//当たった後の処理を分岐
+	float differenceX = 0.0f;
+	float differenceZ = 0.0f;
+	//X軸の差を求める
+	if (baseAPos.x < baseBPos.x) {
+		differenceX = (baseAPos.x + baseASize.x) - (baseBPos.x - baseBSize.x);
+	}
+	else if (baseAPos.x > baseBPos.x) {
+		differenceX = (baseBPos.x + baseBSize.x) - (baseAPos.x - baseASize.x);
+	}
+	//Z軸の差を求める
+	if (baseAPos.z < baseBPos.z) {
+		differenceZ = (baseAPos.z + baseASize.z) - (baseBPos.z - baseBSize.z);
+	}
+	else if (baseAPos.z > baseBPos.z) {
+		differenceZ = (baseBPos.z + baseBSize.z) - (baseAPos.z - baseASize.z);
+	}
+
+	//小さいほうを修正軸として返す
+	if (differenceX < differenceZ)return AXIS_X;
+	if (differenceX > differenceZ)return AXIS_Z;
+}
+
+//========================================
 
 ////エネミー1とブロック
 //void CollisionManager::CheckStageBlockToEnemyType1

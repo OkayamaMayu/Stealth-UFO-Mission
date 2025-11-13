@@ -63,6 +63,9 @@ public:
 	//bool CheckHit(Sphere collisionA, LineSegment collisionB) { return Collision::IsCollidingAABBToAABB(collisionA, collisionB); }
 	//bool CheckHit(LineSegment collisionA, Sphere collisionB) { return Collision::IsCollidingAABBToAABB(collisionA, collisionB); }
 
+	//修正軸を選ぶ
+	COLLISION_AXIS SelectModifyingAxis(CollisionBase* baseA, CollisionBase* baseB);
+
 	//--------------------------------
 
 	//ブロックとプレイヤー
