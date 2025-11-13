@@ -185,6 +185,9 @@ void Player::Step(VECTOR ufoPos,VECTOR vCameraRot,float fRot, bool cameraFlag, b
 		//移動量を計算
 		m_vSpeed	= Math::GetMoving(m_vPos, ufoPos, UFO_CATCH_SPEED);
 		m_vNextPos	= VAdd(m_vPos, m_vSpeed);
+
+		//当たり判定をとらないようにする
+		m_Collision.SetIsCollision(false);
 	}
 
 	//落下状態かUFOに解放された後なら
@@ -192,6 +195,9 @@ void Player::Step(VECTOR ufoPos,VECTOR vCameraRot,float fRot, bool cameraFlag, b
 	{
 		//重力を座標に加算
 		m_vNextPos.y += m_fGravityAdd;
+
+		//当たり判定をとるようにする
+		m_Collision.SetIsCollision(true);
 	}
 
 	//コリジョン情報の更新
