@@ -73,5 +73,5 @@ void StageBlock::Draw() {
 }
 
 void StageBlock::Fin() {
-
+	CollisionManager::GetInstance()->UnRegisterCollision(&m_Collision);
 }
