@@ -15,6 +15,7 @@ void CModel::Init()
 	memset(&m_vSize, 0, sizeof(VECTOR));
 	ZeroMemory(&m_AnimData, sizeof(m_AnimData));
 	ZeroMemory(&m_OldAnimData, sizeof(m_OldAnimData));
+	ZeroMemory(&m_EditAxisFlag, sizeof(m_EditAxisFlag));
 	m_vScale				= MODEL_SCALE_V;
 	m_fBlend				= INIT_BLEND;
 	m_fBlendSpd				= INIT_BLEND_SPEED;

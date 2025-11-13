@@ -45,8 +45,6 @@ void EnemyType1::Init(VECTOR vStartPos, VECTOR vGoalPos, float vStartRot, float 
 	UpdateCollision();
 	//当たった時の処理
 	m_Collision.SetOnHitCollback([this](CollisionBase* hitCollision, COLLISION_AXIS axis) {Hit(hitCollision, axis); });
-	//情報を登録
-	//CollisionManager::GetInstance()->RegisterCollision(&m_Collision);
 }
 
 void EnemyType1::Step(Player& pl, ItemManager& itemMana, StageBlockManager& block, bool gameOverFlag, bool clearFlag)
@@ -344,8 +342,14 @@ void EnemyType1::Hit(CollisionBase* hitCollision, COLLISION_AXIS axis) {
 		return;
 
 	COLLISION_AXIS collisionAxis = axis;
-	if (collisionAxis == AXIS_X || collisionAxis == AXIS_Z)
-		collisionAxis = CollisionManager::GetInstance()->SelectModifyingAxis(&m_Collision, hitCollision);
+
+	//修正可能軸を設定する
+	m_EditAxisFlag.x = m_EditAxisFlag.y = m_EditAxisFlag.z = true;
+	if (m_vPos.x == m_vNextPos.x)m_EditAxisFlag.x = false;
+	if (m_vPos.y == m_vNextPos.y)m_EditAxisFlag.y = false;
+	if (m_vPos.z == m_vNextPos.z)m_EditAxisFlag.z = false;
+
+	collisionAxis = CollisionManager::GetInstance()->SelectModifyingAxis(m_EditAxisFlag, &m_Collision, hitCollision);
 
 	//当たった先の情報
 	VECTOR hitPos = {};
@@ -411,7 +415,7 @@ void EnemyType1::HitX(VECTOR hitPos, VECTOR hitSize) {
 		enemyPos.x += (hitPos.x + hitSize.x) - (enemyPos.x - enemySize.x);
 	}
 
-	//適応
+	//適用
 	m_vNextPos.x = enemyPos.x;
 	//コリジョン情報の更新
 	UpdateCollision();
@@ -437,7 +441,7 @@ void EnemyType1::HitY(VECTOR hitPos, VECTOR hitSize) {
 	//重力を初期化
 	HitGravityReset();
 
-	//適応
+	//適用
 	m_vNextPos.y = enemyPos.y;
 	//座標を足元に移動
 	m_vNextPos.y -= enemySize.y;
@@ -461,7 +465,7 @@ void EnemyType1::HitZ(VECTOR hitPos, VECTOR hitSize) {
 		enemyPos.z += (hitPos.z + hitSize.z) - (enemyPos.z - enemySize.z);
 	}
 
-	//適応
+	//適用
 	m_vNextPos.z = enemyPos.z;
 	//コリジョン情報の更新
 	UpdateCollision();

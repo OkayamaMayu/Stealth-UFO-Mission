@@ -1,6 +1,14 @@
 #pragma once
 #include"DxLib.h"
 
+//修正可能軸フラグ
+struct EditAxisFlag
+{
+	bool x;
+	bool y;
+	bool z;
+};
+
 class CModel
 {
 public:
@@ -15,7 +23,6 @@ public:
 	const float		INIT_BLEND_SPEED	= 0.05f;	//ブレンドの速度
 
 protected:
-
 	struct ANIM_DATA
 	{
 		float m_fEndFrm;		//アニメ全再生時間
@@ -26,18 +33,19 @@ protected:
 		ANIMSTATE m_iState;		//アニメの状態
 	};
 
-	ANIM_DATA	m_AnimData;			//アニメ再生関連データ
-	ANIM_DATA	m_OldAnimData;		//ブレンド用
-	VECTOR		m_vPos;				//座標
-	VECTOR		m_vNextPos;			//次の座標
-	VECTOR		m_vRot;				//回転角度
-	VECTOR		m_vSize;			//モデルサイズ
-	VECTOR		m_vScale;			//拡大縮小率
-	VECTOR		m_vSpeed;			//移動増加量
-	float		m_fBlend;			//アニメーションのブレンド率
-	float		m_fBlendSpd;		//ブレンドの速度
-	bool		m_AnimeChangeFlag;	//アニメーション変更中のフラグ
-	int			m_iHandle;			//モデルハンドル
+	EditAxisFlag	m_EditAxisFlag;		//当たり判定の修正軸実行可能フラグ
+	ANIM_DATA		m_AnimData;			//アニメ再生関連データ
+	ANIM_DATA		m_OldAnimData;		//ブレンド用
+	VECTOR			m_vPos;				//座標
+	VECTOR			m_vNextPos;			//次の座標
+	VECTOR			m_vRot;				//回転角度
+	VECTOR			m_vSize;			//モデルサイズ
+	VECTOR			m_vScale;			//拡大縮小率
+	VECTOR			m_vSpeed;			//移動増加量
+	float			m_fBlend;			//アニメーションのブレンド率
+	float			m_fBlendSpd;		//ブレンドの速度
+	bool			m_AnimeChangeFlag;	//アニメーション変更中のフラグ
+	int				m_iHandle;			//モデルハンドル
 
 public:
 	//初期化

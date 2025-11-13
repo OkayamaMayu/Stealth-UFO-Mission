@@ -53,6 +53,7 @@ public:
 	bool Collision(Sphere collisionA, CollisionBase* baseB);
 	bool Collision(LineSegment collisionA, CollisionBase* baseB);
 
+
 	//当たり判定
 	bool CheckHit(AABB collisionA, AABB collisionB) { return Collision::IsCollidingAABBToAABB(collisionA, collisionB) ; }
 	bool CheckHit(AABB collisionA, Sphere collisionB) { return Collision::IsCollidingAABBToSphere(collisionA, collisionB); }
@@ -64,7 +65,8 @@ public:
 	//bool CheckHit(LineSegment collisionA, Sphere collisionB) { return Collision::IsCollidingAABBToAABB(collisionA, collisionB); }
 
 	//修正軸を選ぶ
-	COLLISION_AXIS SelectModifyingAxis(CollisionBase* baseA, CollisionBase* baseB);
+	//引数：修正可能軸フラグ構造体, 修正する対象, 当たった相手
+	COLLISION_AXIS SelectModifyingAxis(EditAxisFlag editAxisFlag, CollisionBase* baseA, CollisionBase* baseB);
 
 	//--------------------------------
 

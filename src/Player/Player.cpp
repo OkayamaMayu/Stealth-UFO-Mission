@@ -630,9 +630,17 @@ void Player::Hit(CollisionBase* hitCollision, COLLISION_AXIS axis) {
 	if (hitCollision->GetCollisionType() >= KIND_ITEM && hitCollision->GetCollisionType() > KIND_BLOCK)
 		return;
 
+
+
 	COLLISION_AXIS collisionAxis = axis;
-	if (collisionAxis == AXIS_X || collisionAxis == AXIS_Z)
-		collisionAxis = CollisionManager::GetInstance()->SelectModifyingAxis(&m_Collision, hitCollision);
+
+	//修正可能軸を設定する
+	m_EditAxisFlag.x = m_EditAxisFlag.y = m_EditAxisFlag.z = true;
+	if (m_vPos.x == m_vNextPos.x)m_EditAxisFlag.x = false;
+	if (m_vPos.y == m_vNextPos.y)m_EditAxisFlag.y = false;
+	if (m_vPos.z == m_vNextPos.z)m_EditAxisFlag.z = false;
+
+	collisionAxis = CollisionManager::GetInstance()->SelectModifyingAxis(m_EditAxisFlag ,&m_Collision, hitCollision);
 
 	//当たった先の情報
 	VECTOR hitPos = {};
@@ -693,7 +701,7 @@ void Player::HitX(VECTOR hitPos, VECTOR hitSize){
 		playerPos.x += (hitPos.x + hitSize.x) - (playerPos.x - playerSize.x);
 	}
 
-	//適応
+	//適用
 	m_vNextPos.x = playerPos.x;
 	//コリジョン情報の更新
 	UpdateCollision();
@@ -718,7 +726,7 @@ void Player::HitY(VECTOR hitPos, VECTOR hitSize) {
 		HitCeiling();
 	}
 
-	//適応
+	//適用
 	m_vNextPos.y = playerPos.y;
 	//座標を足元に移動
 	m_vNextPos.y -= playerSize.y;
@@ -741,7 +749,7 @@ void Player::HitZ(VECTOR hitPos, VECTOR hitSize) {
 		playerPos.z += (hitPos.z + hitSize.z) - (playerPos.z - playerSize.z);
 	}
 
-	//適応
+	//適用
 	m_vNextPos.z = playerPos.z;
 	//コリジョン情報の更新
 	UpdateCollision();
