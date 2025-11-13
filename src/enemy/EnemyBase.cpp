@@ -18,19 +18,20 @@ void EnemyBase::Init(VECTOR vPos, VECTOR vRot)
 void EnemyBase::Init()
 {
 	//変数の初期化
-	m_State					= ENEMY_STATE_NORMAL;
-	m_fGravityAdd			= 0.0f;
-	m_fSpeed				= 0.0f;
-	m_fStunMoveSpeed		= 0.0f;
-	m_fPlFoundCound			= 0.0f;
-	m_fRespawnTimeCount		= 0.0f;
-	m_fNextMoveRot			= 0.0f;
-	m_fHitBlockCount		= 0.0f;
-	m_IsUse					= true;
-	m_InitPosFlag			= false;
-	m_LookOnFlag			= false;
-	m_HitBlockFlag			= false;
-	m_iItemIndex			= -1;
+	m_State						= ENEMY_STATE_NORMAL;
+	m_fGravityAdd				= 0.0f;
+	m_fSpeed					= 0.0f;
+	m_fStunMoveSpeed			= 0.0f;
+	m_fPlFoundCound				= 0.0f;
+	m_fRespawnTimeCount			= 0.0f;
+	m_fNextMoveRot				= 0.0f;
+	m_fHitBlockCount			= 0.0f;
+	m_IsUse						= true;
+	m_InitPosFlag				= false;
+	m_LookOnFlag				= false;
+	m_HitBlockFlag				= false;
+	m_ProgressImpossibleFlag	= false;
+	m_iItemIndex				= -1;
 
 	//行動の持続時間の設定
 	m_fStateTime			= GetRand((int)ENEMY_STATE_MAXTIME) + 1.0f;
@@ -145,8 +146,7 @@ void EnemyBase::Move(VECTOR plPos, float speed)
 void EnemyBase::TrackingMove(Player& player, VECTOR itemPos, float speed)
 {
 	//見失っている状態は実行しない
-	if (m_FoundType == ENEMY_LOSE)
-		return;
+	if (m_FoundType == ENEMY_LOSE)return;
 
 	//変数の設定
 	VECTOR vPos		= {};
@@ -157,7 +157,7 @@ void EnemyBase::TrackingMove(Player& player, VECTOR itemPos, float speed)
 	if (m_FoundType == FOUND_PLAYER)
 	{
 		//プレイヤー
-		vPos	= player.GetRingPos();
+		vPos	= player.GetPos();
 
 		//プレイヤーの追跡速度を作成
 		//距離から速度を作成する
@@ -379,6 +379,17 @@ void EnemyBase::StopEffect()
 		CEffekseerCtrl::Stop(m_iEffectHnadle[i]);
 		m_iEffectHnadle[i] = -1;
 	}
+}
+
+//プレイヤーに当たった時の処理
+void EnemyBase::HitPlayer(CollisionBase* hitBase) {
+	//プレイヤーに当たっていなかったら終了
+	if (hitBase->GetKind() != KIND_PLAYER)return;
+	//気絶状態だったら
+	if (m_State == EnemyBase::ENEMY_STATE_STUN)return;
+	
+	//発見状態にする
+	PlayerDiscovery();
 }
 
 /*--------------------------------

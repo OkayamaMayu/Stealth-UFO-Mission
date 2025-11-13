@@ -59,6 +59,7 @@ protected:
 	const float		FOUND_MIN_TIME			= 5.0f;			//発見時間の最低時間
 	const float		RESPAWN_GRAVITY			= 0.5f;			//リスポーン時の重力
 	const float		RESPAWN_POS_Y			= 10.0f;		//リスポーン時の高さ
+	const float		ENEMY_JUMP_POWER		= 1.0f;			//ジャンプ力
 	const int		ACT_PROBABILITY			= 50;			//行動の確率
 
 protected:
@@ -79,6 +80,7 @@ protected:
 	bool			m_StunMoveFlag[3];						//スタン状態の動きフラグ
 	bool			m_LookOnFlag;							//ロックオンされているフラグ
 	bool			m_HitBlockFlag;							//ステージブロックに当たっている
+	bool			m_ProgressImpossibleFlag;				//進行不能フラグ
 	int				m_iItemIndex;							//発見してるアイテムの番号
 	int				m_iEffectHnadle[ENEMY_REACTION_NUM];	//エフェクトハンドル
 
@@ -109,6 +111,9 @@ protected:
 	//リスポーン
 	void			Respawn();
 
+	//プレイヤーに当たった時の処理
+	void			HitPlayer(CollisionBase* hitBase);
+
 public:
 	//生存フラグを取得
 	bool			GetIsUse() { return m_IsUse; }
@@ -136,6 +141,10 @@ public:
 	FOUND_ID		GetFoundType() { return m_FoundType; }
 	//重力を設定
 	void			SetGravity(float set) { m_fGravityAdd = set; }
+	//進行不能フラグを取得
+	bool			GetProgressImpossibleFlag() { return m_ProgressImpossibleFlag; }
+	//進行不能フラグを設定
+	void			SetProgressImpossibleFlag(bool set) { m_ProgressImpossibleFlag = set; }
 
 protected:
 	/*--------------------------------

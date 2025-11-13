@@ -34,12 +34,35 @@ private:
 public:
 	void			Init(VECTOR vStartPos, VECTOR vGoalPos, float vStartRot, float vGoalRot);
 	void			Step(Player& pl,ItemManager& itemMana, StageBlockManager& block, bool gameOverFlag, bool clearFlag);
+	void			Fin();
 	
 	//サイズを取得
 	VECTOR			GetSize() { return ENEMY_TYPE1_SIZE; }
 	//移動先のポイントを設定
 	void			SetEnemyPointPos(VECTOR set) { m_vNextMovePos = set; }
 
+	//コリジョン情報の呼び出し
+	CollisionAABB	GetCollision() { return m_Collision; }
+	//コリジョン情報の設定
+	void			SetCollision(CollisionAABB set) { m_Collision = set; }
+
+	//当たった処理
+	void			Hit(CollisionBase* hitCollision, COLLISION_AXIS axis);
+	//コリジョンを登録
+	void			RegisterCollision() { CollisionManager::GetInstance()->RegisterCollision(&m_Collision); }
+
 private:
 	void			Move(VECTOR plPos, float speed);
+
+	//X軸の当たった処理
+	void			HitX(VECTOR hitPos, VECTOR hitSize);
+	//Y軸の当たった処理
+	void			HitY(VECTOR hitPos, VECTOR hitSize);
+	//Z軸の当たった処理
+	void			HitZ(VECTOR hitPos, VECTOR hitSize);
+
+	//コリジョン情報の更新
+	void			UpdateCollision();
+	//ステージブロックとの衝突
+	void			HitStageBlock(CollisionBase* hitCollision);
 };

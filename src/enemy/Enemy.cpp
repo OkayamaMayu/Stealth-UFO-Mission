@@ -1,6 +1,7 @@
 #include"Enemy.h"
 #include"DxLib.h"
 #include"../MyLib/MyLib.h"
+#include"../BackGround/StageBlockManager.h"
 
 void EnemyType1::Init(VECTOR vStartPos, VECTOR vGoalPos, float vStartRot, float vGoalRot)
 {
@@ -21,7 +22,7 @@ void EnemyType1::Init(VECTOR vStartPos, VECTOR vGoalPos, float vStartRot, float 
 	m_vRot				= VGet(0.0f, vStartRot, 0.0f);
 
 	//座標、角度を固定
-	Updata();
+	Update();
 	memset(&m_vSpeed, 0, sizeof(VECTOR));
 
 	//移動速度を計算
@@ -33,6 +34,19 @@ void EnemyType1::Init(VECTOR vStartPos, VECTOR vGoalPos, float vStartRot, float 
 	//状態の設定
 	m_MovePoint			= true;
 	m_State				= ENEMY_STATE_MOVE;
+
+	//モデルサイズを設定
+	m_vSize = ENEMY_TYPE1_SIZE;
+	m_vSize.y /= 2.0f;
+
+	//コリジョン情報の設定
+	m_Collision.SetOwner(this);
+	//構造体の設定
+	UpdateCollision();
+	//当たった時の処理
+	m_Collision.SetOnHitCollback([this](CollisionBase* hitCollision, COLLISION_AXIS axis) {Hit(hitCollision, axis); });
+	//情報を登録
+	//CollisionManager::GetInstance()->RegisterCollision(&m_Collision);
 }
 
 void EnemyType1::Step(Player& pl, ItemManager& itemMana, StageBlockManager& block, bool gameOverFlag, bool clearFlag)
@@ -260,11 +274,12 @@ void EnemyType1::Step(Player& pl, ItemManager& itemMana, StageBlockManager& bloc
 	//重力をかける
 	m_fGravityAdd += GRAVITY;
 	m_vNextPos.y += m_fGravityAdd;
+
+	//コリジョン情報の更新
+	UpdateCollision();
 	
 	//アニメ
 	EnemyBase::Step();
-
-	Updata();
 
 	//一定以上落ちたら
 	if (m_vNextPos.y <= DEATH_Y)
@@ -275,6 +290,13 @@ void EnemyType1::Step(Player& pl, ItemManager& itemMana, StageBlockManager& bloc
 			Respawn();
 		}
 	}
+}
+
+void EnemyType1::Fin() {
+	EnemyBase::Fin();
+
+	//当たり判定を削除
+	CollisionManager::GetInstance()->UnRegisterCollision(&m_Collision);
 }
 
 void EnemyType1::Move(VECTOR plPos, float speed)
@@ -313,4 +335,170 @@ void EnemyType1::Move(VECTOR plPos, float speed)
 			}
 		}
 	}
+}
+
+//当たった処理
+void EnemyType1::Hit(CollisionBase* hitCollision, COLLISION_AXIS axis) {
+	//アイテムだと実行しない
+	if (hitCollision->GetCollisionType() >= KIND_ITEM && hitCollision->GetCollisionType() > KIND_BLOCK)
+		return;
+
+	COLLISION_AXIS collisionAxis = axis;
+	if (collisionAxis == AXIS_X || collisionAxis == AXIS_Z)
+		collisionAxis = CollisionManager::GetInstance()->SelectModifyingAxis(&m_Collision, hitCollision);
+
+	//当たった先の情報
+	VECTOR hitPos = {};
+	VECTOR hitSize = {};
+	switch (hitCollision->GetCollisionType())
+	{
+	case TYPE_AABB: {
+		CollisionAABB* hitAABB = static_cast<CollisionAABB*>(hitCollision);
+		hitPos = hitAABB->GetCollision().centerPos;
+		hitSize = hitAABB->GetCollision().size;
+		break;
+	}
+	case TYPE_SPHERE: {
+		CollisionSphere* hitSphere = static_cast<CollisionSphere*>(hitCollision);
+		hitPos = hitSphere->GetCollision().centerPos;
+		hitSize.y = hitSphere->GetCollision().radius;
+		break;
+	}
+	default:
+		break;
+	}
+
+	//発見状態判定
+	HitPlayer(hitCollision);
+
+	//軸を修正
+	switch (collisionAxis)
+	{
+	case AXIS_Y:
+		HitY(hitPos, hitSize);
+		break;
+
+	case AXIS_X:
+		HitX(hitPos, hitSize);
+		HitStageBlock(hitCollision);
+		break;
+
+	case AXIS_Z:
+		HitZ(hitPos, hitSize);
+		HitStageBlock(hitCollision);
+		break;
+
+	default:
+		break;
+	}
+}
+
+//X軸の当たった処理
+void EnemyType1::HitX(VECTOR hitPos, VECTOR hitSize) {
+	if (m_vPos.x == m_vNextPos.x)return;
+
+	//情報を取得
+	AABB MyCollision = m_Collision.GetCollision();
+
+	VECTOR enemyPos = MyCollision.centerPos;
+	VECTOR enemySize = MyCollision.size;
+	if (enemyPos.x < hitPos.x) {
+		//←側にあった
+		enemyPos.x -= (enemyPos.x + enemySize.x) - (hitPos.x - hitSize.x);
+	}
+	if (enemyPos.x > hitPos.x) {
+		//→側に当たった
+		enemyPos.x += (hitPos.x + hitSize.x) - (enemyPos.x - enemySize.x);
+	}
+
+	//適応
+	m_vNextPos.x = enemyPos.x;
+	//コリジョン情報の更新
+	UpdateCollision();
+}
+//Y軸の当たった処理
+void EnemyType1::HitY(VECTOR hitPos, VECTOR hitSize) {
+	if (m_vPos.y == m_vNextPos.y)return;
+
+	//情報を取得
+	AABB MyCollision = m_Collision.GetCollision();
+
+	VECTOR enemyPos = MyCollision.centerPos;
+	VECTOR enemySize = MyCollision.size;
+	if (enemyPos.y > hitPos.y) {
+		//床に当たった
+		enemyPos.y += (hitPos.y + hitSize.y) - (enemyPos.y - enemySize.y);
+	}
+	if (enemyPos.y < hitPos.y) {
+		//天井に当たった
+		enemyPos.y -= (enemyPos.y + enemySize.y) - (hitPos.y - hitSize.y);
+	}
+
+	//重力を初期化
+	HitGravityReset();
+
+	//適応
+	m_vNextPos.y = enemyPos.y;
+	//座標を足元に移動
+	m_vNextPos.y -= enemySize.y;
+	//コリジョン情報の更新
+	UpdateCollision();
+}
+//Z軸の当たった処理
+void EnemyType1::HitZ(VECTOR hitPos, VECTOR hitSize) {
+	if (m_vPos.z == m_vNextPos.z)return;
+
+	//情報を取得
+	AABB MyCollision = m_Collision.GetCollision();
+	VECTOR enemyPos = MyCollision.centerPos;
+	VECTOR enemySize = MyCollision.size;
+
+	//座標の修正
+	if (enemyPos.z < hitPos.z) {
+		enemyPos.z -= (enemyPos.z + enemySize.z) - (hitPos.z - hitSize.z);
+	}
+	if (enemyPos.z > hitPos.z) {
+		enemyPos.z += (hitPos.z + hitSize.z) - (enemyPos.z - enemySize.z);
+	}
+
+	//適応
+	m_vNextPos.z = enemyPos.z;
+	//コリジョン情報の更新
+	UpdateCollision();
+}
+
+//コリジョン情報の更新
+void EnemyType1::UpdateCollision() {
+	AABB setCollision = m_Collision.GetCollision();
+	//サイズを設定
+	setCollision.size = m_vSize;
+	//中心座標を設定
+	setCollision.centerPos = m_vNextPos;
+	setCollision.centerPos.y += setCollision.size.y;
+	//情報を更新
+	m_Collision.SetCollision(setCollision);
+}
+
+//ステージブロックとの衝突
+void EnemyType1::HitStageBlock(CollisionBase* hitCollision) {
+	//ブロックに当たっていなかったら終了
+	if (hitCollision->GetCollisionType() != KIND_STAGE)return;
+	//ブロック情報を受け取る
+	StageBlock* stageBlock = static_cast<StageBlock*>(hitCollision->GetOwner());
+	//衝突したブロックが空気ブロックなら終了
+	if (stageBlock->GetBlockType() == StageBlock::BLOCK_AIR)return;
+
+	//壁に接触しているフラグの設定
+	m_HitBlockFlag = true;
+
+	//床に衝突していたらジャンプさせる
+	if (stageBlock->GetBlockType() <= StageBlock::BLOCK_NORMAL_2) {
+		//ジャンプさせる
+		SetGravity(ENEMY_JUMP_POWER);
+	}
+
+	//移動状態か壁ブロックでなけば終了
+	if (m_State != EnemyBase::ENEMY_STATE_MOVE || stageBlock->GetBlockType() != StageBlock::BLOCK_WALL)return;
+
+	m_ProgressImpossibleFlag = true;
 }

@@ -15,6 +15,8 @@ void EnemyManager::Init(LoadStageData&data)
 		m_EnemyType1	= new EnemyType1[m_iEnemyType1Num];
 	}
 	
+	//kindを個別で分ける変数
+	int kindNum = 0;
 	//エネミーを初期化
 	for (int i = 0; i < m_iEnemyType1Num; i++)
 	{
@@ -26,6 +28,16 @@ void EnemyManager::Init(LoadStageData&data)
 			data.GetEnemyType1MovePos(i),
 			data.GetEnemyType1Rot(i,0),
 			data.GetEnemyType1Rot(i,1));
+
+		//kindを設定する
+		CollisionAABB setCollision= m_EnemyType1[i].GetCollision();
+		setCollision.SetKind(KIND_ENEMY + kindNum);
+		m_EnemyType1[i].SetCollision(setCollision);
+		//コリジョンを登録
+		m_EnemyType1[i].RegisterCollision();
+
+		//次の番号へ変更
+		kindNum++;
 	}
 
 	//エネミー通過ポイントの数を取得
@@ -80,8 +92,11 @@ void EnemyManager::Step(Player& pl, ItemManager& itemMana, StageBlockManager& bl
 			continue;
 
 		//通過ポイントを設定する
-
-		m_EnemyType1[i].SetEnemyPointPos(HitWall(i));
+		if (m_EnemyType1[i].GetProgressImpossibleFlag()) {
+			m_EnemyType1[i].SetEnemyPointPos(HitWall(i));
+			m_EnemyType1[i].SetProgressImpossibleFlag(false);
+		}
+		
 
 		m_EnemyType1[i].Step(pl, itemMana, block, gameOverFlag, clearFlag);
 
