@@ -250,7 +250,7 @@ void PlayCamera::Step(VECTOR vForcus, float fRot, int plState, UFO ufo)
 		m_fPlMoveTime = 0.0f;
 	}
 
-	Updata();
+	Update();
 
 	//ステージ落下状態なら一人称カメラを病める
 	if (m_vPos[MAIN].y <= DEATH_Y / 2)
@@ -295,7 +295,7 @@ void PlayCamera::Step(VECTOR vForcus,float fRot)
 	m_vPos[MAIN].x = m_vPos[SUB].x;
 	m_vPos[MAIN].z = m_vPos[SUB].z;
 
-	Updata();
+	Update();
 }
 //ゲームオーガー演出用
 void PlayCamera::Step(VECTOR plPos, VECTOR vForcus, float fRot)
@@ -323,7 +323,7 @@ void PlayCamera::Step(VECTOR plPos, VECTOR vForcus, float fRot)
 
 	m_vPos[MAIN]	= m_vPos[SUB];
 
-	Updata();
+	Update();
 }
 
 bool PlayCamera::StartStep(VECTOR plPos, VECTOR goalPos)
@@ -359,7 +359,7 @@ bool PlayCamera::StartStep(VECTOR plPos, VECTOR goalPos)
 	pos.y += FORCUS_OFFSET_Y;
 	m_vForcus[MAIN] = m_vForcus[SUB] = pos;
 
-	Updata();
+	Update();
 
 	if (Math::GetDistance(m_vForPos, nextPos) <= 1.0f)
 	{
@@ -408,7 +408,7 @@ bool PlayCamera::StartStep(VECTOR plPos, VECTOR goalPos)
 }
 
 //更新したデータを反映させる
-void PlayCamera::Updata()
+void PlayCamera::Update()
 {
 	//カメラ設定
 	SetCameraPositionAndTargetAndUpVec(m_vPos[MAIN], m_vForcus[MAIN], m_vUp);

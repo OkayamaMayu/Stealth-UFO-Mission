@@ -28,7 +28,7 @@ void CheckPoint::Start()
 	//スケールの設定
 	m_vScale = Vector::MakeVec(MODEL_SCALE);
 	//情報の適応
-	Updata();
+	Update();
 
 	//リスポーンしていなかったらアニメーションを初期化
 	if (!Data::GetReSpawnFlag())

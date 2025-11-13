@@ -29,7 +29,7 @@ public:
 	void Draw();
 
 	//更新したデータを反映させる
-	void Updata();
+	void Update();
 
 	void SetPos(VECTOR set) { pos = set; }
 	void SetRot(float set) { rot.y = set; }

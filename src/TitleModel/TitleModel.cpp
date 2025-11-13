@@ -8,9 +8,9 @@ void TitleModel::Init()
 void TitleModel::Init(VECTOR setPos)
 {
 	Init();
-	m_vPos = setPos;
+	m_vPos = m_vNextPos = setPos;
 
-	CModel::Updata();
+	CModel::Update();
 }
 
 void TitleModel::Load(const char* pFileName, float modelSize, ANIME_ID animeID, float snimeSp, ANIMSTATE animeState )
@@ -21,7 +21,7 @@ void TitleModel::Load(const char* pFileName, float modelSize, ANIME_ID animeID, 
 	
 	m_vScale = Vector::MakeVec(modelSize);
 
-	CModel::Updata();
+	CModel::Update();
 }
 
 void TitleModel::Step()
@@ -34,7 +34,7 @@ void TitleModel::Step()
 	}
 
 	//アップデート
-	Updata();
+	Update();
 	UpdateBlendRate(); 
 	UpdateAnim();
 }

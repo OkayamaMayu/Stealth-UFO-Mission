@@ -35,7 +35,7 @@ public:
 	void	Load();
 	void	Start();
 	void	Step();
-	void	Updata();
+	void	Update();
 	void	Draw(bool drawFrg);
 	void	Fin();
 

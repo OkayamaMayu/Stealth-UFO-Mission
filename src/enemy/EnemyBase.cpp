@@ -8,7 +8,7 @@ void EnemyBase::Init(VECTOR vPos, VECTOR vRot)
 	m_vPos			= m_vNextPos;
 	m_vRot			= vRot;
 	//座標、角度の適応
-	Updata();
+	Update();
 
 	memset(&m_vSpeed, (int)0.0f, sizeof(VECTOR));
 
@@ -64,11 +64,12 @@ void EnemyBase::Start()
 	//アニメーションの再生
 	RequestLoop(ANIMID_DEFFAULT, ANIMATION_SPEED[ANIMID_DEFFAULT]);
 
-	Updata();
+	Update();
 }
 
 void EnemyBase::Draw()
 {
+	Update();
 	CModel::Draw();
 }
 
@@ -363,7 +364,7 @@ void EnemyBase::Respawn()
 	m_State				= ENEMY_STATE_NORMAL;
 	m_FoundType			= FOUND_NEUTRAL;
 	m_vNextPos.y		+= RESPAWN_POS_Y;
-	Updata();
+	Update();
 }
 
 //エフェクトの停止

@@ -45,7 +45,7 @@ public:
 	//終了処理
 	virtual void	Fin() = 0;
 	//数値の更新処理
-	virtual void	Updata();
+	virtual void	Update();
 	//モデルの描画
 	virtual void	Draw();
 

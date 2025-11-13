@@ -33,7 +33,7 @@ void UFO::Start()
 	//スケールの設定
 	m_vScale = Vector::MakeVec(UFO_SCALE);
 	//一回更新
-	Updata();
+	Update();
 }
 
 void UFO::Step(Player& pl)
@@ -150,7 +150,7 @@ void UFO::Step(Player& pl)
 	//透明度の適応
 	MV1SetOpacityRate(m_iHandle, m_fAlpha);
 
-	Updata();
+	Update();
 	UpdateAnim();
 
 	//標準ライトのスペキュラカラーを変更
@@ -280,7 +280,7 @@ VECTOR UFO::GetSearchPos(VECTOR vPos)
 	return ret;
 }
 
-void UFO::Updata()
+void UFO::Update()
 {
 	if (m_iHandle == -1)	return;
 

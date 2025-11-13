@@ -37,8 +37,10 @@ void CModel::Fin()
 //---------------------------
 //		Å@çXêVèàóù
 //---------------------------
-void CModel::Updata()
+void CModel::Update()
 {
+	m_vPos = m_vNextPos;
+
 	if (m_iHandle == -1)
 		return;
 
@@ -56,7 +58,7 @@ void CModel::Draw()
 	if (m_iHandle == -1)
 		return;
 
-	Updata();
+	Update();
 	MV1DrawModel(m_iHandle);
 }
 

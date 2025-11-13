@@ -116,7 +116,7 @@ public:
 	//開始時の演出
 	bool	StartStep(VECTOR plPos, VECTOR goalPos);
 	//更新したデータを反映させる
-	void	Updata();
+	void	Update();
 	//一人称視点フラグ
 	bool	GetPlVisionFlag() { return m_PlVision; }
 	//一人称カメラにする

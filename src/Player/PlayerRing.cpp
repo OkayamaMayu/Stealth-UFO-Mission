@@ -38,7 +38,7 @@ void PlayerRing::Step()
 	m_vPlRingRot.y += RING_ROT_SPEED;
 }
 
-void PlayerRing::Updata()
+void PlayerRing::Update()
 {
 	MV1SetRotationXYZ(m_iRingHandle, m_vPlRingRot);
 

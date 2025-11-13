@@ -43,7 +43,7 @@ Player::~Player()
 void Player::Init()
 {
 	//プレイヤーの向き設定
-	Updata();
+	Update();
 
 	//変数の初期化
 	m_iJumpCount		= 0;
@@ -84,7 +84,7 @@ void Player::Init(VECTOR setPos, VECTOR setRot)
 	m_vNextRot	= m_vRot;
 	memset(&m_vSpeed, 0, sizeof(VECTOR));
 
-	Updata();
+	Update();
 
 	//リングの初期化
 	PlayerRing.Init(m_vPos, m_vRot);
@@ -114,7 +114,7 @@ void Player::Start()
 	RequestAnimation(ANIMID_DEFFAULT, ANIME_SPEED[ANIMID_DEFFAULT]);
 
 	//情報の更新
-	Updata();
+	Update();
 
 	//リングの準備処理
 	PlayerRing.Start();
@@ -200,7 +200,7 @@ void Player::Step(VECTOR ufoPos,VECTOR vCameraRot,float fRot, bool cameraFlag, b
 	//無敵時間処理
 	FaverTime();
 	//座標更新
-	//Updata();
+	//Update();
 	//アニメ
 	Step();
 
@@ -253,7 +253,7 @@ void Player::Step(VECTOR ufoPos,VECTOR vCameraRot,float fRot, bool cameraFlag, b
 
 void Player::Draw()
 {
-	Updata();
+	Update();
 
 	//リングの描画
 	PlayerRing.Draw(m_GameoverUfoFlag);
@@ -274,13 +274,11 @@ void Player::Fin()
 	CollisionManager::GetInstance()->UnRegisterCollision(&m_Collision);
 }
 
-void Player::Updata()
+void Player::Update()
 {
-	m_vPos = m_vNextPos;
+	CModel::Update();
 
-	CModel::Updata();
-
-	PlayerRing.Updata();
+	PlayerRing.Update();
 }
 
 //=======================================================

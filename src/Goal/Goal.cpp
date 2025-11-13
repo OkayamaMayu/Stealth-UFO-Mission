@@ -9,7 +9,7 @@ void Goal::Init(VECTOR vPos)
 	m_vScale	= MODEL_SCALE_V;
 	m_vStartPos = m_vPos;
 
-	Updata();
+	Update();
 }
 void Goal::Init()
 {
@@ -38,7 +38,7 @@ void Goal::Start()
 	m_iEffectHandle = CEffekseerCtrl::Request(EFFECT_GOAL_POINT, vPos, true);
 	RequestEndLoop(ANIME_DEFAULT, ANIME_SPEED[ANIME_DEFAULT]);
 
-	Updata();
+	Update();
 }
 
 void Goal::Step()
@@ -136,7 +136,7 @@ void Goal::Step()
 
 	UpdateBlendRate();
 	UpdateAnim();
-	Updata();
+	Update();
 }
 
 void Goal::Fin()

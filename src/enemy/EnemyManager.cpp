@@ -79,6 +79,10 @@ void EnemyManager::Step(Player& pl, ItemManager& itemMana, StageBlockManager& bl
 		if (m_EnemyType1 == nullptr)
 			continue;
 
+		//通過ポイントを設定する
+
+		m_EnemyType1[i].SetEnemyPointPos(HitWall(i));
+
 		m_EnemyType1[i].Step(pl, itemMana, block, gameOverFlag, clearFlag);
 
 		if (m_EnemyType1[i].GetFoundType() == EnemyBase::FOUND_PLAYER)
@@ -103,13 +107,13 @@ void EnemyManager::Step(Player& pl, ItemManager& itemMana, StageBlockManager& bl
 }
 
 
-void EnemyManager::Updata()
+void EnemyManager::Update()
 {
 	for (int i = 0; i < m_iEnemyType1Num; i++)
 	{
 		if (m_EnemyType1 == nullptr)
 			continue;
-		m_EnemyType1[i].Updata();
+		m_EnemyType1[i].Update();
 	}
 }
 
@@ -171,12 +175,6 @@ VECTOR EnemyManager::HitWall(int ID)
 	}
 
 	return nextPoint;
-}
-
-//ジャンプ：該当エネミー
-void EnemyManager::HitJump(int ID)
-{
-	m_EnemyType1[ID].SetGravity(ENEMY_JUMP_POWER);
 }
 
 void EnemyManager::ItemTarget(ItemManager& itemMana, Player& pl, float rot, VECTOR vFocus, bool throwFlag)

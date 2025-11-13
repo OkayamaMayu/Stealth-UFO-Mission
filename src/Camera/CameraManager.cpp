@@ -56,13 +56,13 @@ void CameraManager::Updeta()
 	{
 	case CAMERA_ID_PLAY:	//プレイヤーカメラ
 
-		playCamera.Updata();
+		playCamera.Update();
 
 		break;
 
 	case CAMERA_ID_DEBUG:	//デバックカメラ
 
-		debugCamera.Updata();
+		debugCamera.Update();
 
 		break;
 	default:

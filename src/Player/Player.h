@@ -84,7 +84,7 @@ public:
 	void Step(VECTOR ufoPos, VECTOR vCameraRot, float fRot, bool cameraFlag, bool gameoverFlag);
 	void Draw();
 	void Fin();
-	void Updata();
+	void Update();
 
 	//–³“GŽžŠÔƒtƒ‰ƒOŽæ“¾
 	bool		GetFeverTimeFlag() { return m_FeverTime; }

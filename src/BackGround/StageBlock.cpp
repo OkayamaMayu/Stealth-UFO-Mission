@@ -10,7 +10,7 @@ void StageBlock::Init(SET_BLOCK blockType, VECTOR setPos) {
 	//ブロックタイプを設定
 	m_Type = blockType;
 	//座標を取得
-	m_vPos = setPos;
+	m_vPos = m_vNextPos = setPos;
 	//ハンドルを初期化
 	m_iHandle = -1;
 	//描画フラグを初期化

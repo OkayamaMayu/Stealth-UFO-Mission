@@ -12,7 +12,7 @@ void Item::Init(VECTOR setPos, VECTOR setRot)
 	m_vNextPos		= m_vPos;
 	m_vRot			= setRot;
 
-	Updata();
+	Update();
 }
 
 void Item::Init()
@@ -55,7 +55,7 @@ void Item::Start()
 	m_iHandle	= m_iDrawHandle[0];
 	MV1SetScale(m_iHandle, m_vScale);
 
-	Updata();
+	Update();
 }
 
 void Item::Step(VECTOR plPos, float plRot, VECTOR plSpeed, bool plVisionFlag, bool blockModeFlag, float focusRot)
@@ -161,7 +161,7 @@ void Item::Step(VECTOR plPos, float plRot, VECTOR plSpeed, bool plVisionFlag, bo
 	}
 
 	//ç¿ïWçXêV
-	Updata();	
+	Update();	
 }
 
 void Item::Draw()
@@ -326,7 +326,7 @@ void Item::CatchMove(VECTOR plPos, float plRot, VECTOR plSpeed, bool plVisionFla
 
 	m_vPos = m_vNextPos;
 
-	Updata();
+	Update();
 }
 
 //ìäÇ∞ÇÁÇÍÇΩãììÆ

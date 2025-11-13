@@ -34,12 +34,12 @@ void Laser::Start()
 	//エフェクトの再生
 	m_iEffectHandle = CEffekseerCtrl::Request(EFFECT_LASER, m_vNextPos, true);
 	//情報の更新
-	Updata();
+	Update();
 }
 
 void Laser::Step()
 {
-	Updata();
+	Update();
 
 	//長さが変更されていたらエフェクトの位置を変更する
 	if (m_fLaserLength[0] != m_fLaserLength[1])

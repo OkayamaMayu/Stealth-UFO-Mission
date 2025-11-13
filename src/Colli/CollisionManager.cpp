@@ -270,162 +270,6 @@ COLLISION_AXIS CollisionManager::SelectModifyingAxis(CollisionBase* baseA, Colli
 
 //========================================
 
-////エネミー1とブロック
-//void CollisionManager::CheckStageBlockToEnemyType1
-//(EnemyManager& enemyManager, BackGround& block)
-//{
-//	for (int enemyNum = 0; enemyNum < enemyManager.GetEnemyType1MaxNum(); enemyNum++)
-//	{
-//		EnemyType1& enemy = enemyManager.GetEnemyType1(enemyNum);
-//
-//		//座標を取得
-//		VECTOR checkEnemyPos = enemy.GetPos();
-//		//次の座標
-//		VECTOR enemyNextPos = enemy.GetNextPos();
-//
-//		//サイズを取得
-//		VECTOR enemySize = enemy.GetSize();
-//		//直径にする
-//		VECTOR checkEnemySize = VScale(enemySize, 2.0f);
-//		//縦の高さが大きくなり過ぎたので戻す
-//		checkEnemySize.y /= 2.0f;
-//
-//		//ブロックのサイズ
-//		VECTOR blockSize = Vector::MakeVec(BLOCK_SIZE);
-//		//直径にする
-//		VECTOR checkBlockSize = VScale(blockSize, 2.0f);
-//
-//		//床/天井
-//		checkEnemyPos.y = enemyNextPos.y;
-//		for (int i = 0; i < block.GetBlockNum(); i++)
-//		{
-//			VECTOR blockPos = block.GetPos(i);
-//
-//			//一定距離の外側は以下計算させない
-//			if (Math::GetDistance(blockPos, checkEnemyPos) >= COLLISION_DISANCE)
-//				continue;
-//
-//			//当たったら
-//			if (Collision::Rect3D(
-//				VGet(checkEnemyPos.x, checkEnemyPos.y + enemySize.y / 2.0f, checkEnemyPos.z),
-//				checkEnemySize, blockPos, checkBlockSize))
-//			{
-//				//天井と床
-//				if (checkEnemyPos.y < blockPos.y)
-//				{
-//					checkEnemyPos.y += (blockPos.y - blockSize.y) - (checkEnemyPos.y + enemySize.y);
-//					enemy.HitGravityReset();
-//				}
-//				else if (checkEnemyPos.y > blockPos.y)
-//				{
-//					checkEnemyPos.y += (blockPos.y + blockSize.y) - checkEnemyPos.y;
-//					enemy.HitGravityReset();
-//				}
-//
-//				break;
-//			}
-//		}
-//
-//		//壁X
-//		checkEnemyPos.x = enemyNextPos.x;
-//		for (int i = 0; i < block.GetBlockNum(); i++)
-//		{
-//			VECTOR blockPos = block.GetPos(i);
-//
-//			//一定距離の外側は以下計算させない
-//			if (Math::GetDistance(blockPos, checkEnemyPos) >= COLLISION_DISANCE)
-//				continue;
-//
-//			//当たったら
-//			if (Collision::Rect3D(
-//				VGet(checkEnemyPos.x, checkEnemyPos.y + enemySize.y / 2.0f, checkEnemyPos.z),
-//				checkEnemySize, blockPos, checkBlockSize))
-//			{
-//				//ブロックに当たっている
-//				if (block.GetBlockType(i) <= BackGround::BLOCK_WALL)
-//				{
-//					enemy.SetHitBlockFlag(true);
-//				}
-//
-//				//横の壁
-//				if (checkEnemyPos.x < blockPos.x)
-//				{
-//					checkEnemyPos.x += (blockPos.x - blockSize.x) - (checkEnemyPos.x + enemySize.x);
-//				}
-//				else if (checkEnemyPos.x > blockPos.x)
-//				{
-//					checkEnemyPos.x += (blockPos.x + blockSize.x) - (checkEnemyPos.x - enemySize.x);
-//				}
-//
-//				//床に衝突したらジャンプ
-//				if (block.GetBlockType(i) == BackGround::BLOCK_NORMAL_1 ||
-//					block.GetBlockType(i) == BackGround::BLOCK_NORMAL_2)
-//				{
-//					enemyManager.HitJump(enemyNum);
-//				}
-//
-//				//移動状態かつ壁に衝突したら中継ポイントへ
-//				if (enemy.GetState() == EnemyBase::ENEMY_STATE_MOVE && block.GetBlockType(i) == BackGround::BLOCK_WALL)
-//				{
-//					enemy.SetEnemyPointPos(enemyManager.HitWall(enemyNum));
-//				}
-//
-//				break;
-//			}
-//		}
-//
-//		//壁Z
-//		checkEnemyPos.z = enemyNextPos.z;
-//		for (int i = 0; i < block.GetBlockNum(); i++)
-//		{
-//			VECTOR blockPos = block.GetPos(i);
-//
-//			//一定距離の外側は以下計算させない
-//			if (Math::GetDistance(blockPos, checkEnemyPos) >= COLLISION_DISANCE)
-//				continue;
-//
-//			//当たったら
-//			if (Collision::Rect3D(
-//				VGet(checkEnemyPos.x, checkEnemyPos.y + enemySize.y / 2.0f, checkEnemyPos.z),
-//				checkEnemySize, blockPos, checkBlockSize))
-//			{
-//				//ブロックに当たっている
-//				if (block.GetBlockType(i) <= BackGround::BLOCK_WALL)
-//				{
-//					enemy.SetHitBlockFlag(true);
-//				}
-//
-//				//手前と奥の壁
-//				if (checkEnemyPos.z < blockPos.z)
-//				{
-//					checkEnemyPos.z += (blockPos.z - blockSize.z) - (checkEnemyPos.z + enemySize.z);
-//				}
-//				else if (checkEnemyPos.z > blockPos.z)
-//				{
-//					checkEnemyPos.z += (blockPos.z + blockSize.z) - (checkEnemyPos.z - enemySize.z);
-//				}
-//
-//				//床に衝突したらジャンプ
-//				if (block.GetBlockType(i) == BackGround::BLOCK_NORMAL_1 ||
-//					block.GetBlockType(i) == BackGround::BLOCK_NORMAL_2)
-//				{
-//					enemyManager.HitJump(enemyNum);
-//				}
-//
-//				//移動状態かつ壁に衝突したら中継ポイントへ
-//				if (enemy.GetState() == EnemyBase::ENEMY_STATE_MOVE&& block.GetBlockType(i)== BackGround::BLOCK_WALL)
-//				{
-//					enemy.SetEnemyPointPos(enemyManager.HitWall(enemyNum));
-//				}
-//
-//				break;
-//			}
-//		}
-//
-//		enemy.SetPos(checkEnemyPos);
-//		enemy.Updata();
-//	}
-//}
 ////ブロックとアイテム
 //bool CollisionManager::CheckStageBlockToItem(ItemManager& itemManager, BackGround& block)
 //{
@@ -557,7 +401,7 @@ COLLISION_AXIS CollisionManager::SelectModifyingAxis(CollisionBase* baseA, Colli
 //		}
 //
 //		item.SetPos(checkItemPos);
-//		item.Updata();
+//		item.Update();
 //	}
 //
 //	return hitGroundFlag;
@@ -970,11 +814,7 @@ COLLISION_AXIS CollisionManager::SelectModifyingAxis(CollisionBase* baseA, Colli
 //			foundFlag = true;
 //		}
 //
-//		//当たっていて気絶状態でなかったら発見状態にする
-//		if (foundFlag&& enemy.GetState() != EnemyBase::ENEMY_STATE_STUN)
-//		{
-//			enemy.PlayerDiscovery();
-//		}
+//		
 //
 //		enemy.SetNextPos(checkEnemyPos);
 //		player.SetNextPos(checkPlayerPos);

@@ -105,7 +105,7 @@ public:
 	void CheckUfoToCamera(VECTOR cameraPos, bool plVisionFlag, float discoveryRange);
 
 private:
-	void Updata();
+	void Update();
 	//‘Ò‹@
 	void Stay(VECTOR plPos, bool safetyAreaFlag);	
 	//ˆÚ“®

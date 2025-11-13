@@ -88,7 +88,7 @@ void DebugCamera::Draw()
 }
 
 //更新したデータを反映させる
-void DebugCamera::Updata()
+void DebugCamera::Update()
 {
 	//カメラ設定
 	SetCameraPositionAndAngle(pos, rot.x, rot.y, rot.z);

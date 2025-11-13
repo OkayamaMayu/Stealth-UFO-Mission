@@ -25,7 +25,6 @@ private:
 	const float		TARGET_ROT_SPEED				= 0.01f;	//ターゲット画像の回転スピード
 	const float		BILLBOARD_POS					= 0.5f;		//ビルボード表示の位置
 	const float		BILLBOARD_SIZE					= 20.0f;	//ビルボード表示のサイズ
-	const float		ENEMY_JUMP_POWER				= 1.0f;		//ジャンプ力
 	const float		RANGE_CAMERA					= 0.2f;		//カメラとの距離
 	const float		VIEW_RANGE_RANGE				= 60.0f;	//視界範囲
 	const float		FIELD_OF_VIEW					= 200.0f;	//視野角
@@ -50,7 +49,7 @@ public:
 	void		Load();
 	void		Start();
 	void		Step(Player& pl,ItemManager& itemMana, StageBlockManager& block, bool gameOverFlag, bool clearFlag);
-	void		Updata();
+	void		Update();
 	void		Draw();
 	void		Fin();
 
@@ -72,8 +71,6 @@ public:
 	VECTOR		GetEnemyPoint(int ID) { return m_vEnemyPointPos[ID]; }
 	//壁の衝突：該当エネミー1
 	VECTOR		HitWall(int ID);
-	//ジャンプ：該当エネミー
-	void		HitJump(int ID);
 	//サイズを取得
 	VECTOR		GetEnemyType1Size() { return m_EnemyType1[0].GetSize(); }
 };
