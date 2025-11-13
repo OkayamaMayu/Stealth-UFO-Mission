@@ -135,7 +135,7 @@ void UFO::Step(Player& pl)
 	m_vDrawPos		= m_vPos;
 	m_vDrawPos.y	+= m_fUpPos;
 
-	//高さを適応
+	//高さを適用
 	m_vScale		= Vector::MakeVec(m_fScale);
 
 	//半透明にする処理
@@ -147,7 +147,7 @@ void UFO::Step(Player& pl)
 	{
 		Math::MatchSpecifiedNum(m_fAlpha, ALPHA_MIN, ALPHA_SPEED);
 	}
-	//透明度の適応
+	//透明度の適用
 	MV1SetOpacityRate(m_iHandle, m_fAlpha);
 
 	Update();

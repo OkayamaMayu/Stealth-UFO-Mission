@@ -202,7 +202,7 @@ bool CollisionManager::Collision(LineSegment collisionA, CollisionBase* baseB) {
 }
 
 //修正軸を選ぶ
-COLLISION_AXIS CollisionManager::SelectModifyingAxis(CollisionBase* baseA, CollisionBase* baseB) {
+COLLISION_AXIS CollisionManager::SelectModifyingAxis(EditAxisFlag editAxisFlag, CollisionBase* baseA, CollisionBase* baseB) {
 	//情報を取得
 	VECTOR baseAPos = {};
 	VECTOR baseASize = {};
@@ -247,6 +247,7 @@ COLLISION_AXIS CollisionManager::SelectModifyingAxis(CollisionBase* baseA, Colli
 
 	//当たった後の処理を分岐
 	float differenceX = 0.0f;
+	float differenceY = 0.0f;
 	float differenceZ = 0.0f;
 	//X軸の差を求める
 	if (baseAPos.x < baseBPos.x) {
@@ -254,6 +255,15 @@ COLLISION_AXIS CollisionManager::SelectModifyingAxis(CollisionBase* baseA, Colli
 	}
 	else if (baseAPos.x > baseBPos.x) {
 		differenceX = (baseBPos.x + baseBSize.x) - (baseAPos.x - baseASize.x);
+	}
+	//Y軸の差を求める
+	if (baseAPos.y > baseBPos.y) {
+		//床に当たった
+		differenceY = (baseBPos.y + baseBSize.y) - (baseAPos.y - baseASize.y);
+	}
+	else if (baseAPos.y < baseBPos.y) {
+		//天井に当たった
+		differenceY -= (baseAPos.y + baseASize.y) - (baseBPos.y - baseBSize.y);
 	}
 	//Z軸の差を求める
 	if (baseAPos.z < baseBPos.z) {
@@ -263,9 +273,14 @@ COLLISION_AXIS CollisionManager::SelectModifyingAxis(CollisionBase* baseA, Colli
 		differenceZ = (baseBPos.z + baseBSize.z) - (baseAPos.z - baseASize.z);
 	}
 
+	if (!editAxisFlag.x)differenceX = INFINITY;
+	if (!editAxisFlag.y)differenceY = INFINITY;
+	if (!editAxisFlag.z)differenceZ = INFINITY;
+
 	//小さいほうを修正軸として返す
-	if (differenceX < differenceZ)return AXIS_X;
-	if (differenceX > differenceZ)return AXIS_Z;
+	if (differenceZ < differenceX && differenceZ < differenceY)return AXIS_Z;
+	if (differenceY < differenceX && differenceY < differenceZ)return AXIS_Y;
+	return AXIS_X;
 }
 
 //========================================
@@ -429,7 +444,7 @@ COLLISION_AXIS CollisionManager::SelectModifyingAxis(CollisionBase* baseA, Colli
 //		//リングが一定まで落ちた
 //		if (checkPlayerPos.y <= DEATH_Y / 2)
 //		{
-//			//座標を適応
+//			//座標を適用
 //			player.SetRingPos(checkPlayerPos);
 //			//リングを非表示
 //			player.SetDrawRingFlag(false);
@@ -511,7 +526,7 @@ COLLISION_AXIS CollisionManager::SelectModifyingAxis(CollisionBase* baseA, Colli
 //			//レーザーが一定まで伸びた
 //			if (laserMovePoint > laser.LASER_MAX_LENGTH)
 //			{
-//				//座標を適応
+//				//座標を適用
 //				laser.SetNextPos(laserPos[1]);
 //				laser.SetLaserLength(laserMovePoint);
 //
@@ -530,7 +545,7 @@ COLLISION_AXIS CollisionManager::SelectModifyingAxis(CollisionBase* baseA, Colli
 //				{
 //					laserFlag = true;
 //
-//					//座標を適応
+//					//座標を適用
 //					laserPos[1] = blockPos;
 //					VECTOR nextPos = laserPos[1];
 //					VECTOR laserVec = Math::GetMoveVec(laserRot.y, BLOCK_SIZE);
@@ -904,7 +919,7 @@ COLLISION_AXIS CollisionManager::SelectModifyingAxis(CollisionBase* baseA, Colli
 //			//レーザーが一定まで伸びた
 //			if (laserMovePoint > laser.GetLaserLength())
 //			{
-//				//座標を適応
+//				//座標を適用
 //				laser.SetNextPos(laserPos[1]);
 //				laser.SetLaserLength(laserMovePoint);
 //
@@ -925,7 +940,7 @@ COLLISION_AXIS CollisionManager::SelectModifyingAxis(CollisionBase* baseA, Colli
 //					continue;
 //				else
 //				{
-//					//座標を適応
+//					//座標を適用
 //					laser.SetNextPos(laserPos[1]);
 //					laser.SetLaserLength(laserMovePoint);
 //

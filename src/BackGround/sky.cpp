@@ -6,7 +6,7 @@ void Sky::Init(VECTOR cameraPos)
 	//変数の初期化
 	memset(&m_vRot, 0, sizeof(VECTOR));
 	
-	//適応
+	//適用
 	m_vPos = cameraPos;
 	for (int i = 0; i < MODEL_NUM; i++)
 	{
@@ -29,7 +29,7 @@ void Sky::Start()
 	VECTOR scale = Vector::MakeVec(Sky::MODEL_SCALE);
 	for(int i=0;i<MODEL_NUM;i++)
 	{
-		//モデルスケールを適応
+		//モデルスケールを適用
 		MV1SetScale(m_iHandle[i], scale);
 	}
 }
@@ -40,16 +40,16 @@ void Sky::Step(VECTOR cameraPos)
 	m_vRot.y += SKY_SPEED;
 	m_vRot.x += SKY_SPEED / 2;
 
-	//変数の適応
+	//変数の適用
 	m_vPos = cameraPos;
 	for (int i = 0; i < MODEL_NUM; i++)
 	{
-		//座標を適応
+		//座標を適用
 		MV1SetPosition(m_iHandle[i], m_vPos);	
-		//スカイドームのみ回転を適応する
+		//スカイドームのみ回転を適用する
 		if(i== SKY_DOME)
 		{
-			//回転を適応
+			//回転を適用
 			MV1SetRotationXYZ(m_iHandle[i], m_vRot);
 		}
 	}

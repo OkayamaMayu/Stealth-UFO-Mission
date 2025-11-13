@@ -7,7 +7,7 @@ void EnemyBase::Init(VECTOR vPos, VECTOR vRot)
 	m_vNextPos		= m_vSpawnPos;
 	m_vPos			= m_vNextPos;
 	m_vRot			= vRot;
-	//座標、角度の適応
+	//座標、角度の適用
 	Update();
 
 	memset(&m_vSpeed, (int)0.0f, sizeof(VECTOR));

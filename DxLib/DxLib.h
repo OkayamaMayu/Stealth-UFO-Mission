@@ -2367,7 +2367,7 @@ extern	int			SetNetWorkCloseAfterLostFlag(	int Flag ) ;																			// Ú‘
 extern	int			GetNetWorkCloseAfterLostFlag(	void ) ;																				// Ú‘±‚ªØ’f‚³‚ê‚½’¼Œã‚ÉÚ‘±ƒnƒ“ƒhƒ‹‚ğ‰ğ•ú‚·‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO‚ğæ“¾‚·‚é
 //extern	int			SetProxySetting( int UseFlag, const char *Address, int Port ) ;														// ‚g‚s‚s‚o’ÊM‚Åg—p‚·‚éƒvƒƒLƒVİ’è‚ğs‚¤
 //extern	int			GetProxySetting( int *UseFlagBuffer, char *AddressBuffer, int *PortBuffer ) ;										// ‚g‚s‚s‚o’ÊM‚Åg—p‚·‚éƒvƒƒLƒVİ’è‚ğæ“¾‚·‚é
-//extern	int			SetIEProxySetting( void ) ;																							// ‚h‚d‚ÌƒvƒƒLƒVİ’è‚ğ“K‰‚·‚é
+//extern	int			SetIEProxySetting( void ) ;																							// ‚h‚d‚ÌƒvƒƒLƒVİ’è‚ğ“K—p‚·‚é
 
 extern 	int			NetWorkRecv(			int NetHandle, void *Buffer, int Length ) ;														// óM‚µ‚½ƒf[ƒ^‚ğ“Ç‚İ‚Ş
 extern	int			NetWorkRecvToPeek(		int NetHandle, void *Buffer, int Length ) ;														// óM‚µ‚½ƒf[ƒ^‚ğ“Ç‚İ‚ŞA“Ç‚İ‚ñ‚¾ƒf[ƒ^‚Íƒoƒbƒtƒ@‚©‚çíœ‚³‚ê‚È‚¢
@@ -3036,7 +3036,7 @@ extern	int			SetBlendGraphParam(					int BlendGraph, int BlendType, ... ) ;					
 //		int			SetBlendGraphParam(					int BlendGraph, int BlendType = DX_BLENDGRAPHTYPE_WIPE, int BorderParam = ‹«ŠEˆÊ’u(‚O`‚Q‚T‚T), int BorderRange = ‹«ŠE•(w’è‚Å‚«‚é’l‚Í‚PA‚U‚SA‚P‚Q‚WA‚Q‚T‚T‚Ì‚S‚Â) ) ;
 //		int			SetBlendGraphParam(					int BlendGraph, int BlendType = DX_BLENDGRAPHTYPE_ALPHA ) ;
 extern	int			SetBlendGraphPosition(				int x, int y ) ;												// ƒuƒŒƒ“ƒh‰æ‘œ‚Ì‹N“_À•W‚ğƒZƒbƒg‚·‚é
-extern	int			SetBlendGraphPositionMode(			int BlendGraphPositionMode /* DX_BLENDGRAPH_POSMODE_DRAWGRAPH ‚È‚Ç */ ) ;	// ƒuƒŒƒ“ƒh‰æ‘œ‚Ì“K‰À•Wƒ‚[ƒh‚ğİ’è‚·‚é
+extern	int			SetBlendGraphPositionMode(			int BlendGraphPositionMode /* DX_BLENDGRAPH_POSMODE_DRAWGRAPH ‚È‚Ç */ ) ;	// ƒuƒŒƒ“ƒh‰æ‘œ‚Ì“K—pÀ•Wƒ‚[ƒh‚ğİ’è‚·‚é
 extern	int			SetDrawBright(						int RedBright, int GreenBright, int BlueBright ) ;				// •`‰æ‹P“x‚ğİ’è‚·‚é
 extern	int			GetDrawBright(						int *Red, int *Green, int *Blue ) ;								// •`‰æ‹P“x‚ğæ“¾‚·‚é
 extern	int			SetDrawAddColor(					int Red, int Green, int Blue ) ;								// •`‰æƒJƒ‰[‚É‰ÁZ‚·‚éF‚ğİ’è‚·‚é( Red, Green, Blue : ‰ÁZ‚·‚éF( 0 = 0%  255 = 100%  -255 = -100% ) ( ƒ}ƒCƒiƒX‚Ì’l‚ÅŒ¸Z‚à‚Å‚«‚Ü‚· ) )

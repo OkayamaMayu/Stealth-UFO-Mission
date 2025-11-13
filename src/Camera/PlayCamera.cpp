@@ -215,11 +215,11 @@ void PlayCamera::Step(VECTOR vForcus, float fRot, int plState, UFO ufo)
 		}
 	}
 	
-	//適応
+	//適用
 	m_vForcus[MAIN]		= m_vForcus[SUB];
 	if (!m_PlVision)
 	{
-		//視点座標を適応
+		//視点座標を適用
 		m_vForcus[MAIN].x = vForcusMain.x;
 		m_vForcus[MAIN].z = vForcusMain.z;
 	}

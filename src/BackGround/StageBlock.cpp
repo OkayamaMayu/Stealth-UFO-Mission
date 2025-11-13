@@ -63,7 +63,7 @@ void StageBlock::Step() {
 		Math::MatchSpecifiedNum(nextAlpha, SEMITRANSPARENT_ALPHA, SEMITRANSPARENT_ALPHA_SPEED);
 	}
 
-	//透明度を適応する
+	//透明度を適用する
 	m_fAlpha = nextAlpha;
 	MV1SetOpacityRate(m_iHandle, m_fAlpha);
 }

@@ -6,7 +6,7 @@
 class Vector
 {
 public:
-	//指定された数をすべてに適応する
+	//指定された数をすべてに適用する
 	static VECTOR	MakeVec(float set) { return { set,set,set }; }
 
 	//ベクトル作成

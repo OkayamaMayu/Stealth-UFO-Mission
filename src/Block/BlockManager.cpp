@@ -46,7 +46,7 @@ bool BlockManager::Step(bool setModeFlag)
 		}
 	}
 
-	//座標の適応
+	//座標の適用
 	MV1SetPosition(m_iHandle, m_vSetBlockPos);
 
 	return false;
