@@ -127,6 +127,9 @@ public:
 	//リングの座標を取得
 	VECTOR		GetRingPos() { return PlayerRing.GetRingPos(); }
 
+	//当たった処理
+	void		Hit(CollisionBase* hitCollision, COLLISION_AXIS axis);
+
 private:
 	//移動処理
 	void		Move(VECTOR vCameraRot, float fRot, bool cameraFlag);
@@ -135,15 +138,15 @@ private:
 	//無敵時間
 	void		FaverTime();
 
-	//当たった処理
-	void		Hit(CollisionBase* hitCollision);
-
 	//X軸の当たった処理
-	void		HitX(CollisionBase hitCollision);
+	void		HitX(VECTOR hitPos,VECTOR hitSize);
 	//Y軸の当たった処理
-	void		HitY(CollisionBase hitCollision);
+	void		HitY(VECTOR hitPos, VECTOR hitSize);
 	//Z軸の当たった処理
-	void		HitZ(CollisionBase hitCollision);
+	void		HitZ(VECTOR hitPos, VECTOR hitSize);
+
+	//コリジョン情報の更新
+	void		UpdateCollision();
 
 //アニメ=====================================================
 public:
