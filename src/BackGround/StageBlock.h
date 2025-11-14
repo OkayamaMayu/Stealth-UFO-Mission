@@ -37,7 +37,9 @@ public:
 	void Fin();
 
 	//ブロックのタイプを取得
-	SET_BLOCK	GetBlockType() { return m_Type; }
+	SET_BLOCK		GetBlockType() { return m_Type; }
 	//ブロックを透かすかの設定
-	void		SetIsDraw(bool set) { m_IsDraw = set; }
+	void			SetIsDraw(bool set) { m_IsDraw = set; }
+	//コリジョン情報を取得
+	CollisionAABB	GetCollision() { return m_Collision; }
 };

@@ -7,9 +7,11 @@ const float BLOCK_SURVIVAL_TIME = 10.0f;	//ブロックの生存時間
 class Block :public CModel
 {
 private:
-	CollisionAABB	m_Collision;	//コリジョン情報
-	float			m_fBlockCount;	//消えるまでのカウント
-	bool			m_IsUse;		//設置フラグ
+	const float		BLOCK_SIZE = 5.0f;	//ブロックのサイズ
+
+	CollisionAABB	m_Collision;		//コリジョン情報
+	float			m_fBlockCount;		//消えるまでのカウント
+	bool			m_IsUse;			//設置フラグ
 
 public:
 	void Init();
@@ -24,4 +26,12 @@ public:
 
 public:
 	bool GetIsUse() { return m_IsUse; }
+	//コリジョン情報を取得
+	CollisionAABB	GetCollision() { return m_Collision; }
+	//コリジョン情報の更新
+	void			UpdateCollision();
+	//コリジョン情報の設定
+	void			SetCollision(CollisionAABB set) { m_Collision = set; }
+	//コリジョンを登録
+	void			RegisterCollision() { CollisionManager::GetInstance()->RegisterCollision(&m_Collision); }
 };

@@ -700,13 +700,8 @@ void PlayScene::ItemCatch()
 
 void PlayScene::Collision()
 {
-	//一人称カメラになっていたら
-	//if (cameraMan.GetPlVisionFlag())
-	//	//ブロックの設置場所を計算する
-	//	CollisionManager::GetInstance()->CheckSetBlockPos		(cameraMan, block, backGraund, player.GetSetBlockFlag());
-	//else
-	//	//ブロックを配置できないようにする
-	//	block.SetBlockSetFlag(false);
+	//ブロックの設置場所を計算する
+	block.CheckSetBlockPos	(cameraMan, backGraund, player.GetSetBlockFlag());
 
 	//CollisionManager::GetInstance()->CheckGoalToPayer			(player, goal);				//プレイヤーとゴール
 	//CollisionManager::GetInstance()->CheckEnemyToPlayer			(player, enemy);			//プレイヤーとエネミー

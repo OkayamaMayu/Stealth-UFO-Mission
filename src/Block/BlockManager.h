@@ -1,5 +1,7 @@
 #pragma once
 #include"Block.h"
+#include"../Camera/CameraManager.h"
+#include"../BackGround/StageBlockManager.h"
 
 const int	BLOCK_MAX_NUM = 20;		//最大設置可能数
 class BlockManager
@@ -34,5 +36,6 @@ public:
 	void	SetBlockPos(VECTOR set) { m_vSetBlockPos = set; }
 	bool	GetBlockSetFlag() { return m_BlockSetFlag; }
 	void	SetBlockSetFlag(bool set) { m_BlockSetFlag = set; }
-
+	//配置ブロック位置の設定
+	void	CheckSetBlockPos(CameraManager& cameraManager, StageBlockManager& stage, bool setMode);
 };
