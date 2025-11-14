@@ -627,10 +627,8 @@ bool Player::ThrowItem(ItemManager& itemMana, float camaraRot,float focusRot)
 //当たった処理
 void Player::Hit(CollisionBase* hitCollision, COLLISION_AXIS axis) {
 	//アイテムだと実行しない
-	if (hitCollision->GetCollisionType() >= KIND_ITEM && hitCollision->GetCollisionType() > KIND_BLOCK)
+	if (hitCollision->GetKind() >= KIND_ITEM && hitCollision->GetKind() < KIND_BLOCK)
 		return;
-
-
 
 	COLLISION_AXIS collisionAxis = axis;
 
