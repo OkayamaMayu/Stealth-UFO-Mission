@@ -9,6 +9,13 @@ struct EditAxisFlag
 	bool z;
 };
 
+//当たり判定の軸
+enum COLLISION_AXIS {
+	AXIS_X,
+	AXIS_Y,
+	AXIS_Z,
+};
+
 class CModel
 {
 public:
@@ -121,5 +128,9 @@ public:
 
 private:
 	//完全にアニメをデタッチ
-	void			DetachAnim();
+	void			DetachAnim();	
+
+protected:
+	//修正可能軸を設定する
+	void SetEditAxisFlag();
 };

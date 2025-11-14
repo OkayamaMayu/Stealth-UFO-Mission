@@ -128,7 +128,7 @@ public:
 	VECTOR		GetRingPos() { return PlayerRing.GetRingPos(); }
 
 	//“–‚½‚Á‚½ˆ—
-	void		Hit(CollisionBase* hitCollision, COLLISION_AXIS axis);
+	void		Hit(CollisionBase* hitCollision);
 
 private:
 	//ˆÚ“®ˆ—

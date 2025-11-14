@@ -314,3 +314,11 @@ void CModel::UpdateBlendRate()
 	// 最新のアニメIDにブレンド率を設定
 	MV1SetAttachAnimBlendRate(m_iHandle, m_AnimData.m_iHandle, m_fBlend);
 }
+
+//修正可能軸を設定する
+void CModel::SetEditAxisFlag() {
+	m_EditAxisFlag.x = m_EditAxisFlag.y = m_EditAxisFlag.z = true;
+	if (m_vPos.x == m_vNextPos.x)m_EditAxisFlag.x = false;
+	if (m_vPos.y == m_vNextPos.y)m_EditAxisFlag.y = false;
+	if (m_vPos.z == m_vNextPos.z)m_EditAxisFlag.z = false;
+}

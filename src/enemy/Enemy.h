@@ -47,7 +47,7 @@ public:
 	void			SetCollision(CollisionAABB set) { m_Collision = set; }
 
 	//“–‚½‚Á‚½ˆ—
-	void			Hit(CollisionBase* hitCollision, COLLISION_AXIS axis);
+	void			Hit(CollisionBase* hitCollision);
 	//ƒRƒŠƒWƒ‡ƒ“‚ð“o˜^
 	void			RegisterCollision() { CollisionManager::GetInstance()->RegisterCollision(&m_Collision); }
 

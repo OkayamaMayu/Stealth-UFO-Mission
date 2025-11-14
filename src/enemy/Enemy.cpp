@@ -44,7 +44,7 @@ void EnemyType1::Init(VECTOR vStartPos, VECTOR vGoalPos, float vStartRot, float 
 	//構造体の設定
 	UpdateCollision();
 	//当たった時の処理
-	m_Collision.SetOnHitCollback([this](CollisionBase* hitCollision, COLLISION_AXIS axis) {Hit(hitCollision, axis); });
+	m_Collision.SetOnHitCollback([this](CollisionBase* hitCollision) {Hit(hitCollision); });
 }
 
 void EnemyType1::Step(Player& pl, ItemManager& itemMana, StageBlockManager& block, bool gameOverFlag, bool clearFlag)
@@ -336,20 +336,14 @@ void EnemyType1::Move(VECTOR plPos, float speed)
 }
 
 //当たった処理
-void EnemyType1::Hit(CollisionBase* hitCollision, COLLISION_AXIS axis) {
+void EnemyType1::Hit(CollisionBase* hitCollision) {
 	//アイテムだと実行しない
 	if (hitCollision->GetKind() >= KIND_ITEM && hitCollision->GetKind() < KIND_BLOCK)
 		return;
 
-	COLLISION_AXIS collisionAxis = axis;
-
 	//修正可能軸を設定する
-	m_EditAxisFlag.x = m_EditAxisFlag.y = m_EditAxisFlag.z = true;
-	if (m_vPos.x == m_vNextPos.x)m_EditAxisFlag.x = false;
-	if (m_vPos.y == m_vNextPos.y)m_EditAxisFlag.y = false;
-	if (m_vPos.z == m_vNextPos.z)m_EditAxisFlag.z = false;
-
-	collisionAxis = CollisionManager::GetInstance()->SelectModifyingAxis(m_EditAxisFlag, &m_Collision, hitCollision);
+	SetEditAxisFlag();
+	COLLISION_AXIS collisionAxis = CollisionManager::GetInstance()->SelectModifyingAxis(m_EditAxisFlag, &m_Collision, hitCollision);
 
 	//当たった先の情報
 	VECTOR hitPos = {};

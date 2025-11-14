@@ -72,24 +72,11 @@ void CollisionManager::Update() {
 			//一定距離の外側は以下計算させない
 			if (Math::GetDistance(m_Collsion[hitMain]->GetOwner()->GetPos(), m_Collsion[hitSub]->GetOwner()->GetPos()) >= COLLISION_DISANCE)continue;
 			
-			//軸ごとに当たっているか調べる
-			//Y軸の当たり判定
+			//当たっているか調べる
 			if (Collision(m_Collsion[hitMain], m_Collsion[hitSub])){
 				//当たっていたら
-				m_Collsion[hitMain]->HitCollision(m_Collsion[hitSub], AXIS_Y);
-				m_Collsion[hitSub]->HitCollision(m_Collsion[hitMain], AXIS_Y);
-			}
-			//X軸の当たり判定
-			if (Collision(m_Collsion[hitMain], m_Collsion[hitSub])) {
-				//当たっていたら
-				m_Collsion[hitMain]->HitCollision(m_Collsion[hitSub], AXIS_X);
-				m_Collsion[hitSub]->HitCollision(m_Collsion[hitMain], AXIS_X);
-			}
-			//Z軸の当たり判定
-			else if (Collision(m_Collsion[hitMain], m_Collsion[hitSub])) {
-				//当たっていたら
-				m_Collsion[hitMain]->HitCollision(m_Collsion[hitSub], AXIS_Z);
-				m_Collsion[hitSub]->HitCollision(m_Collsion[hitMain], AXIS_Z);
+				m_Collsion[hitMain]->HitCollision(m_Collsion[hitSub]);
+				m_Collsion[hitSub]->HitCollision(m_Collsion[hitMain]);
 			}
 		}
 	}
@@ -284,143 +271,6 @@ COLLISION_AXIS CollisionManager::SelectModifyingAxis(EditAxisFlag editAxisFlag, 
 }
 
 //========================================
-
-////ブロックとアイテム
-//bool CollisionManager::CheckStageBlockToItem(ItemManager& itemManager, BackGround& block)
-//{
-//	//地面に当たったかのフラグ
-//	bool hitGroundFlag = false;
-//	for (int itemNum = 0; itemNum < itemManager.GetItemMaxNum(); itemNum++)
-//	{
-//		Item& item = itemManager.GetItem(itemNum);
-//		if (!item.GetIsUse()||item.GetCatchFlag())
-//			continue;
-//
-//		//座標を取得
-//		VECTOR checkItemPos		= item.GetPos();
-//		//次の座標
-//		VECTOR itemNextPos		= item.GetNextPos();
-//		//サイズを取得
-//		VECTOR itemSize			= item.ITEM_SIZE;
-//		//直径にする
-//		VECTOR checkItemSize	= VScale(itemSize, 2.0f);
-//		//ブロックの大きさ
-//		VECTOR blockSize		= Vector::MakeVec(BLOCK_SIZE);
-//		//直径にする
-//		VECTOR checkBgSize		= VScale(blockSize, 2.0f);
-//
-//		//床/天井
-//		checkItemPos.y = itemNextPos.y;
-//		for (int i = 0; i < block.GetBlockNum(); i++)
-//		{
-//			VECTOR blockPos = block.GetPos(i);
-//
-//			//一定距離の外側は以下計算させない
-//			if (Math::GetDistance(blockPos, checkItemPos) >= COLLISION_DISANCE||
-//				block.GetBlockType(i) == block.BLOCK_AIR)
-//				continue;
-//
-//			//当たったら
-//			if (Collision::Rect3D(
-//				VGet(checkItemPos.x, checkItemPos.y, checkItemPos.z),
-//				checkItemSize, blockPos, checkBgSize))
-//			{
-//				//天井と床
-//				if (checkItemPos.y < blockPos.y)
-//				{
-//					checkItemPos.y += (blockPos.y - blockSize.y) - (checkItemPos.y + itemSize.y);
-//					item.HitCeiling();
-//				}
-//				else if (checkItemPos.y > blockPos.y)
-//				{
-//					checkItemPos.y += (blockPos.y + blockSize.y) - (checkItemPos.y - itemSize.y);
-//					
-//					bool isHit = item.HitGround(checkItemPos.y);
-//				
-//					if (isHit && !hitGroundFlag)
-//					{
-//						hitGroundFlag = true;
-//					}
-//				}
-//
-//				break;
-//			}
-//		}
-//
-//		//壁X
-//		checkItemPos.x = itemNextPos.x;
-//		for (int i = 0; i < block.GetBlockNum(); i++)
-//		{
-//			VECTOR blockPos = block.GetPos(i);
-//
-//			//一定距離の外側は以下計算させない
-//			if (Math::GetDistance(blockPos, checkItemPos) >= COLLISION_DISANCE ||
-//				block.GetBlockType(i) == block.BLOCK_AIR)
-//				continue;
-//
-//			//当たったら
-//			if (Collision::Rect3D(
-//				VGet(checkItemPos.x, checkItemPos.y, checkItemPos.z),
-//				checkItemSize, blockPos, checkBgSize))
-//			{
-//				//横の壁
-//				if (checkItemPos.x < blockPos.x)
-//				{
-//					checkItemPos.x += (blockPos.x - blockSize.x) - (checkItemPos.x + itemSize.x);
-//					
-//					item.Reflection();
-//				}
-//				else if (checkItemPos.x > blockPos.x)
-//				{
-//					checkItemPos.x += (blockPos.x + blockSize.x) - (checkItemPos.x - itemSize.x);
-//					
-//					item.Reflection(-1);
-//				}
-//
-//				break;
-//			}
-//		}
-//
-//		//壁Z
-//		checkItemPos.z = itemNextPos.z;
-//		for (int i = 0; i < block.GetBlockNum(); i++)
-//		{
-//			VECTOR blockPos = block.GetPos(i);
-//
-//			//一定距離の外側は以下計算させない
-//			if (Math::GetDistance(blockPos, checkItemPos) >= COLLISION_DISANCE ||
-//				block.GetBlockType(i) == block.BLOCK_AIR)
-//				continue;
-//
-//			//当たったら
-//			if (Collision::Rect3D(
-//				VGet(checkItemPos.x, checkItemPos.y, checkItemPos.z),
-//				checkItemSize, blockPos, checkBgSize))
-//			{
-//				//手前と奥の壁
-//				if (checkItemPos.z < blockPos.z)
-//				{
-//					checkItemPos.z += (blockPos.z - blockSize.z) - (checkItemPos.z + itemSize.z);
-//
-//					item.Reflection();
-//				}
-//				else if (checkItemPos.z > blockPos.z)
-//				{
-//					checkItemPos.z += (blockPos.z + blockSize.z) - (checkItemPos.z - itemSize.z);
-//
-//					item.Reflection(-1);
-//				}
-//
-//				break;
-//			}
-//		}
-//
-//		item.SetPos(checkItemPos);
-//		item.Update();
-//	}
-//
-//	return hitGroundFlag;
-//}
 
 ////ブロックとリング
 //void CollisionManager::CheckStageBlockToPlRing(Player& player, BackGround& block, BlockManager& createBlock)
@@ -708,69 +558,6 @@ COLLISION_AXIS CollisionManager::SelectModifyingAxis(EditAxisFlag editAxisFlag, 
 //				return;
 //	}
 //}
-
-////エネミー1とアイテム
-//bool CollisionManager::CheckEnemyType1ToItem(EnemyManager& enemyManager, ItemManager& itemManager)
-//{
-//	int itemMaxNum = itemManager.GetItemMaxNum();
-//	int enemyMaxNum = enemyManager.GetEnemyType1MaxNum();
-//
-//	//アイテムが衝突したかのフラグ
-//	bool hitItemToEnemyFlag = false;
-//
-//	for (int i = 0; i < itemMaxNum; i++)
-//	{
-//		if (!itemManager.GetItem(i).GetEnemyHitFlag())
-//		{
-//			continue;
-//		}
-//		Item& item = itemManager.GetItem(i);
-//
-//		//アイテムの情報
-//		VECTOR itemPos	= item.GetNextPos();
-//		VECTOR itemRot	= item.GetRot();
-//		VECTOR itemSize = item.ITEM_SIZE;
-//
-//		for (int enemyNum = 0; enemyNum < enemyMaxNum; enemyNum++)
-//		{
-//			//一定距離までは判定しない
-//			if (Math::GetDistance(item.GetPos(), enemyManager.GetEnemyType1(enemyNum).GetPos()) >= COLLISION_DISANCE)
-//				continue;
-//
-//			EnemyType1& enemy = enemyManager.GetEnemyType1(enemyNum);
-//
-//			VECTOR enemyPos = enemy.GetPos();
-//			//座標を取得
-//			VECTOR checkEnemyPos = enemy.GetNextPos();
-//			enemy.GetNextPos();
-//			//サイズを取得
-//			VECTOR enemySize = enemy.GetSize();
-//			//直径にする
-//			VECTOR checkEnemySize = VScale(enemySize, 2.0f);
-//			//縦の高さが大きくなり過ぎたので戻す
-//			checkEnemySize.y /= 2.0f;
-//
-//			//当たる
-//			if (Collision::Rect3D(
-//				VGet(checkEnemyPos.x, checkEnemyPos.y + enemySize.y / 2.0f, checkEnemyPos.z),
-//				checkEnemySize, itemPos, itemSize))
-//			{
-//				Sound::Play(SE_ITEM_HIT);
-//
-//				item.HitEnemy();
-//				enemy.SetState(EnemyBase::ENEMY_STATE_STUN);
-//
-//				if (!hitItemToEnemyFlag)
-//				{
-//					hitItemToEnemyFlag = true;
-//				}
-//			}
-//		}
-//	}
-//
-//	return hitItemToEnemyFlag;
-//}
-//
 
 ////ブロック配置可能位置
 //void CollisionManager::CheckSetBlockPos(CameraManager& cameraManager, BlockManager& createBlock, BackGround& block, bool setMode)
