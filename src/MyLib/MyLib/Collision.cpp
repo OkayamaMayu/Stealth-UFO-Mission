@@ -105,13 +105,16 @@ bool Collision::IsCollidingAABBToAABB(AABB aabbA, AABB aabbB) {
 	VECTOR aabbACenterPos = aabbA.centerPos;
 	VECTOR aabbBCenterPos = aabbB.centerPos;
 
-	if (aabbBCenterPos.x - aabbB.size.x < aabbACenterPos.x + aabbA.size.x &&
-		aabbBCenterPos.x + aabbB.size.x > aabbACenterPos.x - aabbA.size.x &&
-		aabbBCenterPos.y - aabbB.size.y < aabbACenterPos.y + aabbA.size.y &&
-		aabbBCenterPos.y + aabbB.size.y > aabbACenterPos.y - aabbA.size.y &&
-		aabbBCenterPos.z - aabbB.size.z < aabbACenterPos.z + aabbA.size.z &&
-		aabbBCenterPos.z + aabbB.size.z > aabbACenterPos.z - aabbA.size.z
-		)
+	//箱の最小点と最大点
+	VECTOR aabbAMinPos = VSub(aabbA.centerPos, aabbA.size);
+	VECTOR aabbAMaxPos = VAdd(aabbA.centerPos, aabbA.size);
+	//箱の最小点と最大点
+	VECTOR aabbBMinPos = VSub(aabbB.centerPos, aabbB.size);
+	VECTOR aabbBMaxPos = VAdd(aabbB.centerPos, aabbB.size);
+
+	if (aabbAMinPos.x < aabbBMaxPos.x && aabbAMaxPos.x > aabbBMinPos.x &&
+		aabbAMinPos.y < aabbBMaxPos.y && aabbAMaxPos.y > aabbBMinPos.y &&
+		aabbAMinPos.z < aabbBMaxPos.z && aabbAMaxPos.z > aabbBMinPos.z)
 		return true;
 	
 	return false;
