@@ -146,23 +146,23 @@ bool Collision::IsCollidingAABBToSphere(AABB aabb, Sphere sphere) {
 
 //箱と線分の当たり判定
 bool Collision::IsCollidingAABBToLineSegment(AABB aabb, LineSegment lineSegment) {
-	//AABBの最小値
-	VECTOR MinAABB = VSub(aabb.centerPos, aabb.size);
-	//AABBの最大値
-	VECTOR MaxAABB = VAdd(aabb.centerPos, aabb.size);
+	//箱の最小点
+	VECTOR aabbMinPos = VSub(aabb.centerPos, aabb.size);
+	//箱の最大点
+	VECTOR aabbMaxPos = VAdd(aabb.centerPos, aabb.size);
 
 	//線分のベクトル
 	VECTOR lineVec = VSub(lineSegment.endPos, lineSegment.startPos);
 
 	//それぞれのスラグに入る時間
-	float nearX = (MinAABB.x - lineSegment.startPos.x) / lineVec.x;
-	float nearY = (MinAABB.y - lineSegment.startPos.y) / lineVec.y;
-	float nearZ = (MinAABB.z - lineSegment.startPos.z) / lineVec.z;
+	float nearX = (aabbMinPos.x - lineSegment.startPos.x) / lineVec.x;
+	float nearY = (aabbMinPos.y - lineSegment.startPos.y) / lineVec.y;
+	float nearZ = (aabbMinPos.z - lineSegment.startPos.z) / lineVec.z;
 
 	//それぞれのスラグを出る時間
-	float farX = (MaxAABB.x - lineSegment.startPos.x) / lineVec.x;
-	float farY = (MaxAABB.y - lineSegment.startPos.y) / lineVec.y;
-	float farZ = (MaxAABB.z - lineSegment.startPos.z) / lineVec.z;
+	float farX = (aabbMaxPos.x - lineSegment.startPos.x) / lineVec.x;
+	float farY = (aabbMaxPos.y - lineSegment.startPos.y) / lineVec.y;
+	float farZ = (aabbMaxPos.z - lineSegment.startPos.z) / lineVec.z;
 
 	//ベクトルがマイナスの場合はnearとfarを逆転させる
 	if (lineVec.x < 0)swap(nearX, farX);
@@ -177,11 +177,11 @@ bool Collision::IsCollidingAABBToLineSegment(AABB aabb, LineSegment lineSegment)
 	lineFar = min(lineFar, farZ);
 
 	//重なった時間を調べる
-	float overlappingTime = lineFar - lineNear;
+	float overlappingTime = lineFar - lineNear;	
 
 	//0～1の範囲に入っている
 	//正の数だと重なっている
-	if (0 <= lineNear && lineFar <= 1.0f &&
+	if (1.0f >= lineNear && lineFar >= 0.0f && 
 		overlappingTime >= 0) return true;
 
 	return false;
