@@ -1,6 +1,7 @@
 #include"DxLib.h"
 #include"../MyLib/MyLib.h"
 #include"Item.h"
+#include"../enemy/EnemyManager.h"
 
 void Item::Init(VECTOR setPos, VECTOR setRot)
 {
@@ -13,6 +14,15 @@ void Item::Init(VECTOR setPos, VECTOR setRot)
 	m_vRot			= setRot;
 
 	Update();
+
+	m_vSize = ITEM_SIZE;
+
+	//コリジョン情報の設定
+	m_Collision.SetOwner(this);
+	//構造体の設定
+	UpdateCollision();
+	//当たった時の処理
+	m_Collision.SetOnHitCollback([this](CollisionBase* hitCollision) {Hit(hitCollision); });
 }
 
 void Item::Init()
@@ -27,6 +37,7 @@ void Item::Init()
 	m_EnemyHitFlag		= false;
 	m_EnemyTargetFlag	= false;
 	m_DrawFlag			= true;
+	m_ModeCloseFlag		= false;
 	m_fBoundValue		= 0.0f;
 	m_fBoundMax			= 0.0f;
 	m_fGravityAdd		= 0.0f;
@@ -34,7 +45,7 @@ void Item::Init()
 	m_fSpeed			= 0.0f;
 	m_fFoundCount		= 0.0f;
 	m_fRespawnTimeCount = 0.0f;
-	m_fAlpha				= 1.0f;
+	m_fAlpha			= 1.0f;
 
 	CModel::Init();
 }
@@ -60,6 +71,8 @@ void Item::Start()
 
 void Item::Step(VECTOR plPos, float plRot, VECTOR plSpeed, bool plVisionFlag, bool blockModeFlag, float focusRot)
 {
+	m_ModeCloseFlag = false;
+
 	//透明度から描画フラグを変更
 	if (m_fAlpha > 0)
 	{
@@ -93,6 +106,10 @@ void Item::Step(VECTOR plPos, float plRot, VECTOR plSpeed, bool plVisionFlag, bo
 		m_vNextPos.y		+= SPAWN_HEIGHT;
 		m_vPos				= m_vNextPos;
 		m_EnemyTargetFlag	= false;
+		m_vSize				= ITEM_SIZE;
+
+		//当たり判定を行う
+		m_Collision.SetIsCollision(true);
 	}
 
 	//アイテムが未使用の場合は以下行わない
@@ -141,6 +158,8 @@ void Item::Step(VECTOR plPos, float plRot, VECTOR plSpeed, bool plVisionFlag, bo
 	{
 		//つかんでる時の動き
 		CatchMove(plPos, plRot, plSpeed, plVisionFlag, focusRot, blockModeFlag);
+		//当たり判定を行わない
+		m_Collision.SetIsCollision(false);
 	}
 	//掴まれてなかったら
 	else
@@ -152,6 +171,8 @@ void Item::Step(VECTOR plPos, float plRot, VECTOR plSpeed, bool plVisionFlag, bo
 		//重力をかける
 		m_fGravityAdd	+= GRAVITY;
 		m_vNextPos.y	+= m_fGravityAdd;
+		//当たり判定を行う
+		m_Collision.SetIsCollision(true);
 	}
 
 	//発見される可能性のある時間を加算
@@ -161,11 +182,13 @@ void Item::Step(VECTOR plPos, float plRot, VECTOR plSpeed, bool plVisionFlag, bo
 	}
 
 	//座標更新
-	Update();	
+	UpdateCollision();
 }
 
 void Item::Draw()
 {
+	Update();
+
 	//ステージに存在していたら
 	if(m_IsUse)
 	{
@@ -192,7 +215,8 @@ void Item::Draw()
 
 void Item::Fin()
 {
-
+	//当たり判定を削除
+	CollisionManager::GetInstance()->UnRegisterCollision(&m_Collision);
 }
 
 //========================================================
@@ -298,7 +322,7 @@ void Item::CatchMove(VECTOR plPos, float plRot, VECTOR plSpeed, bool plVisionFla
 	//matrix = MMult(matrix, rotX);
 	matrix = MMult(matrix, pos2);
 
-	//座標の適応
+	//座標の適用
 	m_vNextPos = VTransform(m_vPos, matrix);
 
 	//-----------------------------------------------------
@@ -324,7 +348,7 @@ void Item::CatchMove(VECTOR plPos, float plRot, VECTOR plSpeed, bool plVisionFla
 	//座標を加算
 	m_vNextPos.y += m_fFryPos;
 
-	m_vPos = m_vNextPos;
+	//m_vPos = m_vNextPos;
 
 	Update();
 }
@@ -410,7 +434,7 @@ void Item::RequestThrow(float plRotY,float plRotX)
 	VECTOR  sp			= Math::GetMoveVec(throwRot, THROW_INIT_SPEED);
 	screenPos			= VAdd(screenPos, sp);
 
-	//座標の適応
+	//座標の適用
 	m_vPos = m_vNextPos = screenPos;
 
 	//アイテムの大きさを変更
@@ -465,4 +489,175 @@ void Item::HitEnemy()
 
 	//エフェクトの再生
 	CEffekseerCtrl::Request(EFFECT_ENEMY_REACTION3, m_vPos,false);
+}
+
+//当たった処理
+void Item::Hit(CollisionBase* hitCollision) {
+	//プレイヤーだと実行しない
+	if (hitCollision->GetKind() == KIND_PLAYER)return;
+	if (hitCollision->GetKind() == KIND_STAGE) {
+		//ブロック情報を受け取る
+		StageBlock* stageBlock = static_cast<StageBlock*>(hitCollision->GetOwner());
+		//空気ブロックなら以下実行しない
+		if (stageBlock->GetBlockType() == StageBlock::BLOCK_AIR)return;
+	}
+
+	//修正可能軸を設定する
+	SetEditAxisFlag();
+	COLLISION_AXIS collisionAxis = CollisionManager::GetInstance()->SelectModifyingAxis(m_EditAxisFlag, &m_Collision, hitCollision);
+
+	VECTOR moveVec = VSub(m_vNextPos, m_vPos);
+	moveVec.x = fabsf(moveVec.x);
+	moveVec.y = fabsf(moveVec.y);
+	moveVec.z = fabsf(moveVec.z);
+	collisionAxis = AXIS_Z;
+	if (moveVec.y > moveVec.x && moveVec.y > moveVec.z)collisionAxis = AXIS_Y;
+	if (moveVec.x > moveVec.y && moveVec.x > moveVec.z)collisionAxis = AXIS_X;
+
+	//当たった先の情報
+	VECTOR hitPos = {};
+	VECTOR hitSize = {};
+	switch (hitCollision->GetCollisionType())
+	{
+	case TYPE_AABB: {
+		CollisionAABB* hitAABB = static_cast<CollisionAABB*>(hitCollision);
+		hitPos = hitAABB->GetCollision().centerPos;
+		hitSize = hitAABB->GetCollision().size;
+		break;
+	}
+	case TYPE_SPHERE: {
+		CollisionSphere* hitSphere = static_cast<CollisionSphere*>(hitCollision);
+		hitPos = hitSphere->GetCollision().centerPos;
+		hitSize.y = hitSphere->GetCollision().radius;
+		break;
+	}
+	default:
+		break;
+	}
+
+	//軸を修正
+	switch (collisionAxis)
+	{
+	case AXIS_Y:
+		HitY(hitPos, hitSize);
+		break;
+
+	case AXIS_X:
+		HitX(hitPos, hitSize);
+		break;
+
+	case AXIS_Z:
+		HitZ(hitPos, hitSize);
+		break;
+
+	default:
+		break;
+	}
+
+	//エネミーに衝突した時の処理
+	//エネミー以外だと実行しない
+	if (hitCollision->GetKind() < KIND_ENEMY || hitCollision->GetKind() >= KIND_ITEM)return;
+	//エネミーに当たる状態でなければ実行しない
+	if (!m_EnemyHitFlag)return;
+
+	//エネミーに当てる
+	HitEnemy();
+	//エネミーに作用する
+	EnemyBase* enemy = static_cast<EnemyBase*>(hitCollision->GetOwner());
+	enemy->HitItem();
+
+	//画面を閉じるようにする
+	m_ModeCloseFlag = true;
+}
+
+//X軸の当たった処理
+void Item::HitX(VECTOR hitPos, VECTOR hitSize) {
+	if (m_vPos.x == m_vNextPos.x)return;
+
+	//情報を取得
+	Sphere MyCollision = m_Collision.GetCollision();
+
+	VECTOR itemPos = MyCollision.centerPos;
+	float itemSize = MyCollision.radius;
+	if (itemPos.x < hitPos.x) {
+		//←側にあった
+		itemPos.x -= (itemPos.x + itemSize) - (hitPos.x - hitSize.x);
+		Reflection();
+	}
+	if (itemPos.x > hitPos.x) {
+		//→側に当たった
+		itemPos.x += (hitPos.x + hitSize.x) - (itemPos.x - itemSize);
+		Reflection(-1);
+	}
+
+	//適用
+	m_vNextPos.x = itemPos.x;
+	//コリジョン情報の更新
+	UpdateCollision();
+}
+//Y軸の当たった処理
+void Item::HitY(VECTOR hitPos, VECTOR hitSize) {
+	if (m_vPos.y == m_vNextPos.y)return;
+
+	//情報を取得
+	Sphere MyCollision = m_Collision.GetCollision();
+
+	VECTOR	itemPos = MyCollision.centerPos;
+	float	itemSize = MyCollision.radius;
+	bool	itemHitFlag = false;
+	if (itemPos.y > hitPos.y) {
+		//床に当たった
+		itemPos.y += (hitPos.y + hitSize.y) - (itemPos.y - itemSize);
+		itemHitFlag = HitGround(itemPos.y);	
+	}
+	if (itemPos.y < hitPos.y) {
+		//天井に当たった
+		itemPos.y -= (itemPos.y + itemSize) - (hitPos.y - hitSize.y);
+		HitCeiling();
+	}
+
+	//適用
+	m_vNextPos.y = itemPos.y;
+	//コリジョン情報の更新
+	UpdateCollision();
+
+	//画面を閉じる条件を満たしていなかったら終了
+	if (!itemHitFlag)return;
+		
+	//画面を閉じるようにする
+	m_ModeCloseFlag = true;
+}
+//Z軸の当たった処理
+void Item::HitZ(VECTOR hitPos, VECTOR hitSize) {
+	if (m_vPos.z == m_vNextPos.z)return;
+
+	//情報を取得
+	Sphere MyCollision = m_Collision.GetCollision();
+
+	VECTOR itemPos = MyCollision.centerPos;
+	float itemSize = MyCollision.radius;
+	if (itemPos.z < hitPos.z) {
+		itemPos.z -= (itemPos.z + itemSize) - (hitPos.z - hitSize.z);
+		Reflection();
+	}
+	if (itemPos.z > hitPos.z) {
+		itemPos.z += (hitPos.z + hitSize.z) - (itemPos.z - itemSize);
+		Reflection(-1);
+	}
+
+	//適用
+	m_vNextPos.z = itemPos.z;
+	//コリジョン情報の更新
+	UpdateCollision();
+}
+
+//コリジョン情報の更新
+void Item::UpdateCollision() {
+	Sphere setCollision = m_Collision.GetCollision();
+	//サイズを設定
+	setCollision.radius = m_vSize.x;
+	//中心座標を設定
+	setCollision.centerPos = m_vNextPos;
+	//情報を更新
+	m_Collision.SetCollision(setCollision);
 }

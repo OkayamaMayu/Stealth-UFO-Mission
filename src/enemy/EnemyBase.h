@@ -145,6 +145,8 @@ public:
 	bool			GetProgressImpossibleFlag() { return m_ProgressImpossibleFlag; }
 	//進行不能フラグを設定
 	void			SetProgressImpossibleFlag(bool set) { m_ProgressImpossibleFlag = set; }
+	//アイテムを当てられた処理
+	void			HitItem(){ m_State = ENEMY_STATE_STUN; }
 
 protected:
 	/*--------------------------------

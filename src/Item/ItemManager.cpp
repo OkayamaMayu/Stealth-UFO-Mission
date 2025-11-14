@@ -12,14 +12,25 @@ void ItemManager::Init(LoadStageData& data)
 		item = new Item[m_iItemMaxNum];
 	}
 
+	//kind‚ğŒÂ•Ê‚Å•ª‚¯‚é•Ï”
+	int kindNum = 0;
 	for (int i = 0; i < m_iItemMaxNum; i++)
 	{
-		if (item == nullptr)
-			continue;
+		if (item == nullptr)continue;
 
 		VECTOR itemPos = data.GetItemSpawnPos(i);
 		itemPos.y += GetItem(i).ITEM_SIZE.y;
 		item[i].Init(itemPos, VGet(0.0f, 0.0f, 0.0f));
+
+		//kind‚ğİ’è‚·‚é
+		CollisionSphere setCollision = item[i].GetCollision();
+		setCollision.SetKind(KIND_ITEM + kindNum);
+		item[i].SetCollision(setCollision);
+		//ƒRƒŠƒWƒ‡ƒ“‚ğ“o˜^
+		item[i].RegisterCollision();
+
+		//Ÿ‚Ì”Ô†‚Ö•ÏX
+		kindNum++;
 	}
 }
 
@@ -40,6 +51,8 @@ void ItemManager::Start()
 {
 	for (int i = 0;i < m_iItemMaxNum;i++)
 	{
+		if (item == nullptr)continue;
+
 		item[i].Start();
 	}
 }

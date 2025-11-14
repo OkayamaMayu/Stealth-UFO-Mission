@@ -66,6 +66,7 @@ private:
 	bool			m_EnemyHitFlag;				//エネミーに当たるフラグ
 	bool			m_EnemyTargetFlag;			//投げた時にエネミーをターゲットにする
 	bool			m_DrawFlag;					//描画フラグ
+	bool			m_ModeCloseFlag;			//アイテムモードを閉じるフラグ
 	int				m_iDrawHandle[2];			//保存しておくハンドル
 
 public:
@@ -82,11 +83,30 @@ public:
 	//天井
 	void HitCeiling();
 
+	//コリジョン情報の呼び出し
+	CollisionSphere	GetCollision() { return m_Collision; }
+	//コリジョン情報の設定
+	void			SetCollision(CollisionSphere set) { m_Collision = set; }
+	//コリジョンを登録
+	void			RegisterCollision() { CollisionManager::GetInstance()->RegisterCollision(&m_Collision); }
+
+	//当たった処理
+	void Hit(CollisionBase* hitCollision);
+
 private:
 	void Init();
 	//つかんでいる時の動き
 	void CatchMove(VECTOR plPos, float plRot, VECTOR plSpeed, bool plVisionFlag,float focusRot, bool blockModeFlag);
 
+	//X軸の当たった処理
+	void			HitX(VECTOR hitPos, VECTOR hitSize);
+	//Y軸の当たった処理
+	void			HitY(VECTOR hitPos, VECTOR hitSize);
+	//Z軸の当たった処理
+	void			HitZ(VECTOR hitPos, VECTOR hitSize);
+
+	//コリジョン情報の更新
+	void			UpdateCollision();
 public:
 	//使用フラグの取得
 	bool GetIsUse() { return m_IsUse; }
@@ -126,4 +146,6 @@ public:
 	bool GetThrow() { return m_Throw; }
 	//反射処理
 	void Reflection(int mul = 1);
+	//アイテムモードを閉じるフラグを取得
+	bool GetModeCloseFlag() { return m_ModeCloseFlag; }
 };
