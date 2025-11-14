@@ -103,3 +103,16 @@ void ItemManager::Fin()
 		item = nullptr;
 	}
 }
+
+//ƒ‚[ƒhØ‚è‘Ö‚¦‹–‰Â‚ğó‚¯æ‚é
+bool ItemManager::GetModeChangeFlag() {
+	bool modeChangeFlag = false;
+	for (int i = 0; i < m_iItemMaxNum; i++)
+	{
+		if (item == nullptr)continue;
+		if (!item[i].GetModeCloseFlag())continue;
+
+		return true;
+	}
+	return false;
+}

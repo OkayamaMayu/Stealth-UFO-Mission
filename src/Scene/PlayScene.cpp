@@ -100,9 +100,6 @@ void PlayScene::Init()
 	if (!Data::GetReSpawnFlag())
 		Data::GetEvaluationData().Init();
 
-	
-	
-
 	//プレイヤーの初期情報
 	VECTOR plPos = loadStageData.GetPlayerSpawnPos();
 	VECTOR plRot = loadStageData.GetPlayerSpawnRot();
@@ -458,6 +455,9 @@ void PlayScene::play()
 
 	if (!Fade::GetInstance()->GetFadeNow())
 	{
+		//画面を閉じる確認
+		if (!m_CloseFlag)m_CloseFlag = item.GetModeChangeFlag();
+
 		//一人称を閉じるフラグがたっている
 		if (m_CloseFlag)
 		{

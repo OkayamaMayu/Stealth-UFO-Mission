@@ -44,4 +44,6 @@ public:
 	void	SetPos(int ID, VECTOR set) { item[ID].SetPos(set);}
 	//アイテムの最大数を取得
 	int		GetItemMaxNum() { return m_iItemMaxNum; }
+	//モード切り替え許可を受け取る
+	bool	GetModeChangeFlag();
 };

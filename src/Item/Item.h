@@ -66,7 +66,7 @@ private:
 	bool			m_EnemyHitFlag;				//エネミーに当たるフラグ
 	bool			m_EnemyTargetFlag;			//投げた時にエネミーをターゲットにする
 	bool			m_DrawFlag;					//描画フラグ
-	bool			m_ModeCloseFlag;			//アイテムモードを閉じるフラグ
+	bool			m_ModeCloseFlag;			//モードを閉じるフラグ
 	int				m_iDrawHandle[2];			//保存しておくハンドル
 
 public:
