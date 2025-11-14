@@ -89,6 +89,13 @@ void StageBlockManager::Draw(){
 }
 
 void StageBlockManager::Fin(){
+	for (int i = 0; i < m_iBlockNum; i++)
+	{
+		if (block == nullptr)continue;
+
+		block[i].Fin();
+	}
+
 	//ƒƒ‚ƒŠŠJ•ú
 	if (block == nullptr)return;
 	
