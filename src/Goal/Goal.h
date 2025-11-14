@@ -61,4 +61,15 @@ public:
 	bool GetIsGoalFlag() { return m_IsGoalFlag; }
 	//次のシーンに移行するフラグ
 	bool GetNextSceneFlag() { return m_NextSceneTrg; }
+
+	//当たった処理
+	void Hit(CollisionBase* hitCollision);
+	//コリジョン情報の更新
+	void UpdateCollision();
+
+private:
+	//通常の動き
+	void DefaultMove();
+	//ゴール時の動き
+	void GoalMove();
 };
