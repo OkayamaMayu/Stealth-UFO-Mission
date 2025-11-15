@@ -3,15 +3,28 @@
 
 void PlayerRing::Init(VECTOR setPos, VECTOR setRot)
 {
-	m_iRingHandle	= -1;
+	Init();
+	
+	//座標回転の設定
+	m_vPos		= m_vNextPos = setPos;
+	m_vRot		= setRot;
+	m_vRot.y	+= Math::ChangeDegToRad(180.0f);
+
+	//コリジョン情報の設定
+	m_Collision.SetOwner(this);
+	m_Collision.SetKind(KIND_PLAYER_RING);
+	//当たった時の処理
+	m_Collision.SetOnHitCollback([this](CollisionBase* hitCollision) {Hit(hitCollision); });
+	CollisionManager::GetInstance()->RegisterCollision(&m_Collision);
+}
+
+void PlayerRing::Init() {
+	CModel::Init();
 
 	MV1SetScale(m_iDrawHandle[0], MODEL_SCALE_V);
 	MV1SetScale(m_iDrawHandle[1], MODEL_SCALE_V);
-	
-	//座標回転の設定
-	m_vPlRingPos	= setPos;
-	m_vPlRingRot	= setRot;
-	m_vPlRingRot.y += Math::ChangeDegToRad(180.0f);
+
+	m_DrawRingFlag = false;
 }
 
 void PlayerRing::Load()
@@ -25,54 +38,88 @@ void PlayerRing::Load()
 void PlayerRing::Start()
 {
 	//初期表示モデルはノーマルにする
-	m_iRingHandle = m_iDrawHandle[NORMAL];
+	m_iHandle = m_iDrawHandle[NORMAL];
 
-	MV1SetPosition(m_iRingHandle, m_vPlRingPos);
-	MV1SetRotationXYZ(m_iRingHandle, m_vPlRingRot);
-	MV1SetScale(m_iRingHandle, MODEL_SCALE_V);
+	MV1SetPosition(m_iHandle, m_vPos);
+	MV1SetRotationXYZ(m_iHandle, m_vRot);
+	MV1SetScale(m_iHandle, MODEL_SCALE_V);
 }
 
 void PlayerRing::Step()
 {
 	//リングを回転
-	m_vPlRingRot.y += RING_ROT_SPEED;
+	m_vRot.y += RING_ROT_SPEED;
+
+	m_DrawRingFlag = false;
+
+	m_vNextPos = m_vPos;
+	UpdateCollision();
 }
 
 void PlayerRing::Update()
 {
-	MV1SetRotationXYZ(m_iRingHandle, m_vPlRingRot);
+	m_vPos = m_vNextPos;
+
+	MV1SetRotationXYZ(m_iHandle, m_vRot);
 
 	//情報の更新
 	for (int i = 0; i < MODEL_TYPE_NUM; i++)
 	{
-		MV1SetPosition(m_iDrawHandle[i], MV1GetPosition(m_iRingHandle));
-		MV1SetRotationXYZ(m_iDrawHandle[i], MV1GetRotationXYZ(m_iRingHandle));
+		MV1SetPosition(m_iDrawHandle[i], MV1GetPosition(m_iHandle));
+		MV1SetRotationXYZ(m_iDrawHandle[i], MV1GetRotationXYZ(m_iHandle));
 		MV1SetScale(m_iDrawHandle[i], MODEL_SCALE_V);
 	}
 }
 
-void PlayerRing::Draw(bool drawFrg)
-{
+void PlayerRing::Draw(bool drawFrg){
+	Update();
+
 	//発見されているかでモデルを分ける
-	if (Data::GetFoundFlag())
-	{
-		m_iRingHandle = m_iDrawHandle[ENEMY_FOUND];
+	if (Data::GetFoundFlag()){
+		m_iHandle = m_iDrawHandle[ENEMY_FOUND];
 	}
-	else
-	{
-		m_iRingHandle = m_iDrawHandle[NORMAL];
+	else{
+		m_iHandle = m_iDrawHandle[NORMAL];
 	}
 
 	//リング
-	UpdateRingPos(m_vPlRingPos);
-	if (m_DrawRingFlag && !drawFrg)
-	{
-		//リングを描画
-		MV1DrawModel(m_iRingHandle);
-	}
+	MV1SetPosition(m_iHandle, m_vPos);	
+	if (!m_DrawRingFlag || drawFrg)return;
+	//リングを描画
+	MV1DrawModel(m_iHandle);
 }
 
 void PlayerRing::Fin()
 {
+	//当たり判定を削除
+	CollisionManager::GetInstance()->UnRegisterCollision(&m_Collision);
+}
 
+//コリジョン情報の更新
+void PlayerRing::UpdateCollision() {
+	LineSegment setCollision = m_Collision.GetCollision();
+	//座標を設定
+	setCollision.startPos = m_vPos;
+	//最大値を設定
+	VECTOR move = m_vPos;
+	move.y -= MAX_LENGTH;
+	setCollision.endPos = VAdd(m_vPos, move);
+	//情報を更新
+	m_Collision.SetCollision(setCollision);
+}
+
+//当たった処理
+void PlayerRing::Hit(CollisionBase* hitCollision) {
+	//ブロック類でなければ実行しない
+	if (hitCollision->GetKind() != KIND_BLOCK)return;
+
+	//ブロックの情報を受け取る
+	CollisionAABB* blockCollision = static_cast<CollisionAABB*>(hitCollision);
+	VECTOR blockPos = blockCollision->GetCollision().centerPos;
+	VECTOR blockSize = blockCollision->GetCollision().size;
+
+	//ブロックの上辺
+	m_vNextPos.y = blockPos.y + blockSize.y;
+
+	m_DrawRingFlag = true;
 }

@@ -2,7 +2,7 @@
 #include "DxLib.h"
 #include "../MyLib/MyLib.h"
 
-class PlayerRing
+class PlayerRing :public CModel
 {
 private:
 	//モデルの種類
@@ -21,17 +21,17 @@ private:
 		"data/pl/model/plRing/plRing_enemy.x"
 	};
 
-	const float RING_ROT_SPEED = 0.01f;		//リングの回転速度
+	const float RING_ROT_SPEED	= 0.01f;	//リングの回転速度
+	const float	MAX_LENGTH		= 100.0f;	//最大長さ
 
 private:
-	VECTOR	m_vPlRingRot;					//リングの回転値
-	VECTOR	m_vPlRingPos;					//リングの座標
+	CollisionLineSegment m_Collision;		//コリジョン情報
 	bool	m_DrawRingFlag;					//リングの表示フラグ
-	int		m_iRingHandle;					//足元リングのハンドル
 	int		m_iDrawHandle[MODEL_TYPE_NUM];	//表示切替ハンドル
 
 public:
 	void	Init(VECTOR setPos, VECTOR setRot);
+	void	Init();
 	void	Load();
 	void	Start();
 	void	Step();
@@ -41,10 +41,10 @@ public:
 
 	//描画フラグの設定
 	void	SetDrawRingFlag(bool set) { m_DrawRingFlag = set; }
-	//座標を更新
-	void	UpdateRingPos(VECTOR setPos) { MV1SetPosition(m_iRingHandle, setPos); }
-	//座標を設定
-	void	SetRingPos(VECTOR set) { m_vPlRingPos = set; }
-	//座標を取得
-	VECTOR	GetRingPos() { return m_vPlRingPos; }
+	//当たった処理
+	void Hit(CollisionBase* hitCollision);
+
+private:
+	//コリジョン情報の更新
+	void UpdateCollision();
 };

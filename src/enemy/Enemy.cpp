@@ -337,8 +337,8 @@ void EnemyType1::Move(VECTOR plPos, float speed)
 
 //当たった処理
 void EnemyType1::Hit(CollisionBase* hitCollision) {
-	//アイテム以降は実行しない
-	if (hitCollision->GetKind() >= KIND_ITEM)return;
+	//プレイヤー以降は実行しない
+	if (hitCollision->GetKind() > KIND_PLAYER_RING)return;
 
 	//修正可能軸を設定する
 	SetEditAxisFlag();

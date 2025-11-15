@@ -120,12 +120,10 @@ public:
 	void		SetSetBlockFlag(bool set) { m_SetBlockFlag = set; }
 	//リング関係
 	void		SetDrawRingFlag(bool set) { PlayerRing.SetDrawRingFlag(set); }
-	//足元リングの座標を更新
-	void		UpdateRingPos(VECTOR setPos) { PlayerRing.UpdateRingPos(setPos); }
 	//リングの座標を設定
-	void		SetRingPos(VECTOR set) { PlayerRing.SetRingPos(set); }
-	//リングの座標を取得
-	VECTOR		GetRingPos() { return PlayerRing.GetRingPos(); }
+	void		SetRingPos(VECTOR set) { PlayerRing.SetPos(set); }
+	//リングの次の座標を設定
+	void		SetRingNextPos(VECTOR set) { PlayerRing.SetPos(set); }
 
 	//当たった処理
 	void		Hit(CollisionBase* hitCollision);

@@ -52,9 +52,4 @@ public:
 	//修正軸を選ぶ
 	//引数：修正可能軸フラグ構造体, 修正する対象, 当たった相手
 	COLLISION_AXIS SelectModifyingAxis(EditAxisFlag editAxisFlag, CollisionBase* baseA, CollisionBase* baseB);
-
-	//--------------------------------
-
-	////ブロックとリング
-	//void CheckStageBlockToPlRing(Player& player, BackGround& block, BlockManager& createBlock);
 };

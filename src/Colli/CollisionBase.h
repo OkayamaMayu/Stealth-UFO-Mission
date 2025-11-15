@@ -16,6 +16,7 @@ enum COLLISION_TYPE {
 enum COLLISION_KIND {
 	KIND_BLOCK		= 0,	//ステージブロック
 	KIND_PLAYER,			//プレイヤー
+	KIND_PLAYER_RING,		//プレイヤーの足元リング
 	KIND_GOAL,				//ゴール
 	KIND_ENEMY		= 100,	//エネミー
 	KIND_ITEM		= 200,	//アイテム

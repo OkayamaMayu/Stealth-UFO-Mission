@@ -205,8 +205,6 @@ void Player::Step(VECTOR ufoPos,VECTOR vCameraRot,float fRot, bool cameraFlag, b
 
 	//無敵時間処理
 	FaverTime();
-	//座標更新
-	//Update();
 	//アニメ
 	Step();
 
@@ -253,6 +251,8 @@ void Player::Step(VECTOR ufoPos,VECTOR vCameraRot,float fRot, bool cameraFlag, b
 		Data::SetNextScene(SCENE_GAMEOVER);
 	}
 
+	//リングの位置を足元に設定
+	SetRingPos(m_vPos);
 	//リングの通常処理
 	PlayerRing.Step();
 }
@@ -283,8 +283,6 @@ void Player::Fin()
 void Player::Update()
 {
 	CModel::Update();
-
-	PlayerRing.Update();
 }
 
 //=======================================================
@@ -626,8 +624,10 @@ bool Player::ThrowItem(ItemManager& itemMana, float camaraRot,float focusRot)
 
 //当たった処理
 void Player::Hit(CollisionBase* hitCollision) {
-	//アイテム移行は実行しない
+	//アイテム以降は実行しない
 	if (hitCollision->GetKind() >= KIND_ITEM )return;
+	//足元のリングは実行しない
+	if(hitCollision->GetKind() == KIND_PLAYER_RING)return;
 
 	//修正可能軸を設定する
 	SetEditAxisFlag();

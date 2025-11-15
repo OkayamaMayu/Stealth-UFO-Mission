@@ -493,16 +493,17 @@ void Item::HitEnemy()
 
 //当たった処理
 void Item::Hit(CollisionBase* hitCollision) {
-	//プレイヤーだと実行しない
-	if (hitCollision->GetKind() == KIND_PLAYER)return;
+	//エネミーとブロック以外は実行しない
+	if (hitCollision->GetKind() != KIND_BLOCK && hitCollision->GetKind() != KIND_ENEMY)return;
+
+	//ブロックの場合
 	if (hitCollision->GetKind() == KIND_BLOCK) {
 		//ブロック情報を受け取る
 		StageBlock* stageBlock = static_cast<StageBlock*>(hitCollision->GetOwner());
 		//空気ブロックなら以下実行しない
 		if (stageBlock->GetBlockType() == StageBlock::BLOCK_AIR)return;
 	}
-	//チェックポイントだと実行しない
-	if (hitCollision->GetKind() >= KIND_CHECKPOINT)return;
+	
 
 	//修正可能軸を設定する
 	SetEditAxisFlag();
