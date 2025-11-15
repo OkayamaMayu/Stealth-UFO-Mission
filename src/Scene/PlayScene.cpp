@@ -727,9 +727,6 @@ void PlayScene::Collision()
 	//当たり判定
 	CollisionManager::GetInstance()->Update();
 
-	//レーザーとプレイヤー
-	laser.CheckLaserToPlayer(player.GetPos(), enemy);
-
 	//チューリアルを距離で透かす
 	UI.CheckTutorialToPlayer(player.GetPos(), cameraMan.GetPlayCamera().GetPos());
 }

@@ -57,9 +57,4 @@ public:
 
 	////ブロックとリング
 	//void CheckStageBlockToPlRing(Player& player, BackGround& block, BlockManager& createBlock);
-	////ブロックとレーザー
-	//void CheckStageBlockToLaser(LaserManager& laserManager, BackGround& block);
-	
-	////配置ブロックとレーザー
-	//void CheckSetBlockToLaser(LaserManager& laserManager, BlockManager& createBlock);
 };
