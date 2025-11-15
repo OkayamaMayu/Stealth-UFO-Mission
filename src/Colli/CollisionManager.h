@@ -61,8 +61,8 @@ public:
 	bool CheckHit(AABB collisionA, LineSegment collisionB) { return Collision::IsCollidingAABBToLineSegment(collisionA, collisionB); }
 	bool CheckHit(LineSegment collisionA, AABB collisionB) { return Collision::IsCollidingAABBToLineSegment(collisionB, collisionA); }
 	bool CheckHit(Sphere collisionA, Sphere collisionB) { return Collision::IsCollidingSphereToSphere(collisionA, collisionB); }
-	//bool CheckHit(Sphere collisionA, LineSegment collisionB) { return Collision::IsCollidingAABBToAABB(collisionA, collisionB); }
-	//bool CheckHit(LineSegment collisionA, Sphere collisionB) { return Collision::IsCollidingAABBToAABB(collisionA, collisionB); }
+	bool CheckHit(Sphere collisionA, LineSegment collisionB) { return Collision::IsCollidingSphereToLineSegment(collisionA, collisionB); }
+	bool CheckHit(LineSegment collisionA, Sphere collisionB) { return Collision::IsCollidingSphereToLineSegment(collisionB, collisionA); }
 
 	//修正軸を選ぶ
 	//引数：修正可能軸フラグ構造体, 修正する対象, 当たった相手
@@ -70,38 +70,14 @@ public:
 
 	//--------------------------------
 
-	//ブロックとプレイヤー
-	//void CheckStageBlockToPlayer(Player& player, BackGround& block);
-	////ブロックとエネミー1
-	//void CheckStageBlockToEnemyType1(EnemyManager& enemyManager, BackGround& block);
-	////ブロックとアイテム
-	//bool CheckStageBlockToItem(ItemManager& itemManager, BackGround& block);
-
 	////ブロックとリング
 	//void CheckStageBlockToPlRing(Player& player, BackGround& block, BlockManager& createBlock);
 	////ブロックとレーザー
 	//void CheckStageBlockToLaser(LaserManager& laserManager, BackGround& block);
-
-	////ゴールとプレイヤー
-	//void CheckGoalToPayer(Player& player, Goal& goal);
+	
 	////チェックポイントとプレイヤー
 	//void CheckCheckPointToPayer(CheckPointManager& checkPointManager, Player& player);
 
-	////エネミーとプレイヤー
-	//void CheckEnemyToPlayer(Player& player, EnemyManager& enemyManager);
-	////エネミーとエネミー
-	//void CheckEnemyToEnemy(EnemyManager& enemyManager);
-	////エネミー1とアイテム
-	//bool CheckEnemyType1ToItem(EnemyManager& enemyManager, ItemManager& itemManager);
-
-	////ブロック配置可能位置
-	//void CheckSetBlockPos(CameraManager& cameraManager, BlockManager& createBlock, BackGround& block, bool setMode);
 	////配置ブロックとレーザー
 	//void CheckSetBlockToLaser(LaserManager& laserManager, BlockManager& createBlock);
-	////配置ブロックとプレイヤー
-	//void CheckSetBlockToPlayer(Player& player, BlockManager& createBlock);
-	////配置ブロックとエネミー1
-	//void CheckSetBlockToEnemyType1(EnemyManager& enemyManager, BlockManager& createBlock);
-	////配置ブロックとアイテム
-	//void CheckSetBlockToItem(ItemManager& itemManager, BlockManager& createBlock);
 };

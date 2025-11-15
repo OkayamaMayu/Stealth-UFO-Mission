@@ -60,6 +60,9 @@ public:
 	//球と球の当たり判定
 	static bool IsCollidingSphereToSphere(Sphere sphereA, Sphere sphereB);
 
+	//球と線分の当たり判定
+	static bool IsCollidingSphereToLineSegment(Sphere sphere, LineSegment lineSegment);
+
 	//==========================================
 
 	//ひし形の当たり判定：頂点を時計回り, 調べたいものの座標(点)

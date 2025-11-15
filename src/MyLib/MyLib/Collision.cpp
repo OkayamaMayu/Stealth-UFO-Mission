@@ -206,6 +206,31 @@ bool Collision::IsCollidingSphereToSphere(Sphere sphereA, Sphere sphereB){
 	return false;
 }
 
+//球と線分の当たり判定
+bool Collision::IsCollidingSphereToLineSegment(Sphere sphere, LineSegment lineSegment) {
+	//球の中心座標
+	VECTOR sphereCenterPos = sphere.centerPos;
+	//球の半径
+	float sphereRadius = sphere.radius;
+
+	//線分のベクトル
+	VECTOR lineVec = VSub(lineSegment.endPos, lineSegment.startPos);
+	//線分の開始地点と球のベクトル
+	VECTOR lineToSphereVec = VSub(sphereCenterPos, lineSegment.startPos);
+	//球ともっとも近い位置の線分の割合
+	float t = VDot(lineToSphereVec, lineVec) / VDot(lineVec, lineVec);
+
+	//端にあわせる
+	t = Math::Clamp(t, 0.0f, 1.0f);
+
+	//線上の球ともっとも近い座標を求める
+	VECTOR lineMove = VScale(lineVec, t);
+	VECTOR lineNear = VAdd(lineSegment.startPos, lineMove);
+	if (Math::GetDistance(lineNear, sphereCenterPos) <= sphereRadius) return true;
+
+	return false;
+}
+
 //===========================================
 
 //ひし形の当たり判定中身：一辺の始まりと終わり, 調べたいものの座標(点)

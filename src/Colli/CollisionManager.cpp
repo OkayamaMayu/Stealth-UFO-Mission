@@ -154,12 +154,12 @@ bool CollisionManager::Collision(Sphere collisionA, CollisionBase* baseB) {
 		return CheckHit(collisionA, collisionB);
 		break;
 	}
-	/*case TYPE_LINE: {
+	case TYPE_LINE: {
 		CollisionLineSegment* sub = static_cast<CollisionLineSegment*>(baseB);
 		LineSegment collisionB = sub->GetCollision();
 		return CheckHit(collisionA, collisionB);
 		break;
-	}*/
+	}
 	default:
 		break;
 	}
@@ -175,12 +175,12 @@ bool CollisionManager::Collision(LineSegment collisionA, CollisionBase* baseB) {
 		return CheckHit(collisionA, collisionB);
 		break;
 	}
-	/*case TYPE_SPHERE: {
+	case TYPE_SPHERE: {
 		CollisionSphere* sub = static_cast<CollisionSphere*>(baseB);
 		Sphere collisionB = sub->GetCollision();
 		return CheckHit(collisionA, collisionB);
 		break;
-	}*/
+	}
 	default:
 		break;
 	}
