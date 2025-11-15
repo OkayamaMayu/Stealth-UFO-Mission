@@ -101,9 +101,9 @@ void PlayerRing::UpdateCollision() {
 	//座標を設定
 	setCollision.startPos = m_vPos;
 	//最大値を設定
-	VECTOR move = m_vPos;
-	move.y -= MAX_LENGTH;
-	setCollision.endPos = VAdd(m_vPos, move);
+	VECTOR endPos = m_vPos;
+	endPos.y -= MAX_LENGTH;
+	setCollision.endPos = endPos;
 	//情報を更新
 	m_Collision.SetCollision(setCollision);
 }
@@ -119,7 +119,7 @@ void PlayerRing::Hit(CollisionBase* hitCollision) {
 	VECTOR blockSize = blockCollision->GetCollision().size;
 
 	//ブロックの上辺
-	m_vNextPos.y = blockPos.y + blockSize.y;
+	m_vNextPos.y = blockPos.y + blockSize.y+0.5f;
 
 	m_DrawRingFlag = true;
 }
