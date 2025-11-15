@@ -2,21 +2,9 @@
 
 void BlockManager::Init()
 {
-	//kind‚ğŒÂ•Ê‚Å•ª‚¯‚é•Ï”
-	int kindNum = 0;
 	for (int i = 0; i < BLOCK_MAX_NUM; i++)
 	{
 		block[i].Init();
-
-		//kind‚ğİ’è‚·‚é
-		CollisionAABB setCollision = block[i].GetCollision();
-		setCollision.SetKind(KIND_BLOCK + kindNum);
-		block[i].SetCollision(setCollision);
-		//ƒRƒŠƒWƒ‡ƒ“‚ğ“o˜^
-		block[i].RegisterCollision();
-
-		//Ÿ‚Ì”Ô†‚Ö•ÏX
-		kindNum++;
 	}
 }
 

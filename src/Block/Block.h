@@ -32,6 +32,4 @@ public:
 	void			UpdateCollision();
 	//ƒRƒŠƒWƒ‡ƒ“î•ñ‚ÌÝ’è
 	void			SetCollision(CollisionAABB set) { m_Collision = set; }
-	//ƒRƒŠƒWƒ‡ƒ“‚ð“o˜^
-	void			RegisterCollision() { CollisionManager::GetInstance()->RegisterCollision(&m_Collision); }
 };

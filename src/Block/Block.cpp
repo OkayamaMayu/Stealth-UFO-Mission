@@ -15,8 +15,10 @@ void Block::Init()
 
 	//ƒRƒŠƒWƒ‡ƒ“î•ñ‚ÌÝ’è
 	m_Collision.SetOwner(this);
+	m_Collision.SetKind(KIND_BLOCK);
 	//\‘¢‘Ì‚ÌÝ’è
 	UpdateCollision();
+	CollisionManager::GetInstance()->RegisterCollision(&m_Collision);
 }
 
 void Block::Load(int originHandle)

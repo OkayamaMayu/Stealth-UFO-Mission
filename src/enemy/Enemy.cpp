@@ -337,10 +337,8 @@ void EnemyType1::Move(VECTOR plPos, float speed)
 
 //当たった処理
 void EnemyType1::Hit(CollisionBase* hitCollision) {
-	//アイテムだと実行しない
-	if (hitCollision->GetKind() >= KIND_ITEM && hitCollision->GetKind() < KIND_BLOCK)return;
-	//チェックポイントだと実行しない
-	if (hitCollision->GetKind() >= KIND_CHECKPOINT)return;
+	//アイテム以降は実行しない
+	if (hitCollision->GetKind() >= KIND_ITEM)return;
 
 	//修正可能軸を設定する
 	SetEditAxisFlag();
@@ -481,7 +479,7 @@ void EnemyType1::UpdateCollision() {
 //ステージブロックとの衝突
 void EnemyType1::HitStageBlock(CollisionBase* hitCollision) {
 	//ブロックに当たっていなかったら終了
-	if (hitCollision->GetCollisionType() != KIND_STAGE)return;
+	if (hitCollision->GetCollisionType() != KIND_BLOCK)return;
 	//ブロック情報を受け取る
 	StageBlock* stageBlock = static_cast<StageBlock*>(hitCollision->GetOwner());
 	//衝突したブロックが空気ブロックなら終了

@@ -495,7 +495,7 @@ void Item::HitEnemy()
 void Item::Hit(CollisionBase* hitCollision) {
 	//プレイヤーだと実行しない
 	if (hitCollision->GetKind() == KIND_PLAYER)return;
-	if (hitCollision->GetKind() == KIND_STAGE) {
+	if (hitCollision->GetKind() == KIND_BLOCK) {
 		//ブロック情報を受け取る
 		StageBlock* stageBlock = static_cast<StageBlock*>(hitCollision->GetOwner());
 		//空気ブロックなら以下実行しない

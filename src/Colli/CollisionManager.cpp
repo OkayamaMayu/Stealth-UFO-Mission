@@ -69,15 +69,12 @@ void CollisionManager::Update() {
 			if (m_Collsion[hitMain]->GetKind() == m_Collsion[hitSub]->GetKind())continue;
 			//“–‚½‚è”»’è‚ðŽÀs‚µ‚È‚¢
 			if (!m_Collsion[hitSub]->IsCollision())continue;
-			//ˆê’è‹——£‚ÌŠO‘¤‚ÍˆÈ‰ºŒvŽZ‚³‚¹‚È‚¢
-			if (Math::GetDistance(m_Collsion[hitMain]->GetOwner()->GetPos(), m_Collsion[hitSub]->GetOwner()->GetPos()) >= COLLISION_DISANCE)continue;
 			
 			//“–‚½‚Á‚Ä‚¢‚é‚©’²‚×‚é
-			if (Collision(m_Collsion[hitMain], m_Collsion[hitSub])){
-				//“–‚½‚Á‚Ä‚¢‚½‚ç
-				m_Collsion[hitMain]->HitCollision(m_Collsion[hitSub]);
-				m_Collsion[hitSub]->HitCollision(m_Collsion[hitMain]);
-			}
+			if (!Collision(m_Collsion[hitMain], m_Collsion[hitSub]))continue;
+			//“–‚½‚Á‚Ä‚¢‚½‚ç
+			m_Collsion[hitMain]->HitCollision(m_Collsion[hitSub]);
+			m_Collsion[hitSub]->HitCollision(m_Collsion[hitMain]);
 		}
 	}
 }

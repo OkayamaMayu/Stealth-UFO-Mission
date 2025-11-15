@@ -22,7 +22,7 @@ void StageBlock::Init(SET_BLOCK blockType, VECTOR setPos) {
 
 	//コリジョン情報の設定
 	m_Collision.SetOwner(this);
-	m_Collision.SetKind(KIND_STAGE);
+	m_Collision.SetKind(KIND_BLOCK);
 	//構造体の設定
 	AABB setCollision = {};
 	//サイズを設定

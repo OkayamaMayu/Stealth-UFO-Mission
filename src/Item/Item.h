@@ -99,14 +99,14 @@ private:
 	void CatchMove(VECTOR plPos, float plRot, VECTOR plSpeed, bool plVisionFlag,float focusRot, bool blockModeFlag);
 
 	//X軸の当たった処理
-	void			HitX(VECTOR hitPos, VECTOR hitSize);
+	void HitX(VECTOR hitPos, VECTOR hitSize);
 	//Y軸の当たった処理
-	void			HitY(VECTOR hitPos, VECTOR hitSize);
+	void HitY(VECTOR hitPos, VECTOR hitSize);
 	//Z軸の当たった処理
-	void			HitZ(VECTOR hitPos, VECTOR hitSize);
+	void HitZ(VECTOR hitPos, VECTOR hitSize);
 
 	//コリジョン情報の更新
-	void			UpdateCollision();
+	void UpdateCollision();
 public:
 	//使用フラグの取得
 	bool GetIsUse() { return m_IsUse; }
