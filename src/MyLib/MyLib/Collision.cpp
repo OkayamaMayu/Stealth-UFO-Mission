@@ -154,6 +154,15 @@ bool Collision::IsCollidingAABBToLineSegment(AABB aabb, LineSegment lineSegment)
 	//線分のベクトル
 	VECTOR lineVec = VSub(lineSegment.endPos, lineSegment.startPos);
 
+	//軸に動きがない
+	//始点が範囲内でないなら交差なし
+	if (fabsf(lineVec.x) < 0.0f) 
+		if (lineSegment.startPos.x < aabbMinPos.x || lineSegment.startPos.x > aabbMaxPos.x)return false;
+	if (fabsf(lineVec.y) < 0.0f)
+		if (lineSegment.startPos.y < aabbMinPos.y || lineSegment.startPos.y > aabbMaxPos.y)return false;
+	if (fabsf(lineVec.z) < 0.0f)
+		if (lineSegment.startPos.z < aabbMinPos.z || lineSegment.startPos.z > aabbMaxPos.z)return false;
+
 	//それぞれのスラグに入る時間
 	float nearX = (aabbMinPos.x - lineSegment.startPos.x) / lineVec.x;
 	float nearY = (aabbMinPos.y - lineSegment.startPos.y) / lineVec.y;
@@ -170,21 +179,18 @@ bool Collision::IsCollidingAABBToLineSegment(AABB aabb, LineSegment lineSegment)
 	if (lineVec.z < 0)swap(nearZ, farZ);
 
 	//nearの最大値を選出
-	float lineNear = max(nearX, nearY);
-	lineNear = max(lineNear, nearZ);
+	float lineNear	= max(nearX, nearY);
+	lineNear		= max(lineNear, nearZ);
+	if (lineNear < 0.0f)lineNear = 0.0f;
 	//farの最小値を選出
-	float lineFar = min(farX, farY);
-	lineFar = min(lineFar, farZ);
+	float lineFar	= min(farX, farY);
+	lineFar			= min(lineFar, farZ);
+	if (lineFar > 1.0f)lineFar = 1.0f;
 
-	//重なった時間を調べる
-	float overlappingTime = lineFar - lineNear;	
+	if (lineNear > lineFar)return false;
+	if (lineFar < 0.0f || lineNear > 1.0f) return false;
 
-	//0～1の範囲に入っている
-	//正の数だと重なっている
-	if (1.0f >= lineNear && lineFar >= 0.0f && 
-		overlappingTime >= 0) return true;
-
-	return false;
+	return true;
 }
 
 //球と球の当たり判定
