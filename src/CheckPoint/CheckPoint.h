@@ -2,6 +2,13 @@
 #include"../Model/Model.h"
 #include"../MyLib/MyLib.h"
 
+//リスポーン地点
+struct ReSpawnInfo
+{
+	VECTOR	pos;		//座標
+	float	rot;		//回転
+};
+
 class CheckPoint :public CModel
 {
 private:
@@ -22,14 +29,17 @@ private:
 		1.0f,				//アニメーションの移行
 	};
 
+	const float CHECKPOINT_HIT_SCALE	= 3.0f;		//チェックポイントの大きめ当たり判定のスケール
 	const float MODEL_SEMITRANSPARENT	= 0.4f;		//モデルの半透明時の値
 	const float MODEL_FADE_SPEED		= 0.05f;	//透明度の変化速度
-
+	const float	MODEL_SIZE				= 5.0f;		//モデルサイズ
 private:
-	CollisionAABB	m_Collision;					//コリジョン情報
+	CollisionSphere	m_Collision;					//コリジョン情報
+	ReSpawnInfo		m_ReSpawnInfo;					//リスポーン情報
 	float			m_fModelFade;					//透明度
 	bool			m_IsActive;						//使用中か
 	bool			m_SemitransparentFlag;			//半透明にするフラグ
+	bool			m_CheckPointFlag;				//チェックポイント起動フラグ
 	int				m_iEffectHandle;				//エフェクトハンドル
 	
 public:
@@ -52,6 +62,24 @@ public:
 	bool GetIsActive() { return m_IsActive; }
 	//半透明のフラグセット
 	void SetSemitransparentFlag(bool set) { m_SemitransparentFlag = set; }
+	//リスポーン情報
+	ReSpawnInfo		GetReSpawnInfo() { return m_ReSpawnInfo; }
+	//チェックポイントフラグを取得
+	bool			GetCheckPointFlag() { return m_CheckPointFlag; }
+	//チェックポイントフラグを設定
+	void			SetCheckPointFlag(bool set) { m_CheckPointFlag = set; }
+
+	//当たった処理
+	void			Hit(CollisionBase* hitCollision);
+
+	//コリジョン情報を取得
+	CollisionSphere	GetCollision() { return m_Collision; }
+	//コリジョン情報の更新
+	void			UpdateCollision();
+	//コリジョン情報の設定
+	void			SetCollision(CollisionSphere set) { m_Collision = set; }
+	//コリジョンを登録
+	void			RegisterCollision() { CollisionManager::GetInstance()->RegisterCollision(&m_Collision); }
 
 private:
 	//初期化

@@ -2,28 +2,13 @@
 #include<vector>
 using namespace std;
 
-//#include"../Player/Player.h"
-//#include"../enemy/EnemyManager.h"
-//#include"../BackGround/BackGround.h"
-//#include"../Item/ItemManager.h"
-//#include"../Goal/Goal.h"
-//#include"../Camera/CameraManager.h"
-//#include"../enemy/UFO.h"
-//#include"../Laser/LaserManager.h"
-//#include"../Block/BlockManager.h"
-//#include"../CheckPoint/CheckPointManager.h"
-//#include"../UI/UIManager.h"
 #include"CollisionBase.h"
 #include"CollisionAABB.h"
 #include"CollisionSphere.h"
 #include"CollisionLineSegment.h"
 
-//エネミーにアイテムが当たった時の処理
-//true：反射	false：消す
-const bool	ENEMY_TO_ITEM_Flag				= false;
 const float COLLISION_DISANCE				= 20.0f;	//この距離内だけ判定する
 const float TUTORIAL_FADE_DISTANCE			= 50.0f;	//チュートリアルの透かし範囲
-const float CHECKPOINT_HIT_SCALE			= 3.0f;		//チェックポイントの大きめ当たり判定のスケール
 const float CREATE_BLOCK_HIT_SCALE			= 3.0f;		//チェックポイントの大きめ当たり判定のスケール
 const float CREATE_BLOCK_STAGE_HIT_SCALE	= 5.0f;		//生成ブロックとステージブロックの当たるスケール
 
@@ -75,9 +60,6 @@ public:
 	////ブロックとレーザー
 	//void CheckStageBlockToLaser(LaserManager& laserManager, BackGround& block);
 	
-	////チェックポイントとプレイヤー
-	//void CheckCheckPointToPayer(CheckPointManager& checkPointManager, Player& player);
-
 	////配置ブロックとレーザー
 	//void CheckSetBlockToLaser(LaserManager& laserManager, BlockManager& createBlock);
 };

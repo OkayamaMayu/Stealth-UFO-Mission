@@ -14,12 +14,13 @@ enum COLLISION_TYPE {
 
 //識別ID
 enum COLLISION_KIND {
-	KIND_STAGE	= 0,	//ステージブロック
-	KIND_PLAYER,		//プレイヤー
-	KIND_GOAL,			//ゴール
-	KIND_ENEMY	= 100,	//エネミー
-	KIND_ITEM	= 200,	//アイテム
-	KIND_BLOCK	= 300,	//配置ブロック
+	KIND_STAGE		= 0,	//ステージブロック
+	KIND_PLAYER,			//プレイヤー
+	KIND_GOAL,				//ゴール
+	KIND_ENEMY		= 100,	//エネミー
+	KIND_ITEM		= 200,	//アイテム
+	KIND_BLOCK		= 300,	//配置ブロック
+	KIND_CHECKPOINT = 400,	//チェックポイント
 };
 
 class CollisionBase {

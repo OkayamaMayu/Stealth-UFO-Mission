@@ -627,8 +627,9 @@ bool Player::ThrowItem(ItemManager& itemMana, float camaraRot,float focusRot)
 //当たった処理
 void Player::Hit(CollisionBase* hitCollision) {
 	//アイテムだと実行しない
-	if (hitCollision->GetKind() >= KIND_ITEM && hitCollision->GetKind() < KIND_BLOCK)
-		return;
+	if (hitCollision->GetKind() >= KIND_ITEM && hitCollision->GetKind() < KIND_BLOCK)return;
+	//チェックポイントだと実行しない
+	if (hitCollision->GetKind() >= KIND_CHECKPOINT)return;
 
 	//修正可能軸を設定する
 	SetEditAxisFlag();

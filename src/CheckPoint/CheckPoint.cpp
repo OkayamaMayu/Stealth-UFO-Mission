@@ -6,6 +6,13 @@ void CheckPoint::Init(VECTOR setPos, float setRot)
 
 	m_vPos		= m_vNextPos = setPos;
 	m_vRot.y	= setRot;
+
+	//コリジョン情報の設定
+	m_Collision.SetOwner(this);
+	//構造体の設定
+	UpdateCollision();
+	//当たった時の処理
+	m_Collision.SetOnHitCollback([this](CollisionBase* hitCollision) {Hit(hitCollision); });
 }
 
 void CheckPoint::Init()
@@ -15,6 +22,7 @@ void CheckPoint::Init()
 	m_fModelFade			= 1.0f;
 	m_IsActive				= false;
 	m_SemitransparentFlag	= false;
+	m_CheckPointFlag		= false;
 	m_iEffectHandle			= -1;
 }
 
@@ -55,16 +63,13 @@ void CheckPoint::Draw()
 void CheckPoint::Fin()
 {
 	CModel::Fin();
+	//当たり判定を削除
+	CollisionManager::GetInstance()->UnRegisterCollision(&m_Collision);
 }
 
 //=====================================================
 
-bool CheckPoint::IsHit()
-{
-	//既に有効なら以下実行しない
-	if (m_IsActive)
-		return false;
-
+bool CheckPoint::IsHit(){
 	//チェックポイントを有効化
 	m_IsActive = true;
 	//チェンジアニメを再生
@@ -111,4 +116,36 @@ void CheckPoint::FadeStep()
 
 	//透明度の更新
 	MV1SetOpacityRate(m_iHandle, m_fModelFade);
+}
+
+//=====================================================
+
+//当たった処理
+void CheckPoint::Hit(CollisionBase* hitCollision) {
+	//プレイヤー以外なら実行しない
+	if (hitCollision->GetKind() != KIND_PLAYER)return;
+	//既に有効なら実行しない
+	if (m_IsActive)return;
+
+	//プレイヤー座標を取得
+	VECTOR playerPos = hitCollision->GetOwner()->GetPos();
+	//プレイヤーの向きを取得
+	VECTOR playerRot = hitCollision->GetOwner()->GetRot();
+
+	IsHit();
+	//リスポーン情報を取得
+	m_ReSpawnInfo.pos	= playerPos;
+	m_ReSpawnInfo.rot	= playerRot.y;
+	m_CheckPointFlag	= true;
+}
+
+//コリジョン情報の更新
+void CheckPoint::UpdateCollision() {
+	Sphere setCollision = m_Collision.GetCollision();
+	//サイズを設定
+	setCollision.radius = MODEL_SIZE * CHECKPOINT_HIT_SCALE;
+	//中心座標を設定
+	setCollision.centerPos = m_vNextPos;
+	//情報を更新
+	m_Collision.SetCollision(setCollision);
 }

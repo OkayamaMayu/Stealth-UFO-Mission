@@ -501,6 +501,8 @@ void Item::Hit(CollisionBase* hitCollision) {
 		//空気ブロックなら以下実行しない
 		if (stageBlock->GetBlockType() == StageBlock::BLOCK_AIR)return;
 	}
+	//チェックポイントだと実行しない
+	if (hitCollision->GetKind() >= KIND_CHECKPOINT)return;
 
 	//修正可能軸を設定する
 	SetEditAxisFlag();

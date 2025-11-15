@@ -3,8 +3,8 @@
 void CheckPointManager::Init(VECTOR startPos, float startRot, LoadStageData& setData)
 {
 	//初期位置
-	m_vReSpawnPos	= startPos;
-	m_fReSpawnRot	= startRot;
+	m_ReSpawnInfo.pos	= startPos;
+	m_ReSpawnInfo.rot = startRot;
 
 	//チェックポイントの数
 	m_iCheckPointNum = setData.GetCheckPointNum();
@@ -14,12 +14,22 @@ void CheckPointManager::Init(VECTOR startPos, float startRot, LoadStageData& set
 		m_CheckPoint = new CheckPoint[m_iCheckPointNum];
 	}
 
-	for (int i = 0; i < m_iCheckPointNum; i++)
-	{
-		if (m_CheckPoint == nullptr)
-			continue;
+	//kindを個別で分ける変数
+	int kindNum = 0;
+	for (int i = 0; i < m_iCheckPointNum; i++){
+		if (m_CheckPoint == nullptr)continue;
 
 		m_CheckPoint[i].Init(setData.GetCheckPointPos(i), setData.GetCheckPointRot(i));
+
+		//kindを設定する
+		CollisionSphere setCollision = m_CheckPoint[i].GetCollision();
+		setCollision.SetKind(KIND_CHECKPOINT + kindNum);
+		m_CheckPoint[i].SetCollision(setCollision);
+		//コリジョンを登録
+		m_CheckPoint[i].RegisterCollision();
+
+		//次の番号へ変更
+		kindNum++;
 	}
 }
 
@@ -29,8 +39,7 @@ void CheckPointManager::Load()
 
 	for (int i = 0; i < m_iCheckPointNum; i++)
 	{
-		if (m_CheckPoint == nullptr)
-			continue;
+		if (m_CheckPoint == nullptr)continue;
 
 		m_CheckPoint[i].Load(oriHandle);
 	}
@@ -40,21 +49,24 @@ void CheckPointManager::Start()
 {
 	for (int i = 0; i < m_iCheckPointNum; i++)
 	{
-		if (m_CheckPoint == nullptr)
-			continue;
+		if (m_CheckPoint == nullptr)continue;
 
 		m_CheckPoint[i].Start();
 	}
 }
 
-void CheckPointManager::Step()
-{
-	for (int i = 0; i < m_iCheckPointNum; i++)
-	{
-		if (m_CheckPoint == nullptr)
-			continue;
+void CheckPointManager::Step(){
+	for (int i = 0; i < m_iCheckPointNum; i++){
+		if (m_CheckPoint == nullptr)continue;
 
 		m_CheckPoint[i].Step();
+
+		//リスポーンが起動していなければ実行しない
+		if (!m_CheckPoint[i].GetCheckPointFlag())continue;
+
+		//リスポーン情報を設定
+		m_ReSpawnInfo = m_CheckPoint[i].GetReSpawnInfo();
+		m_CheckPoint[i].SetCheckPointFlag(false);
 	}
 }
 
@@ -62,8 +74,7 @@ void CheckPointManager::Draw()
 {
 	for (int i = 0; i < m_iCheckPointNum; i++)
 	{
-		if (m_CheckPoint == nullptr)
-			continue;
+		if (m_CheckPoint == nullptr)continue;
 
 		m_CheckPoint[i].Draw();
 	}
@@ -76,8 +87,7 @@ void CheckPointManager::Fin()
 
 	for (int i = 0; i < m_iCheckPointNum; i++)
 	{
-		if (m_CheckPoint == nullptr)
-			continue;
+		if (m_CheckPoint == nullptr)continue;
 
 		m_CheckPoint[i].Fin();
 	}
@@ -87,25 +97,6 @@ void CheckPointManager::Fin()
 		delete[] m_CheckPoint;
 		m_CheckPoint = nullptr;
 	}
-}
-
-bool CheckPointManager::IsHit(int ID, VECTOR setReSpawnPos, float setReSpawnRot)
-{	
-	if (m_CheckPoint == nullptr)
-		return false;
-
-	//起動するか確認
-	if (m_CheckPoint[ID].IsHit())
-	{
-		//リスポーン地点を設定
-		m_vReSpawnPos = setReSpawnPos;
-		//現在の向きを設定
-		m_fReSpawnRot = setReSpawnRot;
-
-		return true;
-	}
-
-	return false;
 }
 
 //チェックポイントを距離で透かす
