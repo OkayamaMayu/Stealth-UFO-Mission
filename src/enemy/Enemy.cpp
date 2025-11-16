@@ -340,7 +340,8 @@ void EnemyType1::Hit(CollisionBase* hitCollision) {
 	//ステージの区画は実行しない
 	if (hitCollision->GetKind() == KIND_AREA)return;
 	//プレイヤー以降は実行しない
-	if (hitCollision->GetKind() > KIND_PLAYER_RING)return;
+	if (hitCollision->GetKind() >= KIND_PLAYER_RING&& hitCollision->GetKind() < KIND_ENEMY)return;
+	if (hitCollision->GetKind() >= KIND_ITEM)return;
 
 	//修正可能軸を設定する
 	SetEditAxisFlag();

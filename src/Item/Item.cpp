@@ -496,7 +496,8 @@ void Item::Hit(CollisionBase* hitCollision) {
 	//ステージの区画は実行しない
 	if (hitCollision->GetKind() == KIND_AREA)return;
 	//エネミーとブロック以外は実行しない
-	if (hitCollision->GetKind() != KIND_BLOCK && hitCollision->GetKind() != KIND_ENEMY)return;
+	if (hitCollision->GetKind() != KIND_BLOCK && 
+		(hitCollision->GetKind() < KIND_ENEMY|| hitCollision->GetKind() >= KIND_ITEM))return;
 
 	//ブロックの場合
 	if (hitCollision->GetKind() == KIND_BLOCK) {
@@ -560,7 +561,9 @@ void Item::Hit(CollisionBase* hitCollision) {
 
 	//エネミーに衝突した時の処理
 	//エネミー以外だと実行しない
-	if (hitCollision->GetKind() < KIND_ENEMY || hitCollision->GetKind() >= KIND_ITEM)return;
+	int kind = hitCollision->GetKind();
+	if(kind < KIND_ENEMY)return;
+	if(kind >= KIND_ITEM)return;
 	//エネミーに当たる状態でなければ実行しない
 	if (!m_EnemyHitFlag)return;
 
