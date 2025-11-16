@@ -24,7 +24,8 @@ void StageBlockManager::Init(LoadStageData &data){
 
 			//ƒRƒŠƒWƒ‡ƒ“î•ñ‚Ìİ’è
 			AABB collision = {};
-			collision.centerPos = VAdd(delimiterPos, halfDelimiterSize);
+			collision.centerPos = VSub(delimiterPos, halfDelimiterSize);
+			collision.centerPos.y = MAP_MIN_Y + halfDelimiterSize.y;
 			collision.size = halfDelimiterSize;
 			m_StageBlockArea[areaNum].Init(collision);
 			areaNum++;
