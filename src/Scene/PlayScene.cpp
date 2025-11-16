@@ -198,11 +198,6 @@ void PlayScene::Start()
 	laser		.Start();	//レーザーの追加設定処理
 	player		.Start();	//プレイヤーの追加設定処理
 	safetyArea	.Start();	//安全地帯の追加設定処理
-
-	//レーザーの終了地点を設定
-	//CollisionManager::GetInstance()->CheckStageBlockToLaser(laser, backGraund);
-	////プレイヤーの足元のリングの位置を設定
-	//CollisionManager::GetInstance()->CheckStageBlockToPlRing(player, backGraund, block);
 }
 
 void PlayScene::Step()
@@ -241,6 +236,9 @@ void PlayScene::Step()
 
 	sky		.Step(cameraMan.GetCameraPos());	//天球の通常処理
 	laser	.Step();							//レーザーの処理
+
+	//当たり判定
+	Collision();
 
 	//常に表示しているエフェクトの更新
 	CEffekseerCtrl::SetPosition(m_iEffectHandle, cameraMan.GetCameraPos());
@@ -567,9 +565,6 @@ void PlayScene::play()
 		backGraund.Step();
 	}
 
-	//当たり判定
-	Collision();
-
 	//UFOに捕まっていなかったら
 	if (!ufo.GetCatchPlayer())
 	{
@@ -702,27 +697,6 @@ void PlayScene::Collision()
 {
 	//ブロックの設置場所を計算する
 	block.CheckSetBlockPos	(cameraMan, backGraund, player.GetSetBlockFlag());
-
-	//CollisionManager::GetInstance()->CheckGoalToPayer			(player, goal);				//プレイヤーとゴール
-	//CollisionManager::GetInstance()->CheckEnemyToPlayer			(player, enemy);			//プレイヤーとエネミー
-	//CollisionManager::GetInstance()->CheckEnemyToEnemy			(enemy);					//エネミーとエネミー
-	//if (CollisionManager::GetInstance()->CheckEnemyType1ToItem	(enemy, item))				//アイテムとエネミー
-	//	m_CloseFlag = true;	//一人称カメラを自動で閉じる
-	//CollisionManager::GetInstance()->CheckSetBlockToPlayer		(player, block);			//設置ブロックとプレイヤー
-	//CollisionManager::GetInstance()->CheckSetBlockToEnemyType1	(enemy, block);				//設置ブロックとエネミー
-	//CollisionManager::GetInstance()->CheckSetBlockToItem		(item, block);				//設置ブロックとアイテム
-	//CollisionManager::GetInstance()->CheckCheckPointToPayer		(checkPoint, player);		//チェックポイントとプレイヤー
-
-	////座標が確定される
-	//CollisionManager::GetInstance()->CheckStageBlockToPlayer	(player, backGraund);		//プレイヤーとステージ
-	//CollisionManager::GetInstance()->CheckStageBlockToEnemyType1(enemy, backGraund);		//エネミーとステージ
-	//if (CollisionManager::GetInstance()->CheckStageBlockToItem	(item, backGraund))			//アイテムとステージ
-	//	m_CloseFlag = true;	//一人称カメラを自動で閉じる
-	//CollisionManager::GetInstance()->CheckStageBlockToPlRing	(player, backGraund,block);	//プレイヤーリングとステージ
-	//CollisionManager::GetInstance()->CheckStageBlockToLaser		(laser, backGraund);		//レーザーとステージ
-
-	////レーザー関連
-	//CollisionManager::GetInstance()->CheckSetBlockToLaser		(laser, block);				//配置ブロックとレーザー
 
 	//当たり判定
 	CollisionManager::GetInstance()->Update();
