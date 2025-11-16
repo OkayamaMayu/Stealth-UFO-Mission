@@ -41,5 +41,5 @@ public:
 	//ブロックを透かすかの設定
 	void			SetIsDraw(bool set) { m_IsDraw = set; }
 	//コリジョン情報を取得
-	CollisionAABB	&GetCollision() { return m_Collision; }
+	CollisionAABB	*GetCollision() { return &m_Collision; }
 };

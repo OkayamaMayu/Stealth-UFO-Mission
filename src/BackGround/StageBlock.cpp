@@ -20,8 +20,6 @@ void StageBlock::Init(SET_BLOCK blockType, VECTOR setPos) {
 	//サイズを設定
 	m_vSize = VGet(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 
-	//コリジョン情報の設定
-	m_Collision.SetOwner(this);
 	m_Collision.SetKind(KIND_BLOCK);
 	//構造体の設定
 	AABB setCollision = {};
@@ -31,6 +29,8 @@ void StageBlock::Init(SET_BLOCK blockType, VECTOR setPos) {
 	setCollision.centerPos = m_vPos;
 	//情報を登録
 	m_Collision.SetCollision(setCollision);
+	//コリジョン情報の設定
+	m_Collision.SetOwner(this);
 }
 
 void StageBlock::Load(int modelHandle) {

@@ -64,7 +64,7 @@ void StageBlockManager::Init(LoadStageData &data){
 		StageBlock stageBlock;
 		stageBlock.Init(type, data.GetBlockPos(i));
 		//ブロック情報を受け取る
-		AABB blockCollison = stageBlock.GetCollision().GetCollision();
+		AABB blockCollison = stageBlock.GetCollision()->GetCollision();
 
 		for (int areaID = 0; areaID < MAP_AREA_NUM; areaID++) {
 			//エリア情報を受け取る

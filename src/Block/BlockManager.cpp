@@ -180,7 +180,7 @@ void BlockManager::CheckSetBlockPos(CameraManager& cameraManager, StageBlockMana
 			}
 
 			//ステージブロックの情報を入手
-			AABB aabb = stageBlock.GetCollision().GetCollision();
+			AABB aabb = stageBlock.GetCollision()->GetCollision();
 			//当たっていなかったら
 			if (!Collision::IsCollidingAABBToLineSegment(aabb, lineSegment))continue;
 

@@ -59,16 +59,15 @@ void StageBlockArea::Fin() {
 
 //当たった処理
 void StageBlockArea::Hit(CollisionBase* hitCollision) {
-	for (auto& stageBlock : m_StageBlock) {
+	for (StageBlock stageBlock : m_StageBlock) {
 		//区画内のブロックの当たり判定
-		AABB stageBlockCollison = stageBlock.GetCollision().GetCollision();
+		AABB stageBlockCollison = stageBlock.GetCollision()->GetCollision();
 		//当たり判定を実行しない
-		if (!stageBlock.GetCollision().IsCollision())continue;
+		if (!stageBlock.GetCollision()->IsCollision())continue;
 
 		//当たっていなければ実行しない
 		if (!HitBlock(stageBlockCollison, hitCollision))continue;
-		//CollisionAABB stageBlockIt = stageBlock.GetCollision();
-		CollisionBase* stageCollison = &stageBlock.GetCollision();
+		CollisionBase* stageCollison = stageBlock.GetCollision();
 		//当たっていたら
 		hitCollision->HitCollision(stageCollison);
 	}
