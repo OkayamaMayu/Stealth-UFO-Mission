@@ -1,5 +1,6 @@
 #include "PlayerRing.h"
 #include "../MyLib/MyLib.h"
+#include "../Block/BlockManager.h"
 
 void PlayerRing::Init(VECTOR setPos, VECTOR setRot)
 {
@@ -112,6 +113,9 @@ void PlayerRing::UpdateCollision() {
 void PlayerRing::Hit(CollisionBase* hitCollision) {
 	//ブロック類でなければ実行しない
 	if (hitCollision->GetKind() != KIND_BLOCK)return;
+	//配置ブロックが配置されていなければ実行しない
+	Block* block = static_cast<Block*>(hitCollision->GetOwner());
+	if (!block->GetIsUse())return;
 
 	//ブロックの情報を受け取る
 	CollisionAABB* blockCollision = static_cast<CollisionAABB*>(hitCollision);
