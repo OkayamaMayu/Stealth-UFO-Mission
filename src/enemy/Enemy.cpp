@@ -337,6 +337,8 @@ void EnemyType1::Move(VECTOR plPos, float speed)
 
 //当たった処理
 void EnemyType1::Hit(CollisionBase* hitCollision) {
+	//ステージの区画は実行しない
+	if (hitCollision->GetKind() == KIND_AREA)return;
 	//プレイヤー以降は実行しない
 	if (hitCollision->GetKind() > KIND_PLAYER_RING)return;
 

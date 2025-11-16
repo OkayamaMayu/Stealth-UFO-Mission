@@ -493,6 +493,8 @@ void Item::HitEnemy()
 
 //当たった処理
 void Item::Hit(CollisionBase* hitCollision) {
+	//ステージの区画は実行しない
+	if (hitCollision->GetKind() == KIND_AREA)return;
 	//エネミーとブロック以外は実行しない
 	if (hitCollision->GetKind() != KIND_BLOCK && hitCollision->GetKind() != KIND_ENEMY)return;
 
@@ -503,7 +505,6 @@ void Item::Hit(CollisionBase* hitCollision) {
 		//空気ブロックなら以下実行しない
 		if (stageBlock->GetBlockType() == StageBlock::BLOCK_AIR)return;
 	}
-	
 
 	//修正可能軸を設定する
 	SetEditAxisFlag();

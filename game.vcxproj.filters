@@ -273,6 +273,9 @@
     <ClCompile Include="src\BackGround\StageBlock.cpp">
       <Filter>ソース ファイル\BackGround</Filter>
     </ClCompile>
+    <ClCompile Include="src\BackGround\StageBlockArea.cpp">
+      <Filter>ソース ファイル\BackGround</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MyLib\MyLib.h">
@@ -441,6 +444,9 @@
       <Filter>ソース ファイル\0_MyLib\MyLib\Collision</Filter>
     </ClInclude>
     <ClInclude Include="src\BackGround\StageBlock.h">
+      <Filter>ソース ファイル\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BackGround\StageBlockArea.h">
       <Filter>ソース ファイル\BackGround</Filter>
     </ClInclude>
   </ItemGroup>

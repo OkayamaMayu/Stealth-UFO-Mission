@@ -14,7 +14,8 @@ enum COLLISION_TYPE {
 
 //識別ID
 enum COLLISION_KIND {
-	KIND_BLOCK		= 0,	//ステージブロック
+	KIND_AREA,				//ステージ区画
+	KIND_BLOCK,				//ステージブロック
 	KIND_PLAYER,			//プレイヤー
 	KIND_PLAYER_RING,		//プレイヤーの足元リング
 	KIND_GOAL,				//ゴール

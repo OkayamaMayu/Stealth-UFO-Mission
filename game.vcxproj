@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\BackGround\StageBlockArea.cpp" />
     <ClCompile Include="src\BackGround\StageBlockManager.cpp" />
     <ClCompile Include="src\BackGround\sky.cpp" />
     <ClCompile Include="src\BackGround\StageBlock.cpp" />
@@ -78,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="src\BackGround\StageBlockArea.h" />
     <ClInclude Include="src\BackGround\StageBlockManager.h" />
     <ClInclude Include="src\BackGround\sky.h" />
     <ClInclude Include="src\BackGround\StageBlock.h" />

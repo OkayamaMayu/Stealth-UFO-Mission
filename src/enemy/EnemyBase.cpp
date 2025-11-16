@@ -216,29 +216,40 @@ void EnemyBase::Discovery(Player& player, ItemManager& itemMana, StageBlockManag
 
 	//対象との間にブロックが存在するか
 	float distance = 0.0f;
-	for (int i = 0; i < block.GetBlockNum(); i++)
-	{
-		StageBlock& stageBlock = block.GetBlock(i);
-		//空気ブロックなら間に入っていても気にしない
-		if (stageBlock.GetBlockType() == stageBlock.BLOCK_AIR)
-			continue;
 
-		VECTOR blockPos = stageBlock.GetPos();
+	//視界の最大と最小
+	LineSegment MaxLine = {};
+	LineSegment MinLine = {};
+	MaxLine.startPos = MinLine.startPos = m_vPos;
+	//視点の終点を求める
+	VECTOR moveVec = Math::GetMoveVec(m_vRot.y + Math::ChangeDegToRad(45.0f), ENEMY_FOUNDSIZE);
+	MaxLine.endPos = VAdd(m_vPos, moveVec);
+	moveVec = Math::GetMoveVec(m_vRot.y - Math::ChangeDegToRad(45.0f), ENEMY_FOUNDSIZE);
+	MinLine.endPos = VAdd(m_vPos, moveVec);
 
-		//ブロックが視界内にあるか判定
-		if (!Math::CheckVision(blockPos, m_vRot.y, m_vPos, ENEMY_FOUNDSIZE))
-			continue;
+	for (int i = 0; i < MAP_AREA_NUM; i++) {
+		AABB areaCollison = block.GetStageBlockArea(i).GetCollision().GetCollision();
+		//エリアに当たっていなければ実行しない
+		if (!Collision::IsCollidingAABBToLineSegment(areaCollison, MinLine)&&
+			!Collision::IsCollidingAABBToLineSegment(areaCollison, MaxLine))continue;
 
-		//Yを比べる
-		if (m_vPos.y <= blockPos.y)
-		{
+		for (auto stageBlock : block.GetStageBlock(i)) {
+			//空気ブロックなら間に入っていても気にしない
+			if (stageBlock.GetBlockType() == stageBlock.BLOCK_AIR)continue;
+
+			VECTOR blockPos = stageBlock.GetPos();
+
+			//ブロックが視界内にあるか判定
+			if (!Math::CheckVision(blockPos, m_vRot.y, m_vPos, ENEMY_FOUNDSIZE))continue;
+
+			//Yを比べる
+			if (m_vPos.y > blockPos.y)continue;
 			//距離を計算
 			float checkDistance = Math::GetDistance(m_vPos, blockPos);
-			if (checkDistance <= distance || distance == 0.0f)
-			{
-				//格納中の値より小さかったら更新
-				distance = checkDistance;
-			}
+
+			if (checkDistance > distance && distance != 0.0f)continue;
+			//格納中の値より小さかったら更新
+			distance = checkDistance;
 		}
 	}
 

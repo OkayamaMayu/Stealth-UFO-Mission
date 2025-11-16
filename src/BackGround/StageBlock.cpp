@@ -31,7 +31,6 @@ void StageBlock::Init(SET_BLOCK blockType, VECTOR setPos) {
 	setCollision.centerPos = m_vPos;
 	//î•ñ‚ð“o˜^
 	m_Collision.SetCollision(setCollision);
-	CollisionManager::GetInstance()->RegisterCollision(&m_Collision);
 }
 
 void StageBlock::Load(int modelHandle) {

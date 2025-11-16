@@ -114,20 +114,20 @@ void BlockManager::CheckSetBlockPos(CameraManager& cameraManager, StageBlockMana
 
 	//配置カメラになっていなければ終了
 	if (!cameraManager.GetPlVisionFlag())return;
-	
+
 	//配置可能ブロックの数を計算
 	int blockNum = (int)(Data::GetBlockGauge() / SET_BLOCK_POINT);
 	if (!setMode)return;
 	if (blockNum <= 0)return;
-	
+
 	//画面の中心座標
 	VECTOR screenPos = { SCREEN_SIZE_X / 2,SCREEN_SIZE_Y / 2,0.0f };
 	//スクリーン座標をワールド座標にする
 	screenPos = ConvScreenPosToWorldPos(screenPos);
-		
+
 	//カメラの視点座標
 	VECTOR cameraPos = cameraManager.GetCameraForcus();
-	
+
 	//ブロックのサイズを取得
 	VECTOR blockSize = Vector::MakeVec(BLOCK_SIZE);
 
@@ -145,30 +145,48 @@ void BlockManager::CheckSetBlockPos(CameraManager& cameraManager, StageBlockMana
 	LineSegment lineSegment = {};
 	lineSegment.startPos = screenPos;
 	lineSegment.endPos = lineEndPos;
-	
-	for (int i = 0; i < stage.GetBlockNum(); i++){
-		//ステージブロックを取得する
-		StageBlock& stageBlock = stage.GetBlock(i);
-	
-		//実行しない
-		if (stageBlock.GetBlockType() == StageBlock::BLOCK_AIR)continue;
-		if (stageBlock.GetBlockType() == StageBlock::BLOCK_WALL)continue;
-		//ステージブロックを取得
-		VECTOR stageBlockPos = stageBlock.GetPos();
-	
-		//既に配置されたブロックとの判定
-		for (int b = 0; b < BLOCK_MAX_NUM; b++) {
-			//配置されていなかったら実行しない
-			if (!block[b].GetIsUse())continue;
+
+	for (int i = 0; i < MAP_AREA_NUM; i++) {
+		AABB areaCollison = stage.GetStageBlockArea(i).GetCollision().GetCollision();
+		//エリアに当たっていなければ実行しない
+		if (!Collision::IsCollidingAABBToLineSegment(areaCollison, lineSegment))continue;
+		for (auto stageBlock : stage.GetStageBlock(i)) {
+
+			//実行しない
+			if (stageBlock.GetBlockType() == StageBlock::BLOCK_AIR)continue;
+			if (stageBlock.GetBlockType() == StageBlock::BLOCK_WALL)continue;
+			//ステージブロックを取得
+			VECTOR stageBlockPos = stageBlock.GetPos();
+
+			//既に配置されたブロックとの判定
+			for (int b = 0; b < BLOCK_MAX_NUM; b++) {
+				//配置されていなかったら実行しない
+				if (!block[b].GetIsUse())continue;
+
+				//ステージブロックの情報を入手
+				AABB aabb = block[b].GetCollision().GetCollision();
+				//配置ブロックに当たっていなかったら実行しない
+				if (!Collision::IsCollidingAABBToLineSegment(aabb, lineSegment))continue;
+
+				//ブロックの上辺に設定
+				createPos = aabb.centerPos;
+				createPos.y = createPos.y + BLOCK_SIZE * 2;
+
+				//配置位置を設定
+				m_vSetBlockPos = createPos;
+				m_BlockSetFlag = true;
+				//終了
+				return;
+			}
 
 			//ステージブロックの情報を入手
-			AABB aabb = block[b].GetCollision().GetCollision();
-			//配置ブロックに当たっていなかったら実行しない
+			AABB aabb = stageBlock.GetCollision().GetCollision();
+			//当たっていなかったら
 			if (!Collision::IsCollidingAABBToLineSegment(aabb, lineSegment))continue;
 
-			//ブロックの上辺に設定
+			//床にあげる
 			createPos = aabb.centerPos;
-			createPos.y = createPos.y + BLOCK_SIZE * 2;
+			createPos.y += blockSize.y * 2;
 
 			//配置位置を設定
 			m_vSetBlockPos = createPos;
@@ -176,20 +194,5 @@ void BlockManager::CheckSetBlockPos(CameraManager& cameraManager, StageBlockMana
 			//終了
 			return;
 		}
-
-		//ステージブロックの情報を入手
-		AABB aabb = stageBlock.GetCollision().GetCollision();
-		//当たっていなかったら
-		if (!Collision::IsCollidingAABBToLineSegment(aabb, lineSegment))continue;
-
-		//床にあげる
-		createPos = aabb.centerPos;
-		createPos.y += blockSize.y * 2;
-
-		//配置位置を設定
-		m_vSetBlockPos = createPos;
-		m_BlockSetFlag = true;
-		//終了
-		return;
 	}
 }

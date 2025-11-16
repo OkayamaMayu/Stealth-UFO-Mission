@@ -624,6 +624,8 @@ bool Player::ThrowItem(ItemManager& itemMana, float camaraRot,float focusRot)
 
 //当たった処理
 void Player::Hit(CollisionBase* hitCollision) {
+	//ステージの区画は実行しない
+	if (hitCollision->GetKind() == KIND_AREA)return;
 	//アイテム以降は実行しない
 	if (hitCollision->GetKind() >= KIND_ITEM )return;
 	//足元のリングは実行しない
