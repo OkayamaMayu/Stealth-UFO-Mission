@@ -482,7 +482,7 @@ void EnemyType1::UpdateCollision() {
 //ステージブロックとの衝突
 void EnemyType1::HitStageBlock(CollisionBase* hitCollision) {
 	//ブロックに当たっていなかったら終了
-	if (hitCollision->GetCollisionType() != KIND_BLOCK)return;
+	if (hitCollision->GetKind() != KIND_BLOCK)return;
 	//ブロック情報を受け取る
 	StageBlock* stageBlock = static_cast<StageBlock*>(hitCollision->GetOwner());
 	//衝突したブロックが空気ブロックなら終了
