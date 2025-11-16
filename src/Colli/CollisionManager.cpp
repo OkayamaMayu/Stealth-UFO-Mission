@@ -237,23 +237,21 @@ COLLISION_AXIS CollisionManager::SelectModifyingAxis(EditAxisFlag editAxisFlag, 
 	if (baseAPos.x < baseBPos.x) {
 		differenceX = (baseAPos.x + baseASize.x) - (baseBPos.x - baseBSize.x);
 	}
-	else if (baseAPos.x > baseBPos.x) {
+	if (baseAPos.x > baseBPos.x) {
 		differenceX = (baseBPos.x + baseBSize.x) - (baseAPos.x - baseASize.x);
 	}
 	//Yé≤ÇÃç∑ÇãÅÇﬂÇÈ
 	if (baseAPos.y > baseBPos.y) {
-		//è∞Ç…ìñÇΩÇ¡ÇΩ
 		differenceY = (baseBPos.y + baseBSize.y) - (baseAPos.y - baseASize.y);
 	}
-	else if (baseAPos.y < baseBPos.y) {
-		//ìVà‰Ç…ìñÇΩÇ¡ÇΩ
-		differenceY -= (baseAPos.y + baseASize.y) - (baseBPos.y - baseBSize.y);
+	if (baseAPos.y < baseBPos.y) {
+		differenceY = (baseAPos.y + baseASize.y) - (baseBPos.y - baseBSize.y);
 	}
 	//Zé≤ÇÃç∑ÇãÅÇﬂÇÈ
 	if (baseAPos.z < baseBPos.z) {
 		differenceZ = (baseAPos.z + baseASize.z) - (baseBPos.z - baseBSize.z);
 	}
-	else if (baseAPos.z > baseBPos.z) {
+	if (baseAPos.z > baseBPos.z) {
 		differenceZ = (baseBPos.z + baseBSize.z) - (baseAPos.z - baseASize.z);
 	}
 
