@@ -29,8 +29,6 @@ void StageBlock::Init(SET_BLOCK blockType, VECTOR setPos) {
 	setCollision.centerPos = m_vPos;
 	//情報を登録
 	m_Collision.SetCollision(setCollision);
-	//コリジョン情報の設定
-	m_Collision.SetOwner(this);
 }
 
 void StageBlock::Load(int modelHandle) {
@@ -43,6 +41,8 @@ void StageBlock::Start() {
 	MV1SetScale(m_iHandle, MODEL_SCALE_V);
 	//モデルの座標を設定
 	MV1SetPosition(m_iHandle, m_vPos);
+	//コリジョン情報の設定
+	m_Collision.SetOwner(this);
 }
 
 void StageBlock::Step() {
